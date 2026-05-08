@@ -1207,7 +1207,7 @@ function mlsTable(list) {
       const diasColor = p.daysListed>30?'var(--red)':p.daysListed>15?'var(--amber)':'var(--text-2)';
       return '<tr onclick="openPropDetail('+p.id+')" style="cursor:pointer;">' +
         '<td><div class="prop-name">'+p.address+'</div>'+notes+'</td>' +
-        '<td style="text-align:center;"><span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;background:'+(p.city==='Jacksonville'?'#E3F0FF':p.city==='South Florida'?'#E3F9EE':'#FFF4E3')+';color:'+(p.city==='Jacksonville'?'#1A6BA8':p.city==='South Florida'?'#1A7A45':'#B86A00')+';">'+(p.city==='Jacksonville'?'🏠 JAX':p.city==='South Florida'?'🌴 SoFL':p.city==='Orlando'?'🎡 ORL':'🌐')+'</span></td>' +
+        '<td><span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;white-space:nowrap;background:'+(p.city==='Jacksonville'?'#E3F0FF':p.city==='South Florida'?'#E3F9EE':'#FFF4E3')+';color:'+(p.city==='Jacksonville'?'#1A6BA8':p.city==='South Florida'?'#1A7A45':'#B86A00')+';">'+(p.city==='Jacksonville'?'🏠 Jacksonville':p.city==='South Florida'?'🌴 South Florida':p.city==='Orlando'?'🎡 Orlando':'🌐 —')+'</span></td>' +
         '<td><span style="font-size:11px;color:var(--text-2);">'+p.type+'</span></td>' +
         '<td>'+(p.country==='AR'?'USD ':'$')+p.listPrice.toLocaleString()+'</td>' +
         '<td><div class="agent-chip">'+agentDot(p.agent)+' '+agentName(p.agent)+'</div></td>' +
@@ -1960,7 +1960,7 @@ function handleGlobalDocUpload() {
       if(!window._globalDocs)window._globalDocs=[];
       window._globalDocs.push({name:file.name,prop:'',date:new Date().toLocaleDateString('es-AR'),url});
     });
-    renderDocumentos(document.getElementById('main-content'),document.getElementById('view-actions'));
+    renderDocumentos(document.getElementById('content'),document.getElementById('topbar-actions'));
     toast('\u2713 '+e.target.files.length+' documento(s) cargado(s)');
   };input.click();
 }
@@ -2173,8 +2173,8 @@ function toggleCommissionPaid(id) {
   const o=DATA.operations.find(x=>x.id===id);
   if(!o)return;
   o.commissionPaid=!o.commissionPaid;
-  const el=document.getElementById('main-content');
-  const act=document.getElementById('view-actions');
+  const el=document.getElementById('content');
+  const act=document.getElementById('topbar-actions');
   if(el&&act)renderComisiones(el,act);
 }
 function buildComRows(ops, paid) {
