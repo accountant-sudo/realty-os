@@ -168,8 +168,6 @@
       </div>
       <div class="nav-section">
         <div class="nav-label">Gestión</div>
-        <div class="nav-item" onclick="goTo('leads')"><span class="nav-icon">◉</span> Leads / Pipeline</div>
-        <div class="nav-item" onclick="goTo('clientes')"><span class="nav-icon">◎</span> Clientes</div>
         <div class="nav-item" onclick="goTo('mls')"><span class="nav-icon">⌂</span> Propiedades / MLS</div>
         <div class="nav-item" onclick="goTo('operaciones')"><span class="nav-icon">≡</span> Operaciones</div>
         <div class="nav-item" onclick="goTo('documentos')"><span class="nav-icon">◻</span> Documentos</div>
@@ -568,7 +566,7 @@ function renderAlertsPanel() {
 // ─── ROUTER ────────────────────────────────────────────────────────────────
 function goTo(view, param) {
   document.querySelectorAll('.nav-item').forEach(el => {
-    const match = { dashboard:'dashboard', clientes:'clientes', mls:'mls', operaciones:'operaciones', documentos:'documentos', zillow:'zillow', usuarios:'usuarios' };
+    const match = { dashboard:'dashboard', mls:'mls', operaciones:'operaciones', documentos:'documentos', zillow:'zillow', usuarios:'usuarios' };
     el.classList.toggle('active', el.getAttribute('onclick').includes(`'${view}'`));
   });
   const titles = { dashboard:'Dashboard', leads:'Leads / Pipeline', clientes:'Clientes', mls:'Propiedades / MLS', operaciones:'Operaciones', documentos:'Documentos', zillow:'Análisis de mercado — Zillow 🇺🇸', zonaprop:'Análisis ZonaProp 🇦🇷', comisiones:'Comisiones', usuarios:'Usuarios', 'op-detail':'' };
