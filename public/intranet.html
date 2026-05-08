@@ -1,0 +1,2001 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Miami Tango Investments — Intranet</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #C9A84C; --gold-light: #F5EDD4; --gold-dark: #8A6B1F;
+    --bg: #F7F6F3; --surface: #FFFFFF; --border: #E5E3DC;
+    --text: #1A1A18; --text-2: #5A5850; --text-3: #9A9890;
+    --green: #2D7A4F; --green-bg: #EAF5EE;
+    --red: #C0392B; --red-bg: #FDECEA;
+    --amber: #C07A00; --amber-bg: #FFF4DC;
+    --blue: #1A5FA8; --blue-bg: #EAF1FB;
+    --radius: 10px; --radius-sm: 6px;
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.5; }
+  .app { display: flex; height: 100vh; overflow: hidden; }
+  .sidebar { width: 220px; background: var(--text); display: flex; flex-direction: column; flex-shrink: 0; }
+  .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+  .topbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 24px; height: 52px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .content { flex: 1; overflow-y: auto; padding: 24px; }
+  .sidebar-logo { padding: 20px 18px 16px; border-bottom: 1px solid #333; }
+  .logo-mark { display: flex; align-items: center; gap: 8px; }
+  .logo-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+  .logo-text { font-size: 13px; font-weight: 600; color: #fff; line-height: 1.3; }
+  .logo-sub { font-size: 10px; color: #888; font-weight: 400; }
+  .nav-section { padding: 12px 0 4px; }
+  .nav-label { font-size: 10px; color: #666; text-transform: uppercase; letter-spacing: 0.08em; padding: 0 18px 6px; font-weight: 500; }
+  .nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 18px; cursor: pointer; color: #AAA; font-size: 13px; transition: all 0.15s; border-left: 2px solid transparent; }
+  .nav-item:hover { color: #fff; background: #2A2A28; }
+  .nav-item.active { color: var(--gold); border-left-color: var(--gold); background: #252520; }
+  .nav-icon { font-size: 14px; width: 16px; text-align: center; }
+  .sidebar-footer { margin-top: auto; padding: 16px 18px; border-top: 1px solid #333; font-size: 12px; color: #666; }
+  .user-badge { display: flex; align-items: center; gap: 8px; }
+  .avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: #1A1A18; flex-shrink: 0; }
+  .page-title { font-size: 16px; font-weight: 600; color: var(--text); }
+  .topbar-actions { display: flex; align-items: center; gap: 10px; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: all 0.15s; }
+  .btn-primary { background: var(--gold); color: #1A1A18; border-color: var(--gold); }
+  .btn-primary:hover { background: var(--gold-dark); border-color: var(--gold-dark); color: #fff; }
+  .btn-secondary { background: var(--surface); color: var(--text-2); border-color: var(--border); }
+  .btn-secondary:hover { background: var(--bg); }
+  .btn-ghost { background: none; color: var(--text-2); border-color: transparent; }
+  .btn-ghost:hover { background: var(--bg); }
+  .btn-green { background: var(--green-bg); color: var(--green); border-color: var(--green); font-size: 12px; padding: 5px 12px; }
+  .btn-green:hover { background: var(--green); color: #fff; }
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; }
+  .stat-label { font-size: 12px; color: var(--text-2); margin-bottom: 6px; font-weight: 500; }
+  .stat-val { font-size: 28px; font-weight: 700; }
+  .stat-val.gold { color: var(--gold-dark); }
+  .stat-val.green { color: var(--green); }
+  .stat-val.red { color: var(--red); }
+  .stat-sub { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 20px; }
+  .card-header { padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .card-title { font-size: 13px; font-weight: 600; color: var(--text); }
+  .card-body { padding: 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { font-size: 11px; font-weight: 600; color: var(--text-2); text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--border); background: #FAFAF8; text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; }
+  td { padding: 11px 14px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: #FAFAF8; }
+  .prop-name { font-weight: 600; font-size: 13px; }
+  .prop-sub { font-size: 11px; color: var(--text-3); }
+  .badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 20px; }
+  .badge-active { background: var(--amber-bg); color: var(--amber); }
+  .badge-closed { background: var(--green-bg); color: var(--green); }
+  .badge-cancelled { background: var(--red-bg); color: var(--red); }
+  .badge-admin { background: #F0EDFF; color: #5B3FBF; }
+  .badge-ops { background: var(--blue-bg); color: var(--blue); }
+  .badge-commercial { background: var(--green-bg); color: var(--green); }
+  .badge-mls { background: var(--blue-bg); color: var(--blue); }
+  .badge-contract { background: var(--amber-bg); color: var(--amber); }
+  .badge-withdrawn { background: #F0F0F0; color: var(--text-3); }
+  .chk { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 5px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.1s; user-select: none; }
+  .chk:hover { opacity: 0.8; transform: scale(1.1); }
+  .chk-yes { background: var(--green-bg); color: var(--green); }
+  .chk-no { background: var(--bg); color: var(--text-3); border: 1px solid var(--border); }
+  .chk-na { background: #F0F0F0; color: var(--text-3); font-size: 9px; font-weight: 700; border: 1px dashed var(--border); }
+  .closing-near { color: var(--red); font-weight: 600; }
+  .closing-ok { color: var(--text-2); }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 20px; }
+  .form-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .form-full { grid-column: 1 / -1; }
+  .form-group { display: flex; flex-direction: column; gap: 5px; }
+  .form-label { font-size: 12px; font-weight: 600; color: var(--text-2); }
+  .form-input { padding: 8px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; color: var(--text); background: var(--surface); transition: border-color 0.15s; font-family: inherit; }
+  .form-input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-light); }
+  select.form-input { cursor: pointer; }
+  textarea.form-input { resize: vertical; min-height: 80px; }
+  .form-actions { padding: 16px 20px; border-top: 1px solid var(--border); display: flex; gap: 10px; justify-content: flex-end; }
+  .form-section { padding: 16px 20px 4px; }
+  .form-section-title { font-size: 11px; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
+  .detail-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 20px; }
+  .detail-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .detail-row:last-child { border-bottom: none; }
+  .detail-key { color: var(--text-2); font-weight: 500; }
+  .detail-val { font-weight: 500; text-align: right; }
+  .alert-box { display: flex; align-items: flex-start; gap: 8px; padding: 12px 14px; border-radius: var(--radius-sm); font-size: 13px; margin-bottom: 14px; }
+  .alert-warning { background: var(--amber-bg); color: var(--amber); border: 1px solid #F0D070; }
+  .progress-wrap { background: var(--bg); border-radius: 20px; height: 6px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--gold); border-radius: 20px; transition: width 0.3s; }
+  .doc-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .doc-item:last-child { border-bottom: none; }
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; z-index: 100; }
+  .modal { background: var(--surface); border-radius: var(--radius); width: 680px; max-width: 95vw; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+  .modal-header { padding: 18px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: var(--surface); z-index: 1; }
+  .modal-title { font-size: 15px; font-weight: 700; }
+  .modal-close { font-size: 20px; color: var(--text-3); cursor: pointer; background: none; border: none; line-height: 1; padding: 2px 6px; }
+  .modal-close:hover { color: var(--text); }
+  .hidden { display: none !important; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .search-filter-bar { padding: 12px 14px; display: flex; gap: 10px; border-bottom: 1px solid var(--border); }
+  .search-input { flex: 1; padding: 8px 12px 8px 32px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; background: var(--bg); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%239A9890' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: 10px center; }
+  .search-input:focus { outline: none; border-color: var(--gold); background-color: var(--surface); }
+  .agent-chip { display: inline-flex; align-items: center; gap: 5px; }
+  .agent-dot { width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .ag-diego { background: #1A5FA8; } .ag-gaston { background: #2D7A4F; } .ag-ilan { background: #8A3FBF; }
+  .ag-adolfo { background: #C07A00; } .ag-leo { background: #C0392B; } .ag-sabrina { background: #2A7A7A; }
+  .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .toggle-row:last-child { border-bottom: none; }
+  .toggle { width: 36px; height: 20px; border-radius: 10px; background: var(--border); cursor: pointer; position: relative; transition: background 0.2s; flex-shrink: 0; }
+  .toggle.on { background: var(--green); }
+  .toggle::after { content: ''; position: absolute; width: 14px; height: 14px; background: #fff; border-radius: 50%; top: 3px; left: 3px; transition: left 0.2s; }
+  .toggle.on::after { left: 19px; }
+  .inline-edit { border: none; background: transparent; font-size: 13px; color: var(--text); font-family: inherit; padding: 2px 4px; border-radius: 4px; width: 100%; }
+  .inline-edit:hover { background: var(--bg); }
+  .inline-edit:focus { outline: none; background: var(--gold-light); border: 1px solid var(--gold); }
+  .insp-select { font-size: 12px; padding: 5px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); cursor: pointer; font-family: inherit; }
+  .insp-select:focus { outline: none; border-color: var(--gold); }
+  .progress-wrap { background: var(--bg); border-radius: 20px; height: 6px; overflow: hidden; }
+  .chk-hint { font-size: 10px; color: var(--text-3); margin-top: 2px; }
+  .alert-danger { background: var(--red-bg); color: var(--red); border: 1px solid #F0A0A0; }
+  .country-flag { font-size: 16px; line-height: 1; }
+  .badge-us { background: #EAF1FB; color: #1A5FA8; }
+  .badge-ar { background: #E8F4FC; color: #1A6BA8; }
+  .commission-row { display:flex; gap:12px; margin-bottom:12px; }
+  .commission-card { flex:1; background:var(--bg); border:1px solid var(--border); border-radius:var(--radius-sm); padding:12px 14px; }
+  .commission-label { font-size:11px; color:var(--text-3); font-weight:600; text-transform:uppercase; margin-bottom:4px; }
+  .commission-amount { font-size:20px; font-weight:700; color:var(--gold-dark); }
+  .commission-pct { font-size:11px; color:var(--text-3); }
+  .tabs { display:flex; gap:2px; border-bottom:2px solid var(--border); margin-bottom:20px; }
+  .tab { padding:9px 18px; font-size:13px; font-weight:500; color:var(--text-2); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-2px; }
+  .tab.active { color:var(--gold-dark); border-bottom-color:var(--gold); font-weight:600; }
+  .alerts-panel { margin-bottom: 20px; }
+  .alerts-panel-header { font-size: 12px; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+  .alert-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--red); margin-right: 6px; animation: pulse 1.4s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-mark">
+        <div class="logo-dot"></div>
+        <div><div class="logo-text">Miami Tango</div><div class="logo-sub">Investments</div></div>
+      </div>
+    </div>
+    <nav>
+      <div class="nav-section">
+        <div class="nav-label">Principal</div>
+        <div class="nav-item active" onclick="goTo('dashboard')"><span class="nav-icon">▦</span> Dashboard</div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">Gestión</div>
+        <div class="nav-item" onclick="goTo('leads')"><span class="nav-icon">◉</span> Leads / Pipeline</div>
+        <div class="nav-item" onclick="goTo('clientes')"><span class="nav-icon">◎</span> Clientes</div>
+        <div class="nav-item" onclick="goTo('mls')"><span class="nav-icon">⌂</span> Propiedades / MLS</div>
+        <div class="nav-item" onclick="goTo('operaciones')"><span class="nav-icon">≡</span> Operaciones</div>
+        <div class="nav-item" onclick="goTo('documentos')"><span class="nav-icon">◻</span> Documentos</div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">Análisis</div>
+        <div class="nav-item" onclick="goTo('zillow')"><span class="nav-icon">◈</span> Mercado / Zillow</div>
+        <div class="nav-item" onclick="goTo('zonaprop')"><span class="nav-icon">◈</span> ZonaProp 🇦🇷</div>
+        <div class="nav-item" onclick="goTo('comisiones')"><span class="nav-icon">$</span> Comisiones</div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">Admin</div>
+        <div class="nav-item" onclick="goTo('usuarios')"><span class="nav-icon">☰</span> Usuarios</div>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-badge">
+        <div class="avatar">XM</div>
+        <div><div style="color:#ccc;font-size:12px;font-weight:500;">Ximena</div><div style="color:#666;font-size:10px;">Admin</div></div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="page-title" id="page-title">Dashboard</div>
+      <div class="topbar-actions" id="topbar-actions"></div>
+    </div>
+    <div class="content" id="content"></div>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="modal-overlay">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title"></span>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+// ─── DATA ──────────────────────────────────────────────────────────────────
+const DATA = {
+  agents: [
+    { id:'diego', name:'Diego', active:2, closed:18 },
+    { id:'gaston', name:'Gastón', active:2, closed:24 },
+    { id:'ilan', name:'Ilan', active:1, closed:14 },
+    { id:'adolfo', name:'Adolfo', active:1, closed:19 },
+    { id:'leo', name:'Leo', active:1, closed:11 },
+    { id:'sabrina', name:'Sabrina', active:1, closed:9 },
+    { id:'aldana', name:'Aldana', active:0, closed:3 },
+    { id:'ilay', name:'Ilay', active:0, closed:2 },
+    { id:'karina', name:'Karina', active:0, closed:4 },
+    { id:'leonel', name:'Leonel', active:0, closed:5 },
+    { id:'tomas', name:'Tomás', active:0, closed:1 },
+    { id:'gustavo', name:'Gustavo', active:0, closed:7 },
+  ],
+  realtors: [
+    { id:'carlos', name:'Carlos' },
+    { id:'elisabeth', name:'Elisabeth' },
+    { id:'none', name:'Sin realtor' },
+  ],
+  clients: [
+    { id:1, name:'Carlos Mendoza', type:'buyer', email:'cmendoza@gmail.com', phone:'+1 305 555 0101', nationality:'Argentina', country:'AR', llc:'CM Holdings LLC', ops:2, source:'Meta', interest:'investor', budget:200000, horizon:'6 meses', roi:'8%', status:'busqueda', contactHistory:[{date:'2026-05-06',notes:'Llamada - interesado en dpto Brickell'},{date:'2026-04-20',notes:'Reunión Zoom'}] },
+    { id:2, name:'Ana Rodríguez', type:'seller', email:'arodriguez@gmail.com', phone:'+1 786 555 0202', nationality:'Venezuela', country:'US', llc:'', ops:1, source:'Web', interest:'seller', budget:0, horizon:'', roi:'', status:'activo', contactHistory:[{date:'2026-05-04',notes:'WhatsApp - confirma disponibilidad'}] },
+    { id:3, name:'Martín García', type:'investor', email:'mgarcia@inversiones.com', phone:'+1 305 555 0303', nationality:'Colombia', country:'US', llc:'MG Real Estate LLC', ops:3, source:'Referido', interest:'investor', budget:500000, horizon:'12 meses', roi:'10%', status:'negociacion', contactHistory:[{date:'2026-05-07',notes:'Oferta presentada'},{date:'2026-04-28',notes:'Visita propiedad Coral Gables'},{date:'2026-04-10',notes:'Reunión inicial'}] },
+    { id:4, name:'Laura Fernández', type:'buyer', email:'lfernandez@email.com', phone:'+1 954 555 0404', nationality:'España', country:'US', llc:'', ops:1, source:'Google', interest:'buyer', budget:280000, horizon:'3 meses', roi:'', status:'busqueda', contactHistory:[{date:'2026-05-03',notes:'Envío de propuestas por email'}] },
+    { id:5, name:'Roberto Silva', type:'seller', email:'rsilva@gmail.com', phone:'+1 305 555 0505', nationality:'Brasil', country:'AR', llc:'RS Investments LLC', ops:2, source:'Orgánico', interest:'seller', budget:0, horizon:'', roi:'', status:'activo', contactHistory:[{date:'2026-04-25',notes:'Llamada seguimiento'}] },
+  ],
+  leads: [
+    { id:1,  name:'Pablo Herrera',       phone:'+54 11 5555 1234', email:'pablo@gmail.com',       country:'AR', source:'Meta',    stage:'busqueda',    interest:'investor', budget:150000, horizon:'12 meses', roi:'8%',  agent:'gaston',  lastContact:'2026-05-01', notes:'Busca dpto en Florida, tiene LLC' },
+    { id:2,  name:'Jennifer Walsh',       phone:'+1 305 555 9876',  email:'jwalsh@email.com',      country:'US', source:'Web',     stage:'propuesta',   interest:'buyer',    budget:280000, horizon:'3 meses',  roi:'',    agent:'diego',   lastContact:'2026-05-05', notes:'SF en área de Miami, financiación convencional' },
+    { id:3,  name:'Rodrigo Castillo',     phone:'+1 786 555 4321',  email:'rcastillo@mail.com',    country:'US', source:'Google',  stage:'llamar',      interest:'investor', budget:400000, horizon:'6 meses',  roi:'9%',  agent:'ilan',    lastContact:'2026-04-28', notes:'Interesado en condos para renta' },
+    { id:4,  name:'Valeria Torres',       phone:'+54 11 4444 5678', email:'valeria.t@gmail.com',   country:'AR', source:'TikTok',  stage:'reunion',     interest:'buyer',    budget:95000,  horizon:'6 meses',  roi:'',    agent:'aldana',  lastContact:'2026-05-03', notes:'Busca departamento en Buenos Aires' },
+    { id:5,  name:'Michael Brandt',       phone:'+1 954 555 7890',  email:'mbrandt@biz.com',       country:'US', source:'Referido',stage:'negociacion', interest:'investor', budget:600000, horizon:'3 meses',  roi:'7%',  agent:'sabrina', lastContact:'2026-05-06', notes:'Múltiples propiedades, pago cash' },
+    { id:6,  name:'Claudia Reyes',        phone:'+1 305 555 2222',  email:'creyes@gmail.com',      country:'US', source:'Landing', stage:'perdido',     interest:'buyer',    budget:190000, horizon:'',         roi:'',    agent:'leo',     lastContact:'2026-04-10', notes:'Sin respuesta después de 3 intentos' },
+    { id:7,  name:'Felipe Mora',          phone:'+54 11 3333 9999', email:'fmora@hotmail.com',     country:'AR', source:'Meta',    stage:'reserva',     interest:'investor', budget:120000, horizon:'12 meses', roi:'9%',  agent:'karina',  lastContact:'2026-05-07', notes:'Reserva firmada, avanzando a operación' },
+    { id:8,  name:'Sandra Kim',           phone:'+1 305 555 3311',  email:'skim@gmail.com',        country:'US', source:'Google',  stage:'llamar',      interest:'buyer',    budget:220000, horizon:'6 meses',  roi:'',    agent:'diego',   lastContact:'2026-05-02', notes:'Primer contacto, vive en NY quiere invertir en Miami' },
+    { id:9,  name:'Marcos Oliveira',      phone:'+54 9 11 6677 8899',email:'marcos.o@mail.com',   country:'AR', source:'Meta',    stage:'llamar',      interest:'investor', budget:180000, horizon:'12 meses', roi:'10%', agent:'gaston',  lastContact:'2026-05-04', notes:'Referido por cliente existente' },
+    { id:10, name:'Diana Fontaine',       phone:'+1 786 555 6644',  email:'dfontaine@corp.com',    country:'US', source:'Web',     stage:'reunion',     interest:'investor', budget:750000, horizon:'3 meses',  roi:'8%',  agent:'ilan',    lastContact:'2026-05-06', notes:'Busca portfolio de 2-3 propiedades' },
+    { id:11, name:'Carlos Vega',          phone:'+54 11 7788 4455', email:'cvega@hotmail.com',     country:'AR', source:'Orgánico',stage:'reunion',     interest:'buyer',    budget:85000,  horizon:'9 meses',  roi:'',    agent:'aldana',  lastContact:'2026-05-01', notes:'Primer apartamento, zona norte CABA' },
+    { id:12, name:'Laura Steinberg',      phone:'+1 954 555 2211',  email:'lsteinberg@mail.com',   country:'US', source:'Referido',stage:'propuesta',   interest:'investor', budget:350000, horizon:'6 meses',  roi:'9%',  agent:'leo',     lastContact:'2026-05-05', notes:'Cash buyer, quiere SF con renta' },
+    { id:13, name:'Ahmed Khalil',         phone:'+1 305 555 8877',  email:'akhalil@biz.net',       country:'US', source:'Landing', stage:'propuesta',   interest:'buyer',    budget:420000, horizon:'3 meses',  roi:'',    agent:'sabrina', lastContact:'2026-05-03', notes:'Financiación aprobada, buscando condo Brickell' },
+    { id:14, name:'Natalia Petrov',       phone:'+54 11 9900 1122', email:'npetrov@gmail.com',     country:'AR', source:'TikTok',  stage:'busqueda',    interest:'investor', budget:200000, horizon:'6 meses',  roi:'8%',  agent:'karina',  lastContact:'2026-05-06', notes:'Busca dpto con renta en Palermo o Belgrano' },
+    { id:15, name:'James Connor',         phone:'+1 786 555 0099',  email:'jconnor@usa.com',       country:'US', source:'Google',  stage:'busqueda',    interest:'buyer',    budget:165000, horizon:'6 meses',  roi:'',    agent:'diego',   lastContact:'2026-04-30', notes:'Relocation desde Chicago, necesita SF' },
+    { id:16, name:'Sofía Marchetti',      phone:'+54 11 5544 3322', email:'sofia.m@mail.com',      country:'AR', source:'Meta',    stage:'negociacion', interest:'investor', budget:310000, horizon:'3 meses',  roi:'9%',  agent:'gaston',  lastContact:'2026-05-07', notes:'Oferta en mesa para PH en Puerto Madero' },
+    { id:17, name:'Robert Hawkins',       phone:'+1 954 555 7711',  email:'rhawkins@invest.com',   country:'US', source:'Referido',stage:'negociacion', interest:'investor', budget:900000, horizon:'1 mes',    roi:'7%',  agent:'ilan',    lastContact:'2026-05-08', notes:'Fondo de inversión, 3 propiedades en simultáneo' },
+    { id:18, name:'Luciana Campos',       phone:'+54 11 6655 4433', email:'lcampos@gmail.com',     country:'AR', source:'Web',     stage:'reserva',     interest:'buyer',    budget:130000, horizon:'3 meses',  roi:'',    agent:'aldana',  lastContact:'2026-05-07', notes:'Reserva firmada en Corrientes, espera escritura' },
+    { id:19, name:'Tim Fischer',          phone:'+1 305 555 4455',  email:'tfischer@mail.de',      country:'US', source:'Web',     stage:'reserva',     interest:'investor', budget:480000, horizon:'2 meses',  roi:'8%',  agent:'leo',     lastContact:'2026-05-08', notes:'Alemán con residencia en Miami, compra cash' },
+    { id:20, name:'Patricia Sosa',        phone:'+54 11 3322 5566', email:'psosa@yahoo.com',       country:'AR', source:'Orgánico',stage:'basura',      interest:'buyer',    budget:0,      horizon:'',         roi:'',    agent:'karina',  lastContact:'2026-03-15', notes:'Número inválido, email rebotó' },
+    { id:21, name:'Dave Thornton',        phone:'+1 786 555 3300',  email:'dave.t@corp.com',       country:'US', source:'Meta',    stage:'perdido',     interest:'buyer',    budget:200000, horizon:'',         roi:'',    agent:'sabrina', lastContact:'2026-04-01', notes:'Compró con otra agencia' },
+  ],
+  // MLS Properties — independent from operations
+  mlsProperties: [
+    { id:101, address:'4520 NW 7th Ave', type:'SF', listPrice:195000, agent:'gaston', mlsStatus:'published', daysListed:14, notes:'', country:'US', usState:'Florida', zillowViews:87 },
+    { id:102, address:'7831 Coral Way #203', type:'Condo', listPrice:285000, agent:'ilan', mlsStatus:'published', daysListed:32, notes:'', country:'US', usState:'Florida', zillowViews:34 },
+    { id:103, address:'1122 SW 3rd St', type:'SF', listPrice:142000, agent:'adolfo', mlsStatus:'under_contract', daysListed:45, notes:'Bajo contrato', country:'US', usState:'Florida', zillowViews:112 },
+    { id:104, address:'3300 NE 2nd Ave', type:'Condo', listPrice:320000, agent:'diego', mlsStatus:'published', daysListed:8, notes:'', country:'US', usState:'Michigan', zillowViews:22 },
+    { id:105, address:'890 Brickell Key Dr', type:'Condo', listPrice:550000, agent:'gaston', mlsStatus:'withdrawn', daysListed:60, notes:'Retirada temporalmente', country:'US', usState:'Florida', zillowViews:0 },
+    { id:106, address:'5319 Arrowsmith Rd', type:'SF', listPrice:175000, agent:'diego', mlsStatus:'under_contract', daysListed:76, notes:'En operación activa', country:'US', usState:'Florida', zillowViews:312 },
+    { id:107, address:'3151 Paradox Cir #401', type:'Condo', listPrice:280000, agent:'gaston', mlsStatus:'under_contract', daysListed:51, notes:'En operación activa', country:'US', usState:'Florida', zillowViews:187 },
+    { id:108, address:'1279 W 20th St', type:'SF', listPrice:87500, agent:'leo', mlsStatus:'under_contract', daysListed:21, notes:'En operación activa', country:'US', usState:'Florida', zillowViews:528 },
+    { id:201, address:'Av. Santa Fe 2450 3°B', type:'Departamento', listPrice:95000, agent:'aldana', mlsStatus:'published', daysListed:18, notes:'', country:'AR', city:'Buenos Aires', barrio:'Palermo', zonaPropViews:245 },
+    { id:202, address:'Gurruchaga 1180 PB', type:'Casa', listPrice:220000, agent:'karina', mlsStatus:'published', daysListed:35, notes:'', country:'AR', city:'Buenos Aires', barrio:'Villa Crespo', zonaPropViews:41 },
+    { id:203, address:'Corrientes 4500 7°A', type:'Departamento', listPrice:78000, agent:'ilay', mlsStatus:'under_contract', daysListed:22, notes:'Bajo contrato', country:'AR', city:'Buenos Aires', barrio:'Almagro', zonaPropViews:189 },
+  ],
+  // Operations — checklist values: true=done, false=pending, 'na'=not applicable
+  operations: [
+    { id:1, address:'5319 Arrowsmith Rd', type:'SF', price:175000, financing:'Fixed Loan',
+      agent:'diego', realtor:'carlos', titleCo:'Lore', clientId:1, buyerName:'', execDate:'Feb 20', closingDate:'29-Abr', status:'ACTIVA',
+      compSigned:true, compPct:3, escrow:false, lbp:true, sd:true, flood:true,
+      condoDocs:'na', condoRider:'na',
+      inspDone:true, inspStatus:'Reparaciones en curso', inspNotes:'Hecha – arreglos en proceso',
+      appraisal:'Ok', reinsp:false,
+      pending:'Falta Mold Addendum y Plumbing', closingNear:true,
+      closingDateISO:'2026-05-09', inspEstimatedDate:'2026-05-08',
+      isRented:false, leaseAgreementSent:false, estoppelSent:false },
+    { id:2, address:'3151 Paradox Cir #401', type:'Condo', price:280000, financing:'Conventional',
+      agent:'gaston', realtor:'elisabeth', titleCo:'Lore', clientId:3, buyerName:'', execDate:'Mar 16', closingDate:'22-May', status:'ACTIVA',
+      compSigned:false, compPct:3, escrow:true, lbp:false, sd:false, flood:false,
+      condoDocs:true, condoRider:true,
+      inspDone:true, inspStatus:'Hecha - OK', inspNotes:'OK',
+      appraisal:'Falta ok lender', reinsp:false,
+      pending:'Faltan 3 estoppels. Falta info buyer LLC', closingNear:false,
+      closingDateISO:'2026-05-22', inspEstimatedDate:'',
+      isRented:true, leaseAgreementSent:true, estoppelSent:false },
+    { id:3, address:'3151 Paradox Circle #406', type:'Condo', price:307000, financing:'Cash',
+      agent:'adolfo', realtor:'none', titleCo:'Lore', clientId:5, buyerName:'', execDate:'Abr 9', closingDate:'18-May', status:'ACTIVA',
+      compSigned:true, compPct:3, escrow:true, lbp:false, sd:true, flood:false,
+      condoDocs:true, condoRider:true,
+      inspDone:true, inspStatus:'Reparaciones en curso', inspNotes:'Falta resolver mancha en el techo',
+      appraisal:'na', reinsp:false,
+      pending:'', closingNear:false,
+      closingDateISO:'2026-05-18', inspEstimatedDate:'2026-05-09',
+      isRented:false, leaseAgreementSent:false, estoppelSent:false },
+    { id:4, address:'1279 W 20th St', type:'SF', price:87500, financing:'Cash',
+      agent:'leo', realtor:'carlos', titleCo:'Otro', clientId:4, buyerName:'', execDate:'Abr 16', closingDate:'4-May', status:'ACTIVA',
+      compSigned:false, compPct:3, escrow:true, lbp:true, sd:true, flood:true,
+      condoDocs:'na', condoRider:'na',
+      inspDone:false, inspStatus:'Pendiente', inspNotes:'',
+      appraisal:'na', reinsp:false,
+      pending:'Seller credit 12.5k', closingNear:true,
+      closingDateISO:'2026-05-09', inspEstimatedDate:'',
+      isRented:false, leaseAgreementSent:false, estoppelSent:false },
+    { id:5, address:'2307 Linton Ridge C4', type:'Condo', price:165000, financing:'Conventional',
+      agent:'sabrina', realtor:'none', titleCo:'Lore', clientId:2, buyerName:'', execDate:'Abr 22', closingDate:'22-May', status:'ACTIVA',
+      compSigned:true, compPct:2.5, escrow:true, lbp:false, sd:false, flood:false,
+      condoDocs:false, condoRider:false,
+      inspDone:true, inspStatus:'Hecha - OK', inspNotes:'OK',
+      appraisal:'Pendiente', reinsp:false,
+      pending:'Seller credit 5k', closingNear:false,
+      closingDateISO:'2026-05-22', inspEstimatedDate:'2026-05-14',
+      isRented:false, leaseAgreementSent:false, estoppelSent:false },
+    { id:6, address:'1401 Moselle Ave', type:'SF', price:440000, financing:'DSCR Loan',
+      agent:'diego', titleCo:'Lore', clientId:1, buyerName:'', execDate:'Abr 14', closingDate:'26-May', status:'CANCELADA',
+      compSigned:true, compPct:4, escrow:false, lbp:false, sd:true, flood:false,
+      condoDocs:'na', condoRider:'na',
+      inspDone:false, inspStatus:'Cotizando reparaciones', inspNotes:'Esperando rta de Manu sobre repairs',
+      appraisal:'Pendiente', reinsp:false,
+      pending:'', closingNear:false,
+      isRented:false, leaseAgreementSent:false, estoppelSent:false },
+    { id:7, address:'214 E 2nd St', type:'SF', price:0, financing:'VA Loan',
+      agent:'gaston', titleCo:'Lore', clientId:3, buyerName:'', execDate:'Mar 1', closingDate:'09-Abr', status:'CERRADA',
+      compSigned:true, compPct:0, escrow:true, lbp:true, sd:true, flood:true,
+      condoDocs:'na', condoRider:'na',
+      inspDone:true, inspStatus:'Hecha - OK', inspNotes:'Reparaciones terminadas',
+      appraisal:'Ok', reinsp:false,
+      pending:'', closingNear:false,
+      isRented:false, leaseAgreementSent:false, estoppelSent:false },
+    { id:8, address:'236 Afton Sq Unit 104', type:'Condo', price:0, financing:'Cash',
+      agent:'sabrina', titleCo:'Lore', clientId:2, buyerName:'', execDate:'Ene 10', closingDate:'30-Ene', status:'CERRADA',
+      compSigned:true, compPct:3, escrow:true, lbp:false, sd:true, flood:false,
+      condoDocs:true, condoRider:true,
+      inspDone:true, inspStatus:'Hecha - OK', inspNotes:'OK',
+      appraisal:'na', reinsp:false,
+      pending:'', closingNear:false,
+      isRented:true, leaseAgreementSent:true, estoppelSent:true },
+  ]
+};
+
+// ─── HELPERS ───────────────────────────────────────────────────────────────
+function agentName(id) { const a = DATA.agents.find(x=>x.id===id); return a?a.name:id; }
+function agentDot(id) { return `<span class="agent-dot ag-${id}">${agentName(id).substring(0,2).toUpperCase()}</span>`; }
+function clientName(id) { const c = DATA.clients.find(x=>x.id===id); return c?c.name:'—'; }
+function realtorName(id) { if(!id||id==='none') return '—'; const r = DATA.realtors.find(x=>x.id===id); return r?r.name:id; }
+function countryFlag(c) { return c==='AR'?'🇦🇷':c==='US'?'🇺🇸':'🌐'; }
+
+function chkCell(val, opId, key) {
+  if (val === 'na') return `<span class="chk chk-na" onclick="event.stopPropagation();cycleChk(${opId},'${key}')" title="No aplica — click para cambiar">N/A</span>`;
+  if (val === true) return `<span class="chk chk-yes" onclick="event.stopPropagation();cycleChk(${opId},'${key}')" title="Hecho — click para cambiar">✓</span>`;
+  return `<span class="chk chk-no" onclick="event.stopPropagation();cycleChk(${opId},'${key}')" title="Pendiente — click para cambiar">–</span>`;
+}
+
+function calcProgress(o) {
+  const keys = ['compSigned','escrow','lbp','sd','flood','condoDocs','condoRider','inspDone','reinsp'];
+  const relevant = keys.filter(k => o[k] !== 'na');
+  const done = relevant.filter(k => o[k] === true).length;
+  const pct = relevant.length ? Math.round(done/relevant.length*100) : 0;
+  return { done, total: relevant.length, pct };
+}
+
+function statusBadge(s) {
+  const map = { 'ACTIVA':'badge-active','CERRADA':'badge-closed','CANCELADA':'badge-cancelled' };
+  return `<span class="badge ${map[s]||''}">${s}</span>`;
+}
+
+function mlsStatusBadge(s, country) {
+  const map = { published:'badge-mls', under_contract:'badge-contract', withdrawn:'badge-withdrawn' };
+  const label = { published: country==='AR' ? 'En ZonaProp' : 'En MLS', under_contract:'Bajo contrato', withdrawn:'Retirada' };
+  return `<span class="badge ${map[s]||''}">${label[s]||s}</span>`;
+}
+
+function toast(msg) {
+  const t = document.createElement('div');
+  t.textContent = msg;
+  t.style.cssText = 'position:fixed;bottom:24px;right:24px;background:#1A1A18;color:#fff;padding:10px 18px;border-radius:8px;font-size:13px;z-index:999;box-shadow:0 4px 16px rgba(0,0,0,0.2);';
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(), 2500);
+}
+
+// ─── ALERTS ────────────────────────────────────────────────────────────────
+function getDaysUntil(isoDate) {
+  if (!isoDate) return null;
+  const today = new Date(); today.setHours(0,0,0,0);
+  const target = new Date(isoDate); target.setHours(0,0,0,0);
+  return Math.round((target - today) / 86400000);
+}
+
+function getAlerts() {
+  const alerts = [];
+  DATA.operations.filter(o=>o.status==='ACTIVA').forEach(o=>{
+    if (o.closingDateISO) {
+      const days = getDaysUntil(o.closingDateISO);
+      if (days !== null && days <= 2) {
+        const type = days < 0 ? 'danger' : 'warning';
+        const msg = days < 0  ? `Closing vencido hace ${Math.abs(days)} día${Math.abs(days)===1?'':'s'}` :
+                    days === 0 ? 'Closing es HOY' :
+                                 `Closing en ${days} día${days===1?'':'s'}`;
+        alerts.push({ type, opId:o.id, address:o.address, msg, icon:'🔔', kind:'closing' });
+      }
+    }
+    if (o.inspEstimatedDate) {
+      const days = getDaysUntil(o.inspEstimatedDate);
+      if (days !== null && days <= 2) {
+        const type = days < 0 ? 'danger' : 'warning';
+        const msg = days < 0  ? `Fecha estimada de inspección vencida hace ${Math.abs(days)} día${Math.abs(days)===1?'':'s'}` :
+                    days === 0 ? 'Inspección estimada es HOY' :
+                                 `Inspección estimada en ${days} día${days===1?'':'s'}`;
+        alerts.push({ type, opId:o.id, address:o.address, msg, icon:'🔍', kind:'insp' });
+      }
+    }
+  });
+  return alerts;
+}
+
+function renderAlertsPanel() {
+  const alerts = getAlerts();
+  if (!alerts.length) return '';
+  return `<div class="alerts-panel">
+    <div class="alerts-panel-header"><span class="alert-dot"></span>${alerts.length} alerta${alerts.length===1?'':'s'} activa${alerts.length===1?'':'s'}</div>
+    ${alerts.map(a=>`
+      <div class="alert-box alert-${a.type}" style="margin-bottom:8px;cursor:pointer;" onclick="goTo('op-detail',${a.opId})">
+        <span style="margin-right:6px;">${a.icon}</span>
+        <div>
+          <strong>${a.address}</strong>
+          <span style="margin:0 6px;opacity:0.5;">·</span>${a.msg}
+          <span style="margin-left:8px;font-size:11px;opacity:0.7;">→ Ver operación</span>
+        </div>
+      </div>`).join('')}
+  </div>`;
+}
+
+// ─── ROUTER ────────────────────────────────────────────────────────────────
+function goTo(view, param) {
+  document.querySelectorAll('.nav-item').forEach(el => {
+    const match = { dashboard:'dashboard', clientes:'clientes', mls:'mls', operaciones:'operaciones', documentos:'documentos', zillow:'zillow', usuarios:'usuarios' };
+    el.classList.toggle('active', el.getAttribute('onclick').includes(`'${view}'`));
+  });
+  const titles = { dashboard:'Dashboard', leads:'Leads / Pipeline', clientes:'Clientes', mls:'Propiedades / MLS', operaciones:'Operaciones', documentos:'Documentos', zillow:'Análisis de mercado — Zillow 🇺🇸', zonaprop:'Análisis ZonaProp 🇦🇷', comisiones:'Comisiones', usuarios:'Usuarios', 'op-detail':'' };
+  document.getElementById('page-title').textContent = titles[view] || '';
+  const content = document.getElementById('content');
+  const actions = document.getElementById('topbar-actions');
+  actions.innerHTML = '';
+  if (view==='dashboard') renderDashboard(content,actions);
+  else if (view==='leads') renderLeads(content,actions);
+  else if (view==='clientes') renderClientes(content,actions);
+  else if (view==='mls') renderMLS(content,actions);
+  else if (view==='operaciones') renderOperaciones(content,actions);
+  else if (view==='op-detail') renderOpDetail(content,actions,param);
+  else if (view==='documentos') renderDocumentos(content,actions);
+  else if (view==='zillow') renderZillow(content,actions);
+  else if (view==='zonaprop') renderZonaProp(content,actions);
+  else if (view==='comisiones') renderComisiones(content,actions);
+  else if (view==='usuarios') renderUsuarios(content,actions);
+}
+
+// ─── DASHBOARD ─────────────────────────────────────────────────────────────
+function renderDashboard(el, actions) {
+  const activas = DATA.operations.filter(o=>o.status==='ACTIVA');
+  const cerradas = DATA.operations.filter(o=>o.status==='CERRADA').length;
+  const canceladas = DATA.operations.filter(o=>o.status==='CANCELADA').length;
+  const proximos = [...activas].sort((a,b)=>a.closingDate.localeCompare(b.closingDate));
+  const leadsActivos = DATA.leads.filter(l=>l.stage!=='perdido'&&l.stage!=='basura').length;
+  const leadsCalientes = DATA.leads.filter(l=>['negociacion','reserva'].includes(l.stage)).length;
+  el.innerHTML = `
+    ${renderAlertsPanel()}
+    <div class="stats-grid" style="grid-template-columns:repeat(5,1fr);">
+      <div class="stat-card"><div class="stat-label">Operaciones activas</div><div class="stat-val gold">${activas.length}</div><div class="stat-sub">En curso</div></div>
+      <div class="stat-card"><div class="stat-label">Cerradas</div><div class="stat-val green">${cerradas}</div><div class="stat-sub">Total histórico</div></div>
+      <div class="stat-card"><div class="stat-label">Propiedades en MLS</div><div class="stat-val">${DATA.mlsProperties.length}</div><div class="stat-sub">Publicadas y bajo contrato</div></div>
+      <div class="stat-card" style="cursor:pointer;" onclick="goTo('leads')"><div class="stat-label">Leads activos</div><div class="stat-val" style="color:var(--blue);">${leadsActivos}</div><div class="stat-sub">En pipeline</div></div>
+      <div class="stat-card" style="cursor:pointer;" onclick="goTo('leads')"><div class="stat-label">Leads calientes 🔥</div><div class="stat-val" style="color:var(--red);">${leadsCalientes}</div><div class="stat-sub">Negociación + reserva</div></div>
+    </div>
+    <div class="two-col">
+      <div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">Próximos cierres</span></div>
+          <div class="card-body">
+            <table>
+              <thead><tr><th>Propiedad</th><th>Cliente</th><th>Agente</th><th>Closing</th><th>Estado</th></tr></thead>
+              <tbody>
+                ${proximos.map(o=>`<tr onclick="goTo('op-detail',${o.id})" style="cursor:pointer;">
+                  <td><div class="prop-name">${o.address}</div></td>
+                  <td style="font-size:12px;">
+                <div style="font-weight:600;color:var(--blue);">${o.buyerName||clientName(o.clientId)}</div>
+                ${o.buyerName&&o.buyerName!==clientName(o.clientId)?'<div style="font-size:10px;color:var(--text-3);">cliente: '+clientName(o.clientId)+'</div>':''}
+              </td>
+                  <td><div class="agent-chip">${agentDot(o.agent)} ${agentName(o.agent)}</div></td>
+                  <td class="${o.closingNear?'closing-near':'closing-ok'}">${o.closingDate}</td>
+                  <td>${statusBadge(o.status)}</td>
+                </tr>`).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">Agentes — performance</span></div>
+          <div class="card-body">
+            <table>
+              <thead><tr><th>Agente</th><th>Activas</th><th>Cerradas</th><th>Progreso</th></tr></thead>
+              <tbody>
+                ${DATA.agents.map(a=>`<tr>
+                  <td><div class="agent-chip">${agentDot(a.id)} ${a.name}</div></td>
+                  <td>${a.active}</td><td>${a.closed}</td>
+                  <td style="min-width:80px;"><div class="progress-wrap"><div class="progress-fill" style="width:${Math.round(a.closed/24*100)}%"></div></div></td>
+                </tr>`).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+// ─── LEADS / PIPELINE ──────────────────────────────────────────────────────
+const LEAD_STAGES = [
+  { id:'llamar',      label:'Llamar',           color:'#1A5FA8', bg:'#EAF1FB' },
+  { id:'reunion',     label:'Agendar reunión',   color:'#8A3FBF', bg:'#F3EEFF' },
+  { id:'propuesta',   label:'Propuesta enviada', color:'#C07A00', bg:'#FFF4DC' },
+  { id:'busqueda',    label:'En búsqueda',       color:'#2A7A7A', bg:'#E8F7F7' },
+  { id:'negociacion', label:'Negociación',       color:'#C0392B', bg:'#FDECEA' },
+  { id:'reserva',     label:'Reserva',           color:'#2D7A4F', bg:'#EAF5EE' },
+];
+const LEAD_EXIT = [
+  { id:'perdido', label:'Cliente perdido', color:'#9A9890' },
+  { id:'basura',  label:'Datos basura',    color:'#9A9890' },
+];
+const CLIENT_STAGES = [
+  { id:'activo',      label:'Activo',            color:'#2D7A4F', bg:'#EAF5EE' },
+  { id:'busqueda',    label:'En búsqueda',        color:'#1A5FA8', bg:'#EAF1FB' },
+  { id:'negociacion', label:'En negociación',     color:'#C07A00', bg:'#FFF4DC' },
+  { id:'op_activa',   label:'Operación activa',   color:'#8A3FBF', bg:'#F3EEFF' },
+  { id:'cerrado',     label:'Cerrado ✓',          color:'#2A7A7A', bg:'#E8F7F7' },
+  { id:'inactivo',    label:'Inactivo',           color:'#9A9890', bg:'#F5F5F4' },
+];
+const SOURCE_COLORS = { Meta:'#1877F2', Google:'#EA4335', TikTok:'#000', Web:'#2A7A7A', Landing:'#8A3FBF', Teléfono:'#C07A00', Orgánico:'#2D7A4F', Referido:'#C0392B' };
+
+function renderLeads(el, actions) {
+  if(window._leadFilter===undefined)window._leadFilter='activos';
+  if(window._leadSearch===undefined)window._leadSearch='';
+  actions.innerHTML='<button class="btn btn-secondary" onclick="downloadLeadsReport()" style="margin-right:8px;">⬇ Exportar CSV</button><button class="btn btn-primary" onclick="openModalNuevoLead()">+ Nuevo lead</button>';
+  const hoy=new Date();hoy.setHours(0,0,0,0);
+  const allActive=DATA.leads.filter(l=>!['perdido','basura','convertido'].includes(l.stage));
+  const exitLeads=DATA.leads.filter(l=>['perdido','basura'].includes(l.stage));
+  const convertidos=DATA.leads.filter(l=>l.stage==='convertido');
+  const inactivos=allActive.filter(l=>{const d=new Date(l.lastContact);d.setHours(0,0,0,0);return Math.round((hoy-d)/86400000)>30;});
+  const f=window._leadFilter;
+  let filtered;
+  if(f==='activos')filtered=allActive;
+  else if(f==='convertidos')filtered=convertidos;
+  else if(f==='todos')filtered=DATA.leads.filter(l=>!['perdido','basura'].includes(l.stage));
+  else filtered=allActive.filter(l=>l.stage===f);
+  if(window._leadSearch){const q=window._leadSearch.toLowerCase();filtered=filtered.filter(l=>l.name.toLowerCase().includes(q)||(l.email||'').toLowerCase().includes(q));}
+  const filterDefs=[{id:'activos',label:'Todos activos'},...LEAD_STAGES,{id:'convertidos',label:'Convertidos ✓'},{id:'todos',label:'Ver todos'}];
+  const filterBtns=filterDefs.map(s=>{
+    const a=window._leadFilter===s.id;
+    return '<button onclick="setLeadFilter(\''+s.id+'\')" style="font-size:11px;padding:4px 11px;border-radius:14px;border:1px solid '+(a?'var(--gold)':'var(--border)')+';background:'+(a?'var(--gold)':'transparent')+';color:'+(a?'#fff':'var(--text-2)')+';cursor:pointer;font-weight:'+(a?'700':'400')+';white-space:nowrap;">'+s.label+'</button>';
+  }).join('');
+  const sourceStats={};DATA.leads.forEach(l=>{sourceStats[l.source]=(sourceStats[l.source]||0)+1;});
+  const sourceBars=Object.entries(sourceStats).sort((a,b)=>b[1]-a[1]).map(([src,n])=>
+    '<div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;"><div style="width:80px;font-size:11px;color:var(--text-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+src+'</div><div style="flex:1;background:var(--bg);border-radius:4px;height:7px;overflow:hidden;"><div style="width:'+Math.round(n/DATA.leads.length*100)+'%;background:'+(SOURCE_COLORS[src]||'var(--gold)')+';height:7px;border-radius:4px;"></div></div><div style="font-size:11px;font-weight:600;width:18px;text-align:right;">'+n+'</div></div>'
+  ).join('');
+  const rows=filtered.map(l=>{
+    l.interestedProps=l.interestedProps||[];
+    const dias=Math.round((hoy-new Date(l.lastContact))/86400000);
+    const dc=dias>30?'var(--red)':dias>15?'var(--amber)':'var(--text-3)';
+    const sc=SOURCE_COLORS[l.source]||'#9A9890';
+    const si=[...LEAD_STAGES,...LEAD_EXIT].find(s=>s.id===l.stage)||{label:l.stage,color:'var(--text-3)',bg:'var(--bg)'};
+    const pc=l.interestedProps.length;
+    const isConv=l.stage==='convertido';
+    const sOpts=[...LEAD_STAGES,...LEAD_EXIT].map(s=>'<option value="'+s.id+'"'+(l.stage===s.id?' selected':'')+'>'+s.label+'</option>').join('');
+    const sSel='<select style="font-size:11px;border:1px solid '+(si.color||'var(--border)')+'40;background:'+(si.bg||'transparent')+';color:'+(si.color||'var(--text-2)')+';border-radius:12px;padding:3px 6px;cursor:pointer;max-width:140px;" onchange="changeLeadStage('+l.id+',this.value)" onclick="event.stopPropagation()">'+sOpts+'</select>';
+    const pBadge=pc>0?'<span style="background:var(--blue);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;cursor:pointer;" onclick="openLeadDetail('+l.id+')">'+pc+' prop.</span>':'<span style="font-size:11px;color:var(--text-3);cursor:pointer;" onclick="openLeadDetail('+l.id+')">—</span>';
+    const aBtn=isConv?'<span style="font-size:10px;color:var(--green);font-weight:600;">✓ Convertido</span>':'<div style="display:flex;flex-direction:column;gap:4px;">'+
+      '<button onclick="event.stopPropagation();convertirACliente('+l.id+')" style="font-size:10px;padding:3px 9px;background:var(--green);color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:600;white-space:nowrap;">→ Cliente</button>'+
+      '<button onclick="event.stopPropagation();openPropAssignModal('+l.id+')" style="font-size:10px;padding:3px 9px;background:var(--blue);color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:600;white-space:nowrap;">🏠 Props</button>'+
+    '</div>';
+    return '<tr onclick="openLeadDetail('+l.id+')" style="cursor:pointer;'+(isConv?'opacity:.45;':'')+'"><td><div class="prop-name" style="font-weight:600;color:var(--blue);">'+l.name+'</div><div style="font-size:10px;color:var(--text-3);">'+(l.email||'')+'</div></td><td style="text-align:center;font-size:15px;">'+countryFlag(l.country)+'</td><td onclick="event.stopPropagation()">'+sSel+'</td><td><span style="font-size:10px;font-weight:600;color:'+sc+';background:'+sc+'18;padding:2px 7px;border-radius:10px;">'+l.source+'</span></td><td style="font-size:12px;">$'+(l.budget||0).toLocaleString()+'</td><td style="text-align:center;" onclick="event.stopPropagation()">'+pBadge+'</td><td><div class="agent-chip">'+agentDot(l.agent)+' '+agentName(l.agent)+'</div></td>'+'<td style="font-size:11px;" onclick="event.stopPropagation()"><div style="color:'+dc+';">⏱ '+dias+'d</div><div style="font-size:10px;color:var(--text-3);">'+l.lastContact+'</div><button onclick="event.stopPropagation();registrarContactoHoy('+l.id+')" style="font-size:9px;padding:2px 6px;background:var(--blue)18;color:var(--blue);border:1px solid var(--blue)40;border-radius:6px;cursor:pointer;margin-top:2px;">📞 Hoy</button></td><td onclick="event.stopPropagation()">'+aBtn+'</td></tr>';
+  }).join('');
+  const alertBanner=inactivos.length?'<div style="margin-bottom:16px;">'+inactivos.map(l=>'<div class="alert-box alert-warning" style="margin-bottom:6px;">⚠ <strong>'+l.name+'</strong> sin contacto hace más de 30 días — '+agentName(l.agent)+'</div>').join('')+'</div>':'';
+  const exitHtml=exitLeads.length?'<div class="card" style="margin-top:16px;"><div class="card-header"><span class="card-title" style="color:var(--text-3);">Perdidos / Datos basura ('+exitLeads.length+')</span></div><div class="card-body"><table><thead><tr><th>Nombre</th><th>Agente</th><th>Estado</th><th>Último contacto</th><th>Notas</th></tr></thead><tbody>'+exitLeads.map(l=>'<tr style="opacity:.6;"><td>'+l.name+'</td><td>'+agentName(l.agent)+'</td><td><span style="font-size:11px;color:var(--text-3);">'+(l.stage==='perdido'?'Cliente perdido':'Datos basura')+'</span></td><td style="font-size:12px;color:var(--text-3);">'+l.lastContact+'</td><td style="font-size:12px;color:var(--text-3);">'+(l.notes||'')+'</td></tr>').join('')+'</tbody></table></div></div>':'';
+  el.innerHTML=alertBanner+
+    '<div class="stats-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:16px;">'+
+    '<div class="stat-card"><div class="stat-label">Leads activos</div><div class="stat-val" style="color:var(--blue);">'+allActive.length+'</div></div>'+
+    '<div class="stat-card"><div class="stat-label">Negociación + Reserva 🔥</div><div class="stat-val red">'+DATA.leads.filter(l=>['negociacion','reserva'].includes(l.stage)).length+'</div></div>'+
+    '<div class="stat-card"><div class="stat-label">Sin contacto +30d</div><div class="stat-val" style="color:var(--amber);">'+inactivos.length+'</div></div>'+
+    '<div class="stat-card"><div class="stat-label">Perdidos / basura</div><div class="stat-val" style="color:var(--text-3);">'+exitLeads.length+'</div></div>'+
+    '</div>'+
+    '<div style="display:flex;gap:16px;align-items:flex-start;">'+
+    '<div style="flex:1;min-width:0;"><div class="card">'+
+    '<div class="card-header" style="flex-wrap:wrap;gap:8px;"><span class="card-title">Leads ('+filtered.length+')</span>'+
+    '<div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center;">'+filterBtns+
+    '<input value="'+(window._leadSearch||'')+'" oninput="window._leadSearch=this.value;goTo(\'leads\')" class="search-input" placeholder="Buscar…" style="width:130px;font-size:12px;padding:4px 10px;"></div></div>'+
+    '<div class="card-body" style="overflow-x:auto;"><table><thead><tr><th>Nombre</th><th>País</th><th>Etapa</th><th>Fuente</th><th>Presupuesto</th><th>Props. interés</th><th>Agente</th><th>Contacto</th><th>Acción</th></tr></thead>'+
+    '<tbody>'+(rows||'<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--text-3);">Sin leads en esta etapa</td></tr>')+'</tbody></table></div>'+
+    '</div></div>'+
+    '<div style="width:220px;flex-shrink:0;"><div class="card"><div class="card-header"><span class="card-title">Fuentes</span></div><div style="padding:12px 14px;">'+sourceBars+'</div></div></div>'+
+    '</div>'+exitHtml;
+}
+
+function openModalNuevoLead() {
+  document.getElementById('modal-title').textContent = 'Nuevo lead';
+  const agentOpts = DATA.agents.map(a=>`<option value="${a.id}">${a.name}</option>`).join('');
+  document.getElementById('modal-body').innerHTML = `
+    <div class="form-section"><div class="form-section-title">Datos de contacto</div></div>
+    <div class="form-grid">
+      <div class="form-group form-full"><div class="form-label">Nombre completo *</div><input class="form-input"></div>
+      <div class="form-group"><div class="form-label">Teléfono</div><input class="form-input" placeholder="+1 305 / +54 11"></div>
+      <div class="form-group"><div class="form-label">Email</div><input class="form-input" type="email"></div>
+      <div class="form-group"><div class="form-label">País</div><select id="lead-pais-sel" class="form-input" onchange="togglePaisInput(this)"><option value="US">🇺🇸 USA</option><option value="AR">🇦🇷 Argentina</option><option value="other">🌐 Otro</option></select><input id="lead-pais-custom" class="form-input" placeholder="Ej: Colombia, Brasil..." style="display:none;margin-top:6px;" /></div>
+      <div class="form-group"><div class="form-label">Fuente *</div><select class="form-input"><option value="">Seleccionar…</option><option>Web</option><option>Landing page</option><option>Teléfono</option><option>Meta (Facebook/Instagram)</option><option>Google</option><option>TikTok</option><option>Orgánico</option><option>Referido</option><option>Otro</option></select></div>
+    </div>
+    <div class="form-section"><div class="form-section-title">Perfil de búsqueda</div></div>
+    <div class="form-grid">
+      <div class="form-group"><div class="form-label">Interés</div><select class="form-input"><option value="">Seleccionar…</option><option>buyer">Comprador</option><option value="seller">Vendedor</option><option value="investor">Inversor</option></select></div>
+      <div class="form-group"><div class="form-label">Presupuesto (USD)</div><input class="form-input" type="number" placeholder="0"></div>
+      <div class="form-group"><div class="form-label">Horizonte temporal</div><select class="form-input"><option value="">Seleccionar…</option><option>0-3 meses</option><option>3-6 meses</option><option>6-12 meses</option><option>+12 meses</option></select></div>
+      <div class="form-group"><div class="form-label">ROI objetivo</div><input class="form-input" placeholder="Ej: 8%"></div>
+      <div class="form-group"><div class="form-label">Agente asignado *</div><select class="form-input"><option value="">Seleccionar…</option>${agentOpts}</select></div>
+      <div class="form-group"><div class="form-label">Etapa inicial</div><select class="form-input">${LEAD_STAGES.map(s=>`<option value="${s.id}">${s.label}</option>`).join('')}</select></div>
+    </div>
+    <div class="form-grid" style="padding-top:0;">
+      <div class="form-group form-full"><div class="form-label">Notas</div><textarea class="form-input"></textarea></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="toast('✓ Lead guardado');closeModal()">Guardar lead</button>
+    </div>`;
+  document.getElementById('modal-overlay').classList.remove('hidden');
+}
+function openLeadDetail(id) {
+  const l=DATA.leads.find(x=>x.id===id);
+  if(!l)return;
+  l.interestedProps=l.interestedProps||[];
+  l.contactHistory=l.contactHistory||[];
+  document.getElementById('modal-title').textContent=l.name;
+  const stageOpts=[...LEAD_STAGES,...LEAD_EXIT].map(s=>'<option value="'+s.id+'"'+(l.stage===s.id?' selected':'')+'>'+s.label+'</option>').join('');
+  const agentOpts=DATA.agents.map(a=>'<option value="'+a.id+'"'+(l.agent===a.id?' selected':'')+'>'+a.name+'</option>').join('');
+  const propSel='<select id="pis-'+id+'" class="form-input" style="flex:1;"><option value="">Seleccionar propiedad…</option>'+DATA.mlsProperties.filter(p=>!l.interestedProps.includes(p.id)).map(p=>'<option value="'+p.id+'">'+countryFlag(p.country)+' '+p.address+' — $'+(p.listPrice||p.price||0).toLocaleString()+'</option>').join('')+'</select>';
+  const assignedList=l.interestedProps.length?l.interestedProps.map(pid=>{const p=DATA.mlsProperties.find(x=>x.id===pid);if(!p)return'';return'<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:var(--surface);border:1px solid var(--border);border-radius:6px;margin-bottom:6px;font-size:12px;"><span>'+countryFlag(p.country)+' '+p.address+' <span style="color:var(--text-3);">— $'+(p.listPrice||p.price||0).toLocaleString()+'</span></span><button onclick="removePropFromLead('+id+','+pid+')" style="background:none;border:none;cursor:pointer;color:var(--red);font-size:14px;">✕</button></div>';}).join(''):'<div style="font-size:12px;color:var(--text-3);padding:8px 0;">Sin propiedades asignadas</div>';
+  const histHtml=l.contactHistory.length
+    ?[...l.contactHistory].reverse().map(h=>'<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);"><div style="font-size:11px;font-weight:700;color:var(--text-2);white-space:nowrap;min-width:80px;">'+h.date+'</div><div style="font-size:12px;color:var(--text-2);">'+h.notes+'</div></div>').join('')
+    :'<div style="font-size:12px;color:var(--text-3);padding:8px 0;">Sin historial — registr\xe1 el primer contacto abajo</div>';
+  const isConv=l.stage==='convertido';
+  const countries=[{v:'US',l:'🇺🇸 EE.UU.'},{v:'AR',l:'🇦🇷 Argentina'},{v:'CO',l:'🇨🇴 Colombia'},{v:'VE',l:'🇻🇪 Venezuela'},{v:'MX',l:'🇲🇽 M\xe9xico'},{v:'BR',l:'🇧🇷 Brasil'},{v:'ES',l:'🇪🇸 Espa\xf1a'},{v:'DE',l:'🇩🇪 Alemania'}];
+  const countryOpts=countries.map(c=>'<option value="'+c.v+'"'+(l.country===c.v?' selected':'')+'>'+c.l+'</option>').join('');
+  const interestOpts=[{v:'buyer',l:'Comprador'},{v:'investor',l:'Inversor'},{v:'seller',l:'Vendedor'}].map(o=>'<option value="'+o.v+'"'+(l.interest===o.v?' selected':'')+'>'+o.l+'</option>').join('');
+  document.getElementById('modal-body').innerHTML=
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:4px;">'+
+    '<div class="form-group"><div class="form-label">✨ Etapa</div><select class="form-input" onchange="changeLeadStage('+id+',this.value)">'+stageOpts+'</select></div>'+
+    '<div class="form-group"><div class="form-label">Agente</div><select class="form-input" onchange="l.agent=this.value">'+agentOpts+'</select></div>'+
+    '<div class="form-group"><div class="form-label">Email</div><input class="form-input" value="'+(l.email||'')+'" onchange="l.email=this.value"></div>'+
+    '<div class="form-group"><div class="form-label">Tel\xe9fono</div><input class="form-input" value="'+(l.phone||'')+'" onchange="l.phone=this.value"></div>'+
+    '<div class="form-group"><div class="form-label">Pa\xeds / Mercado</div><select class="form-input" onchange="l.country=this.value">'+countryOpts+'</select></div>'+
+    '<div class="form-group"><div class="form-label">Tipo de inter\xe9s</div><select class="form-input" onchange="l.interest=this.value">'+interestOpts+'</select></div>'+
+    '<div class="form-group"><div class="form-label">Fuente</div><input class="form-input" value="'+(l.source||'')+'" onchange="l.source=this.value"></div>'+
+    '<div class="form-group"><div class="form-label">Presupuesto (USD)</div><input class="form-input" type="number" value="'+(l.budget||0)+'" onchange="l.budget=parseFloat(this.value)||0"></div>'+
+    '<div class="form-group"><div class="form-label">Horizonte</div><input class="form-input" value="'+(l.horizon||'')+'" onchange="l.horizon=this.value"></div>'+
+    '<div class="form-group"><div class="form-label">ROI objetivo</div><input class="form-input" value="'+(l.roi||'')+'" onchange="l.roi=this.value"></div>'+
+    '</div>'+
+    '<div class="form-group" style="margin-bottom:16px;"><div class="form-label">Observaciones del lead</div><textarea class="form-input" rows="2" style="resize:vertical;" onchange="l.notes=this.value">'+(l.notes||'')+'</textarea></div>'+
+    '<div class="form-section"><div class="form-section-title">🏠 Propiedades de inter\xe9s</div></div>'+
+    '<div style="display:flex;gap:8px;margin-bottom:10px;">'+propSel+'<button class="btn btn-secondary" onclick="addPropToLead('+id+')">Agregar</button></div>'+
+    '<div id="apl-'+id+'" style="margin-bottom:16px;">'+assignedList+'</div>'+
+    '<div class="form-section"><div class="form-section-title">📞 Historial de contactos</div></div>'+
+    '<div style="display:flex;gap:8px;margin-bottom:10px;">'+
+      '<input id="lh-notes-'+id+'" class="form-input" placeholder="Llamada, WhatsApp, reuni\xf3n, email…" style="flex:1;">'+
+      '<button class="btn btn-primary" onclick="registrarContactoLead('+id+',\'\')">+ Registrar</button>'+
+      '<button class="btn btn-secondary" onclick="registrarContactoLead('+id+',\'Contacto r\xe1pido\')">📞 Hoy</button>'+
+    '</div>'+
+    '<div style="max-height:200px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;padding:8px 12px;margin-bottom:16px;">'+histHtml+'</div>'+
+    '<div class="form-actions">'+
+    '<button class="btn btn-secondary" onclick="closeModal()">Cerrar</button>'+
+    (isConv?'':'<button class="btn" style="background:var(--green);color:#fff;" onclick="convertirACliente('+id+');closeModal()">→ Convertir a cliente</button>')+
+    '<button class="btn btn-primary" onclick="saveAndCloseLead('+id+')">Guardar</button>'+
+    '</div>';
+  document.getElementById('modal-overlay').classList.remove('hidden');
+}
+function setLeadFilter(f){window._leadFilter=f;goTo('leads');}
+function changeLeadStage(id,newStage){
+  const l=DATA.leads.find(x=>x.id===id);
+  if(!l)return;
+  l.stage=newStage;
+  const si=[...LEAD_STAGES,...LEAD_EXIT].find(s=>s.id===newStage);
+  toast('✓ '+l.name+' → '+(si?si.label:newStage));
+  goTo('leads');
+}
+function convertirACliente(id){
+  const l=DATA.leads.find(x=>x.id===id);
+  if(!l)return;
+  if(l.stage==='convertido'){toast('Ya fue convertido a cliente');return;}
+  const newId=Math.max(...DATA.clients.map(c=>c.id),0)+1;
+  DATA.clients.push({id:newId,name:l.name,type:l.interest==='buyer'?'buyer':l.interest==='seller'?'seller':'investor',country:l.country,email:l.email||'',phone:l.phone||'',nationality:l.country==='AR'?'AR':'US',llc:'',ops:0,source:l.source||'',budget:l.budget||0,horizon:l.horizon||'',roi:l.roi||'',interestedProps:l.interestedProps?[...l.interestedProps]:[]});
+  l.stage='convertido';
+  toast('✓ '+l.name+' agregado a Clientes');
+  goTo('leads');
+}
+function addPropToLead(leadId){
+  const l=DATA.leads.find(x=>x.id===leadId);if(!l)return;
+  l.interestedProps=l.interestedProps||[];
+  const sel=document.getElementById('pis-'+leadId);
+  const pid=parseInt(sel&&sel.value);
+  if(!pid){toast('⚠ Seleccioná una propiedad');return;}
+  if(l.interestedProps.includes(pid)){toast('Ya está asignada');return;}
+  l.interestedProps.push(pid);
+  openLeadDetail(leadId);
+  toast('✓ Propiedad asignada');
+}
+function removePropFromLead(leadId,propId){
+  const l=DATA.leads.find(x=>x.id===leadId);if(!l)return;
+  l.interestedProps=(l.interestedProps||[]).filter(p=>p!==propId);
+  openLeadDetail(leadId);
+  toast('✓ Propiedad removida');
+}
+function addPropToCliente(clientId){
+  const c=DATA.clients.find(x=>x.id===clientId);if(!c)return;
+  c.interestedProps=c.interestedProps||[];
+  const sel=document.getElementById('pic-'+clientId);
+  const pid=parseInt(sel&&sel.value);
+  if(!pid){toast('⚠ Seleccioná una propiedad');return;}
+  if(c.interestedProps.includes(pid)){toast('Ya está asignada');return;}
+  c.interestedProps.push(pid);
+  openClienteDetail(clientId);
+  toast('✓ Propiedad asignada');
+}
+function removePropFromCliente(clientId,propId){
+  const c=DATA.clients.find(x=>x.id===clientId);if(!c)return;
+  c.interestedProps=(c.interestedProps||[]).filter(p=>p!==propId);
+  openClienteDetail(clientId);
+  toast('✓ Propiedad removida');
+}
+function openClienteDetail(id){
+  const c=DATA.clients.find(x=>x.id===id);if(!c)return;
+  c.interestedProps=c.interestedProps||[];
+  c.contactHistory=c.contactHistory||[];
+  c.status=c.status||'activo';
+  document.getElementById('modal-title').textContent=c.name;
+  const typeOpts=['buyer','seller','investor'].map(t=>'<option value="'+t+'"'+(c.type===t?' selected':'')+'>'+(t==='buyer'?'Comprador':t==='seller'?'Vendedor':'Inversor')+'</option>').join('');
+  const statusOpts=CLIENT_STAGES.map(s=>'<option value="'+s.id+'"'+(c.status===s.id?' selected':'')+'>'+s.label+'</option>').join('');
+  const propSel='<select id="pic-'+id+'" class="form-input" style="flex:1;"><option value="">Seleccionar propiedad…</option>'+DATA.mlsProperties.filter(p=>!c.interestedProps.includes(p.id)).map(p=>'<option value="'+p.id+'">'+countryFlag(p.country)+' '+p.address+' — $'+(p.listPrice||p.price||0).toLocaleString()+'</option>').join('')+'</select>';
+  const assignedList=c.interestedProps.length?c.interestedProps.map(pid=>{const p=DATA.mlsProperties.find(x=>x.id===pid);if(!p)return'';return'<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:var(--surface);border:1px solid var(--border);border-radius:6px;margin-bottom:6px;font-size:12px;"><span>'+countryFlag(p.country)+' '+p.address+' <span style="color:var(--text-3);">— $'+(p.listPrice||p.price||0).toLocaleString()+'</span></span><button onclick="removePropFromCliente('+id+','+pid+')" style="background:none;border:none;cursor:pointer;color:var(--red);font-size:14px;">✕</button></div>';}).join(''):'<div style="font-size:12px;color:var(--text-3);padding:8px 0;">Sin propiedades asignadas</div>';
+  const histHtml = c.contactHistory.length
+    ? [...c.contactHistory].reverse().map(h=>'<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);">'+
+        '<div style="font-size:11px;font-weight:700;color:var(--text-2);white-space:nowrap;min-width:80px;">'+h.date+'</div>'+
+        '<div style="font-size:12px;color:var(--text-2);">'+h.notes+'</div>'+
+      '</div>').join('')
+    : '<div style="font-size:12px;color:var(--text-3);padding:8px 0;">Sin historial — registr\xe1 el primer contacto abajo</div>';
+  const cCountries=[{v:'US',l:'🇺🇸 EE.UU.'},{v:'AR',l:'🇦🇷 Argentina'},{v:'CO',l:'🇨🇴 Colombia'},{v:'VE',l:'🇻🇪 Venezuela'},{v:'MX',l:'🇲🇽 M\xe9xico'},{v:'BR',l:'🇧🇷 Brasil'},{v:'ES',l:'🇪🇸 Espa\xf1a'},{v:'DE',l:'🇩🇪 Alemania'}];
+  const cCountryOpts=cCountries.map(x=>'<option value="'+x.v+'"'+(c.country===x.v?' selected':'')+'>'+x.l+'</option>').join('');
+  const opsLinked=DATA.operations?DATA.operations.filter(o=>o.clientId===c.id).length:0;
+  document.getElementById('modal-body').innerHTML=
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:4px;">'+
+    '<div class="form-group" style="grid-column:1/-1;"><div class="form-label">Nombre completo</div><input class="form-input" value="'+c.name+'" onchange="c.name=this.value"></div>'+
+    '<div class="form-group"><div class="form-label">Tipo de cliente</div><select class="form-input" onchange="c.type=this.value">'+typeOpts+'</select></div>'+
+    '<div class="form-group"><div class="form-label">Estado actual</div><select class="form-input" onchange="changeClienteStatus('+id+',this.value)">'+statusOpts+'</select></div>'+
+    '<div class="form-group"><div class="form-label">Email</div><input class="form-input" value="'+(c.email||'')+'" onchange="c.email=this.value"></div>'+
+    '<div class="form-group"><div class="form-label">Tel\xe9fono</div><input class="form-input" value="'+(c.phone||'')+'" onchange="c.phone=this.value"></div>'+
+    '<div class="form-group"><div class="form-label">Pa\xeds / Mercado</div><select class="form-input" onchange="c.country=this.value">'+cCountryOpts+'</select></div>'+
+    '<div class="form-group"><div class="form-label">Nacionalidad</div><input class="form-input" value="'+(c.nationality||'')+'" placeholder="Ej: Argentina" onchange="c.nationality=this.value"></div>'+
+    '<div class="form-group"><div class="form-label">LLC / Empresa</div><input class="form-input" value="'+(c.llc||'')+'" placeholder="Nombre de LLC" onchange="c.llc=this.value"></div>'+
+    '<div class="form-group"><div class="form-label">Fuente</div><input class="form-input" value="'+(c.source||'')+'" placeholder="Meta, Referido, Web…" onchange="c.source=this.value"></div>'+
+    '<div class="form-group"><div class="form-label">Presupuesto (USD)</div><input class="form-input" type="number" value="'+(c.budget||0)+'" onchange="c.budget=parseFloat(this.value)||0"></div>'+
+    '<div class="form-group"><div class="form-label">Horizonte de inversi\xf3n</div><input class="form-input" value="'+(c.horizon||'')+'" placeholder="Ej: 6 meses" onchange="c.horizon=this.value"></div>'+
+    '<div class="form-group"><div class="form-label">ROI objetivo</div><input class="form-input" value="'+(c.roi||'')+'" placeholder="Ej: 8%" onchange="c.roi=this.value"></div>'+
+    '</div>'+
+    '<div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;padding:10px 14px;background:var(--bg);border-radius:8px;border:1px solid var(--border);">'+
+      '<span style="font-size:12px;color:var(--text-3);">Operaciones:</span>'+
+      '<span style="font-size:14px;font-weight:700;color:var(--gold);">'+opsLinked+'</span>'+
+      '<span style="font-size:12px;color:var(--text-3);">Props de inter\xe9s:</span>'+
+      '<span style="font-size:14px;font-weight:700;color:var(--blue);">'+c.interestedProps.length+'</span>'+
+      '<span style="font-size:12px;color:var(--text-3);">Contactos:</span>'+
+      '<span style="font-size:14px;font-weight:700;color:var(--green);">'+c.contactHistory.length+'</span>'+
+    '</div>'+
+    '<div class="form-group" style="margin-bottom:16px;"><div class="form-label">Notas / Observaciones</div><textarea class="form-input" rows="2" style="resize:vertical;" onchange="c.notes=this.value">'+(c.notes||'')+'</textarea></div>'+
+    '<div class="form-section"><div class="form-section-title">🏠 Propiedades de inter\xe9s</div></div>'+
+    '<div style="display:flex;gap:8px;margin-bottom:10px;">'+propSel+'<button class="btn btn-secondary" onclick="addPropToCliente('+id+')">Agregar</button></div>'+
+    '<div id="apc-'+id+'" style="margin-bottom:16px;">'+assignedList+'</div>'+
+    '<div class="form-section"><div class="form-section-title">📞 Historial de contactos</div></div>'+
+    '<div style="display:flex;gap:8px;margin-bottom:10px;">'+
+      '<input id="ch-notes-'+id+'" class="form-input" placeholder="Nota: llamada, WhatsApp, reuni\xf3n…" style="flex:1;">'+
+      '<button class="btn btn-primary" onclick="registrarContactoCliente('+id+',\'\')">+ Registrar</button>'+
+      '<button class="btn btn-secondary" onclick="registrarContactoCliente('+id+',\'Contacto r\xe1pido\')">📞 Hoy</button>'+
+    '</div>'+
+    '<div style="max-height:200px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;padding:8px 12px;margin-bottom:16px;" id="ch-hist-'+id+'">'+histHtml+'</div>'+
+    '<div class="form-actions">'+
+    '<button class="btn btn-secondary" onclick="closeModal()">Cerrar</button>'+
+    '<button class="btn btn-primary" onclick="saveAndCloseCliente('+id+')">Guardar</button>'+
+    '</div>';
+  document.getElementById('modal-overlay').classList.remove('hidden');
+}
+function checkPropertyMatches(prop){
+  const matches=[];
+  const pool=[...DATA.leads.filter(l=>!['perdido','basura','convertido'].includes(l.stage)),...DATA.clients];
+  pool.forEach(person=>{
+    const budget=person.budget||0;if(!budget)return;
+    const cOk=prop.country===person.country||(person.country!=='US'&&person.country!=='AR');
+    const bOk=prop.price>=budget*0.5&&prop.price<=budget*1.3;
+    if(cOk&&bOk)matches.push(person.name);
+  });
+  if(matches.length){
+    const names=matches.slice(0,3).join(', ')+(matches.length>3?' y '+(matches.length-3)+' más':'');
+    toast('🎯 '+prop.address+' coincide con: '+names,5000);
+  }
+  return matches;
+}
+function downloadLeadsReport(){
+  const hdrs=['Nombre','Email','Teléfono','País','Etapa','Fuente','Presupuesto','Agente','Último contacto','Propiedades interés','Notas'];
+  const rws=DATA.leads.map(l=>{
+    const si=[...LEAD_STAGES,...LEAD_EXIT].find(s=>s.id===l.stage)||{label:l.stage};
+    const props=(l.interestedProps||[]).map(pid=>{const p=DATA.mlsProperties.find(x=>x.id===pid);return p?p.address:'';}).filter(Boolean).join(' | ');
+    return[l.name,l.email||'',l.phone||'',l.country,si.label,l.source,l.budget||0,agentName(l.agent),l.lastContact,props,l.notes||''].map(v=>'"'+String(v).replace(/"/g,'""')+'"');
+  });
+  const csv=[hdrs.join(','),...rws.map(r=>r.join(','))].join('\n');
+  const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download='leads_miami_tango.csv';a.click();
+  URL.revokeObjectURL(url);toast('\u2713 Reporte exportado');
+}
+function downloadClientesReport(){
+  const hdrs=['Nombre','Email','Teléfono','País','Tipo','Fuente','Presupuesto','Propiedades interés'];
+  const tl={buyer:'Comprador',seller:'Vendedor',investor:'Inversor'};
+  const rws=DATA.clients.map(c=>{
+    const props=(c.interestedProps||[]).map(pid=>{const p=DATA.mlsProperties.find(x=>x.id===pid);return p?p.address:'';}).filter(Boolean).join(' | ');
+    return[c.name,c.email||'',c.phone||'',c.country||'US',tl[c.type]||c.type,c.source||'',c.budget||0,props].map(v=>'"'+String(v).replace(/"/g,'""')+'"');
+  });
+  const csv=[hdrs.join(','),...rws.map(r=>r.join(','))].join('\n');
+  const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download='clientes_miami_tango.csv';a.click();
+  URL.revokeObjectURL(url);toast('\u2713 Reporte exportado');
+}
+
+// ─── CLIENTES ──────────────────────────────────────────────────────────────
+function renderClientes(el, actions) {
+  actions.innerHTML = `<button class="btn btn-secondary" onclick="downloadClientesReport()" style="margin-right:8px;">⬇ Exportar CSV</button><button class="btn btn-primary" onclick="openModalCliente()">+ Nuevo cliente</button>`;
+  el.innerHTML = `
+    <div class="card">
+      <div class="card-header"><span class="card-title" id="clientes-count">${DATA.clients.length} clientes registrados</span></div>
+      <div class="search-filter-bar">
+        <input class="search-input" placeholder="Buscar por nombre o email…" oninput="filterClientes()" id="client-search" style="flex:1;">
+        <select class="form-input" id="client-type-filter" onchange="filterClientes()" style="width:160px;font-size:13px;">
+          <option value="">Todos los tipos</option>
+          <option value="buyer">Comprador</option>
+          <option value="seller">Vendedor</option>
+          <option value="investor">Inversor</option>
+        </select>
+      </div>
+      <div class="card-body" id="clientes-table">${clientesTable(DATA.clients)}</div>
+    </div>`;
+}
+function clientesTable(list) {
+  const typeLabel = { buyer:'Comprador', seller:'Vendedor', investor:'Inversor' };
+  const typeBadge = { buyer:'badge-active', seller:'badge-ops', investor:'badge-commercial' };
+  if (!list.length) return '<div style="padding:32px;text-align:center;color:var(--text-3);font-size:13px;">Sin resultados</div>';
+  const hoy = new Date(); hoy.setHours(0,0,0,0);
+  const rows = list.map(c => {
+    c.contactHistory = c.contactHistory||[];
+    c.status = c.status||'activo';
+    const lastC = c.contactHistory.length ? c.contactHistory[c.contactHistory.length-1].date : null;
+    const dias = lastC ? Math.round((hoy - new Date(lastC))/86400000) : null;
+    const dc = dias===null?'var(--text-3)':dias>30?'var(--red)':dias>15?'var(--amber)':'var(--green)';
+    const si = CLIENT_STAGES.find(s=>s.id===c.status)||{label:c.status,color:'var(--text-3)',bg:'var(--bg)'};
+    const sOpts = CLIENT_STAGES.map(s=>'<option value="'+s.id+'"'+(c.status===s.id?' selected':'')+'>'+s.label+'</option>').join('');
+    const sSel = '<select style="font-size:11px;border:1px solid '+(si.color||'var(--border)')+'40;background:'+(si.bg||'transparent')+';color:'+(si.color||'var(--text-2)')+';border-radius:12px;padding:3px 6px;cursor:pointer;" onchange="changeClienteStatus('+c.id+',this.value)" onclick="event.stopPropagation()">'+sOpts+'</select>';
+    const pc = (c.interestedProps||[]).length;
+    const propBtn = pc > 0
+      ? '<span style="background:var(--blue);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;cursor:pointer;" onclick="event.stopPropagation();openPropAssignModalCliente('+c.id+')">' + pc + ' prop.</span>'
+      : '<span style="font-size:11px;color:var(--blue);cursor:pointer;" onclick="event.stopPropagation();openPropAssignModalCliente('+c.id+')">+ Props</span>';
+    const contactCell = '<div style="font-size:11px;color:'+dc+';">'+(dias===null?'Sin registro':dias===0?'Hoy':dias+'d atrás')+'</div>'+
+      (lastC?'<div style="font-size:10px;color:var(--text-3);">'+lastC+'</div>':'')+
+      '<button onclick="event.stopPropagation();registrarContactoCliente('+c.id+',\'\')" style="margin-top:2px;font-size:9px;padding:2px 6px;background:var(--green)18;color:var(--green);border:1px solid var(--green)40;border-radius:6px;cursor:pointer;font-weight:600;">📞 Hoy</button>';
+    return '<tr onclick="openClienteDetail('+c.id+')" style="cursor:pointer;">'+
+      '<td><div class="prop-name" style="color:var(--blue);font-weight:600;">'+c.name+'</div><div style="font-size:10px;color:var(--text-3);">'+c.email+'</div></td>'+
+      '<td><span class="badge '+(typeBadge[c.type]||'')+'">'+( typeLabel[c.type]||c.type)+'</span></td>'+
+      '<td style="text-align:center;font-size:16px;">'+countryFlag(c.country||'US')+'</td>'+
+      '<td>'+sSel+'</td>'+
+      '<td style="text-align:center;">'+propBtn+'</td>'+
+      '<td style="font-size:11px;"><button onclick="event.stopPropagation();openPropAssignModalCliente('+c.id+')" style="font-size:10px;padding:3px 8px;background:var(--blue);color:#fff;border:none;border-radius:8px;cursor:pointer;">🏠 Props</button></td>'+
+      '<td style="min-width:110px;">'+contactCell+'</td>'+
+      '<td style="text-align:center;">'+
+        '<div style="font-size:13px;font-weight:700;color:var(--gold);">'+c.ops+'</div>'+
+        '<button onclick="openClienteDetail('+c.id+')" style="margin-top:3px;font-size:9px;padding:2px 8px;background:var(--gold);color:#1A1A18;border:none;border-radius:6px;cursor:pointer;font-weight:700;white-space:nowrap;">📋 Ficha</button>'+
+      '</td>'+
+    '</tr>';
+  }).join('');
+  return '<table><thead><tr><th>Nombre</th><th>Tipo</th><th>País</th><th>Estado</th><th>Props</th><th>Asignar</th><th>Último contacto</th><th>Ops.</th></tr></thead><tbody>'+rows+'</tbody></table>';
+}
+
+function filterClientes() {
+  const q = document.getElementById('client-search').value.toLowerCase();
+  const t = document.getElementById('client-type-filter').value;
+  const filtered = DATA.clients.filter(c => {
+    const matchQ = !q || c.name.toLowerCase().includes(q) || c.email.toLowerCase().includes(q);
+    const matchT = !t || c.type === t;
+    return matchQ && matchT;
+  });
+  document.getElementById('clientes-table').innerHTML = clientesTable(filtered);
+  document.getElementById('clientes-count').textContent = `${filtered.length} clientes registrados`;
+}
+function openModalCliente() {
+  document.getElementById('modal-title').textContent = 'Nuevo cliente';
+  document.getElementById('modal-body').innerHTML = `
+    <div class="form-section"><div class="form-section-title">Datos personales</div></div>
+    <div class="form-grid">
+      <div class="form-group form-full"><div class="form-label">Nombre completo *</div><input class="form-input" placeholder="Ej: Carlos Mendoza"></div>
+      <div class="form-group"><div class="form-label">Tipo *</div>
+        <select class="form-input"><option value="">Seleccionar…</option><option>Comprador (Buyer)</option><option>Vendedor (Seller)</option><option>Inversor</option></select></div>
+      <div class="form-group"><div class="form-label">Nacionalidad</div><input class="form-input" placeholder="Ej: Argentina"></div>
+      <div class="form-group"><div class="form-label">Email</div><input class="form-input" type="email"></div>
+      <div class="form-group"><div class="form-label">Teléfono</div><input class="form-input" placeholder="+1 305 555 0000"></div>
+      <div class="form-group"><div class="form-label">LLC / Entidad legal</div><input class="form-input" placeholder="Opcional"></div>
+    </div>
+    <div class="form-section"><div class="form-section-title">Perfil de búsqueda</div></div>
+    <div class="form-grid">
+      <div class="form-group"><div class="form-label">Interés principal</div>
+        <select class="form-input"><option value="">Seleccionar…</option><option>Compra</option><option>Venta</option><option>Inversión</option><option>Compra + Inversión</option></select></div>
+      <div class="form-group"><div class="form-label">Mercado</div>
+        <select class="form-input"><option>USA (Florida / Michigan)</option><option>Argentina</option><option>Ambos</option></select></div>
+      <div class="form-group"><div class="form-label">Presupuesto (USD)</div><input class="form-input" type="number" placeholder="Ej: 250000"></div>
+      <div class="form-group"><div class="form-label">Horizonte temporal</div>
+        <select class="form-input"><option value="">Seleccionar…</option><option>Inmediato (0-3 meses)</option><option>Corto (3-6 meses)</option><option>Mediano (6-12 meses)</option><option>Largo (+12 meses)</option></select></div>
+      <div class="form-group"><div class="form-label">ROI / Rentabilidad objetivo</div><input class="form-input" placeholder="Ej: 8%"></div>
+      <div class="form-group"><div class="form-label">Fuente de origen</div>
+        <select class="form-input"><option value="">Seleccionar…</option><option>Web</option><option>Landing page</option><option>Teléfono</option><option>Meta (Facebook/Instagram)</option><option>Google</option><option>TikTok</option><option>Orgánico</option><option>Referido</option><option>Otro</option></select></div>
+    </div>
+    <div class="form-grid" style="padding-top:0;">
+      <div class="form-group form-full"><div class="form-label">Notas</div><textarea class="form-input"></textarea></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="toast('✓ Cliente guardado');closeModal()">Guardar cliente</button>
+    </div>`;
+  document.getElementById('modal-overlay').classList.remove('hidden');
+}
+
+// ─── MLS / PROPIEDADES ─────────────────────────────────────────────────────
+function renderMLS(el, actions) {
+  actions.innerHTML = `<button class="btn btn-primary" onclick="openModalNuevaPropiedad()">+ Nueva propiedad</button>`;
+  const usProps = DATA.mlsProperties.filter(p=>p.country!=='AR');
+  const arProps = DATA.mlsProperties.filter(p=>p.country==='AR');
+  const mlsStats = {
+    published: usProps.filter(p=>p.mlsStatus==='published').length,
+    under_contract: usProps.filter(p=>p.mlsStatus==='under_contract').length,
+    withdrawn: usProps.filter(p=>p.mlsStatus==='withdrawn').length,
+    arPublished: arProps.filter(p=>p.mlsStatus==='published').length,
+    arContract: arProps.filter(p=>p.mlsStatus==='under_contract').length,
+  };
+  el.innerHTML = `
+    <div class="stats-grid" style="grid-template-columns:repeat(5,1fr);">
+      <div class="stat-card"><div class="stat-label">🇺🇸 En MLS</div><div class="stat-val blue" style="color:var(--blue);">${mlsStats.published}</div><div class="stat-sub">USA publicadas</div></div>
+      <div class="stat-card"><div class="stat-label">🇺🇸 Bajo contrato</div><div class="stat-val gold">${mlsStats.under_contract}</div><div class="stat-sub">USA con oferta</div></div>
+      <div class="stat-card"><div class="stat-label">🇺🇸 Retiradas</div><div class="stat-val" style="color:var(--text-3);">${mlsStats.withdrawn}</div><div class="stat-sub">Temporalmente fuera</div></div>
+      <div class="stat-card"><div class="stat-label">🇦🇷 En ZonaProp</div><div class="stat-val" style="color:#1A6BA8;">${mlsStats.arPublished}</div><div class="stat-sub">AR publicadas</div></div>
+      <div class="stat-card"><div class="stat-label">🇦🇷 Bajo contrato</div><div class="stat-val gold">${mlsStats.arContract}</div><div class="stat-sub">AR con oferta</div></div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">${DATA.mlsProperties.length} propiedades</span>
+        <select class="form-input" style="font-size:12px;padding:4px 10px;width:160px;" onchange="filterMLS(this.value)" id="mls-filter">
+          <option value="">Todos los estados</option>
+          <option value="published">En MLS</option>
+          <option value="under_contract">Bajo contrato</option>
+          <option value="withdrawn">Retiradas</option>
+        </select>
+      </div>
+      <div class="card-body" id="mls-table">${mlsTable(DATA.mlsProperties)}</div>
+    </div>`;
+}
+function mlsTable(list) {
+  return '<table>' +
+    '<thead><tr><th>Dirección</th><th>País</th><th>Tipo</th><th>Precio lista</th><th>Agente</th><th>Días</th><th>Interesados</th><th>Estado</th><th>Acción</th></tr></thead>' +
+    '<tbody>' + list.map(p => {
+      const intLeads = DATA.leads.filter(l => (l.interestedProps||[]).includes(p.id));
+      const intClients = DATA.clients.filter(c => (c.interestedProps||[]).includes(p.id));
+      const total = intLeads.length + intClients.length;
+      const badge = total > 0
+        ? '<span style="background:var(--gold);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;cursor:pointer;" onclick="event.stopPropagation();openInteresadosModal('+p.id+')">'+total+' 🔥</span>'
+        : '<span style="font-size:11px;color:var(--text-3);cursor:pointer;" onclick="event.stopPropagation();openInteresadosModal('+p.id+')">+ Asignar</span>';
+      const notes = p.notes ? '<div class="prop-sub">'+p.notes+'</div>' : '';
+      const loc = p.country==='US'?(p.usState||''):(p.city||'');
+      const diasColor = p.daysListed>30?'var(--red)':p.daysListed>15?'var(--amber)':'var(--text-2)';
+      return '<tr>' +
+        '<td><div class="prop-name">'+p.address+'</div>'+notes+'</td>' +
+        '<td style="text-align:center;font-size:16px;">'+countryFlag(p.country||'US')+' <span style="font-size:10px;color:var(--text-3);">'+loc+'</span></td>' +
+        '<td><span style="font-size:11px;color:var(--text-2);">'+p.type+'</span></td>' +
+        '<td>'+(p.country==='AR'?'USD ':'$')+p.listPrice.toLocaleString()+'</td>' +
+        '<td><div class="agent-chip">'+agentDot(p.agent)+' '+agentName(p.agent)+'</div></td>' +
+        '<td style="color:'+diasColor+';">'+p.daysListed+'d</td>' +
+        '<td style="text-align:center;">'+badge+'</td>' +
+        '<td><select class="insp-select" onchange="changeMlsStatus('+p.id+',this.value)" onclick="event.stopPropagation()">' +
+          '<option value="published"'+(p.mlsStatus==='published'?' selected':'')+'>En '+(p.country==='AR'?'ZonaProp':'MLS')+'</option>' +
+          '<option value="under_contract"'+(p.mlsStatus==='under_contract'?' selected':'')+'>Bajo contrato</option>' +
+          '<option value="withdrawn"'+(p.mlsStatus==='withdrawn'?' selected':'')+'>Retirada</option>' +
+        '</select></td>' +
+        '<td><button class="btn btn-green" onclick="event.stopPropagation();openModalPasarOperacion('+p.id+')">→ Op.</button></td>' +
+      '</tr>';
+    }).join('') + '</tbody></table>';
+}
+function filterMLS(status) {
+  const list = status ? DATA.mlsProperties.filter(p=>p.mlsStatus===status) : DATA.mlsProperties;
+  document.getElementById('mls-table').innerHTML = mlsTable(list);
+}
+function changeMlsStatus(propId, newStatus) {
+  const p = DATA.mlsProperties.find(x=>x.id===propId);
+  if (!p) return;
+  p.mlsStatus = newStatus;
+  const label = { published:'En MLS/ZonaProp', under_contract:'Bajo contrato', withdrawn:'Retirada' };
+  toast(`✓ ${p.address} → ${label[newStatus]||newStatus}`);
+}
+function openModalNuevaPropiedad(pais='US') {
+  document.getElementById('modal-title').textContent = 'Nueva propiedad / Listing';
+  const agentOptions = DATA.agents.map(a=>`<option>${a.name}</option>`).join('');
+  const formUSA = `
+    <div class="form-grid">
+      <div class="form-group"><div class="form-label">Agente *</div><select class="form-input"><option value="">Seleccionar…</option>${agentOptions}</select></div>
+      <div class="form-group"><div class="form-label">Estado *</div><select class="form-input"><option>Florida</option><option>Michigan</option></select></div>
+      <div class="form-group form-full"><div class="form-label">Dirección de la unidad *</div><input class="form-input" placeholder="Numero, calle, (unidad)"></div>
+      <div class="form-group"><div class="form-label">Nombre condominio / Casa *</div><input class="form-input" placeholder="Ej: Casa / nombre del condo"></div>
+      <div class="form-group"><div class="form-label">Ciudad *</div><input class="form-input" placeholder="Miami"></div>
+      <div class="form-group"><div class="form-label">Tipo</div><select class="form-input"><option>Single Family</option><option>Condo</option><option>Vacant Land</option><option>En construcción</option><option>En desarrollo</option><option>Proyecto</option></select></div>
+      <div class="form-group"><div class="form-label">Administración</div><select class="form-input"><option>State Street</option><option>Management JAX</option><option>Rent & Fun</option><option>Golden Key</option><option>MDPM</option><option>Rondo</option><option>Revive</option><option>Otra</option></select></div>
+      <div class="form-group"><div class="form-label">Precio *</div><input class="form-input" type="number" placeholder="175000"></div>
+      <div class="form-group"><div class="form-label">Tipología</div><input class="form-input" placeholder="Ej: 3/2"></div>
+      <div class="form-group"><div class="form-label">Renta</div><select class="form-input"><option>Si</option><option>No</option><option>Section 8</option><option>Temporal</option><option>Garantizada</option><option>Leaseback program / Renta garantizada</option></select></div>
+      <div class="form-group"><div class="form-label">Renta en / estimada</div><input class="form-input" placeholder="$1,200/mes"></div>
+      <div class="form-group"><div class="form-label">Fecha fin contrato renta</div><input class="form-input" type="date"></div>
+      <div class="form-group"><div class="form-label">Impuesto anual *</div><input class="form-input" placeholder="$2,400"></div>
+      <div class="form-group"><div class="form-label">Lockbox (si vacante)</div><input class="form-input" placeholder="Código lockbox"></div>
+      <div class="form-group"><div class="form-label">Tour 360</div><select class="form-input"><option>Si</option><option>No</option></select></div>
+      <div class="form-group"><div class="form-label">Link al tour</div><input class="form-input" placeholder="https://…"></div>
+      <div class="form-group"><div class="form-label">Seller (nombre o LLC) *</div><input class="form-input"></div>
+      <div class="form-group"><div class="form-label">Seller (teléfono) *</div><input class="form-input" placeholder="+1 305…"></div>
+      <div class="form-group"><div class="form-label">Seller (email) *</div><input class="form-input" type="email"></div>
+      <div class="form-group"><div class="form-label">Fecha firma listing *</div><input class="form-input" type="date"></div>
+      <div class="form-group"><div class="form-label">Fecha fin listing *</div><input class="form-input" type="date"></div>
+      <div class="form-group"><div class="form-label">Inspección</div><select class="form-input"><option>Si</option><option>No</option></select></div>
+      <div class="form-group"><div class="form-label">Estado MLS</div><select class="form-input"><option value="published">Publicada</option><option value="under_contract">Bajo contrato</option><option value="withdrawn">Retirada</option></select></div>
+      <div class="form-group form-full"><div class="form-label">Notas adicionales</div><textarea class="form-input" placeholder="Toda la info adicional…"></textarea></div>
+    </div>`;
+  const formARG = `
+    <div class="form-grid">
+      <div class="form-group"><div class="form-label">Agente *</div><select class="form-input"><option value="">Seleccionar…</option>${agentOptions}</select></div>
+      <div class="form-group"><div class="form-label">Nombre propietario *</div><input class="form-input"></div>
+      <div class="form-group"><div class="form-label">Tipo de propiedad *</div><select class="form-input"><option>Departamento</option><option>Casa</option><option>PH</option><option>Terreno</option><option>Oficina</option><option>Local</option><option>Edificio Comercial</option><option>Cochera</option><option>Hotel</option><option>Fondo de Comercio</option></select></div>
+      <div class="form-group"><div class="form-label">Calle *</div><input class="form-input"></div>
+      <div class="form-group"><div class="form-label">Número *</div><input class="form-input"></div>
+      <div class="form-group"><div class="form-label">Piso y Dpto</div><input class="form-input" placeholder="Ej: 3°B"></div>
+      <div class="form-group"><div class="form-label">Ciudad *</div><input class="form-input" placeholder="Buenos Aires"></div>
+      <div class="form-group"><div class="form-label">Barrio</div><input class="form-input" placeholder="Palermo"></div>
+      <div class="form-group"><div class="form-label">Ambientes</div><input class="form-input" type="number"></div>
+      <div class="form-group"><div class="form-label">Dormitorios</div><input class="form-input" type="number"></div>
+      <div class="form-group"><div class="form-label">Baños</div><input class="form-input" type="number"></div>
+      <div class="form-group"><div class="form-label">Toilettes</div><input class="form-input" type="number"></div>
+      <div class="form-group"><div class="form-label">Cocheras</div><input class="form-input" type="number"></div>
+      <div class="form-group"><div class="form-label">Condición</div><select class="form-input"><option>Excelente</option><option>Muy Bueno</option><option>Bueno</option><option>Reciclado</option><option>A refaccionar</option><option>Regular</option></select></div>
+      <div class="form-group"><div class="form-label">Plantas</div><input class="form-input" type="number"></div>
+      <div class="form-group"><div class="form-label">Antigüedad</div><select class="form-input"><option>A estrenar</option><option>En construcción</option><option>1-5 años</option><option>6-10 años</option><option>11-20 años</option><option>+20 años</option></select></div>
+      <div class="form-group"><div class="form-label">Situación</div><select class="form-input"><option>Vacía</option><option>Habitada</option></select></div>
+      <div class="form-group"><div class="form-label">Expensas $</div><input class="form-input" placeholder="0"></div>
+      <div class="form-group"><div class="form-label">Orientación</div><select class="form-input"><option>Norte</option><option>Sur</option><option>Este</option><option>Oeste</option><option>Noroeste</option><option>Suroeste</option><option>Noreste</option><option>Sudeste</option></select></div>
+      <div class="form-group"><div class="form-label">Disposición</div><select class="form-input"><option>Frente</option><option>Contrafrente</option><option>Interno</option><option>Lateral</option></select></div>
+      <div class="form-group"><div class="form-label">Sup. cubierta m² *</div><input class="form-input" type="number"></div>
+      <div class="form-group"><div class="form-label">Sup. semicubierta m²</div><input class="form-input" type="number"></div>
+      <div class="form-group"><div class="form-label">Total construido m²</div><input class="form-input" type="number"></div>
+      <div class="form-group"><div class="form-label">Descubierta m²</div><input class="form-input" type="number"></div>
+      <div class="form-group"><div class="form-label">Precio (USD) *</div><input class="form-input" type="number"></div>
+      <div class="form-group"><div class="form-label">Estado MLS</div><select class="form-input"><option value="published">Publicada</option><option value="under_contract">Bajo contrato</option><option value="withdrawn">Retirada</option></select></div>
+      <div class="form-group form-full"><div class="form-label">Comentarios adicionales</div><textarea class="form-input"></textarea></div>
+    </div>`;
+  document.getElementById('modal-body').innerHTML = `
+    <div style="padding:0 20px 0;">
+      <div class="tabs">
+        <div class="tab ${pais==='US'?'active':''}" onclick="openModalNuevaPropiedad('US')">🇺🇸 Estados Unidos</div>
+        <div class="tab ${pais==='AR'?'active':''}" onclick="openModalNuevaPropiedad('AR')">🇦🇷 Argentina</div>
+      </div>
+    </div>
+    ${pais==='US' ? formUSA : formARG}
+    <div class="form-actions">
+      <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="toast('✓ Propiedad guardada');closeModal()">Guardar propiedad</button>
+    </div>`;
+  document.getElementById('modal-overlay').classList.remove('hidden');
+}
+function openInteresadosModal(propId) {
+  const p = DATA.mlsProperties.find(x=>x.id===propId);
+  if (!p) return;
+  document.getElementById('modal-title').textContent = countryFlag(p.country)+' '+p.address+' — Interesados';
+  const renderList = () => {
+    const iLeads = DATA.leads.filter(l=>(l.interestedProps||[]).includes(propId));
+    const iClients = DATA.clients.filter(c=>(c.interestedProps||[]).includes(propId));
+    const leadsHtml = iLeads.map(l=>
+      '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:6px;">'+
+      '<div><span style="font-size:11px;font-weight:700;color:var(--blue);background:var(--blue)18;padding:2px 7px;border-radius:10px;margin-right:8px;">LEAD</span>'+
+      '<strong style="font-size:13px;">'+l.name+'</strong> <span style="font-size:11px;color:var(--text-3);">$'+(l.budget||0).toLocaleString()+' · '+agentName(l.agent)+'</span></div>'+
+      '<button onclick="removeLeadInterest('+l.id+','+propId+')" style="background:none;border:none;cursor:pointer;color:var(--red);font-size:16px;">✕</button>'+
+      '</div>'
+    ).join('');
+    const clientsHtml = iClients.map(c=>
+      '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:6px;">'+
+      '<div><span style="font-size:11px;font-weight:700;color:var(--green);background:var(--green)18;padding:2px 7px;border-radius:10px;margin-right:8px;">CLIENTE</span>'+
+      '<strong style="font-size:13px;">'+c.name+'</strong> <span style="font-size:11px;color:var(--text-3);">$'+(c.budget||0).toLocaleString()+'</span></div>'+
+      '<button onclick="removeClientInterest('+c.id+','+propId+')" style="background:none;border:none;cursor:pointer;color:var(--red);font-size:16px;">✕</button>'+
+      '</div>'
+    ).join('');
+    if (!leadsHtml && !clientsHtml) return '<div style="font-size:13px;color:var(--text-3);padding:12px 0;">Ningún lead o cliente asignado aún</div>';
+    return leadsHtml + clientsHtml;
+  };
+  window.renderInteresadosList = renderList;
+  // Build add options: leads not yet assigned
+  const availLeads = DATA.leads.filter(l=>!['perdido','basura','convertido'].includes(l.stage)&&!(l.interestedProps||[]).includes(propId));
+  const availClients = DATA.clients.filter(c=>!(c.interestedProps||[]).includes(propId));
+  const leadOpts = availLeads.map(l=>'<option value="L'+l.id+'">👤 '+l.name+' (Lead) — $'+(l.budget||0).toLocaleString()+'</option>').join('');
+  const clientOpts = availClients.map(c=>'<option value="C'+c.id+'">✓ '+c.name+' (Cliente) — $'+(c.budget||0).toLocaleString()+'</option>').join('');
+  document.getElementById('modal-body').innerHTML =
+    '<div style="margin-bottom:16px;padding:12px 16px;background:var(--gold-light);border-radius:8px;font-size:13px;">'+
+    '<strong>'+p.address+'</strong> · '+(p.country==='AR'?'USD ':'$')+p.listPrice.toLocaleString()+' · '+p.type+'</div>'+
+    '<div style="display:flex;gap:8px;margin-bottom:16px;">'+
+      '<select id="int-add-sel" class="form-input" style="flex:1;">'+
+        '<option value="">Asignar lead o cliente…</option>'+
+        '<optgroup label="Leads activos">'+leadOpts+'</optgroup>'+
+        '<optgroup label="Clientes">'+clientOpts+'</optgroup>'+
+      '</select>'+
+      '<button class="btn btn-primary" onclick="addInteresado('+propId+')">+ Asignar</button>'+
+    '</div>'+
+    '<div id="int-list">'+renderList()+'</div>'+
+    '<div class="form-actions"><button class="btn btn-secondary" onclick="closeModal()">Cerrar</button></div>';
+  document.getElementById('modal-overlay').classList.remove('hidden');
+}
+function removeLeadInterest(leadId, propId) {
+  const l = DATA.leads.find(x=>x.id===leadId);
+  if (l) l.interestedProps = (l.interestedProps||[]).filter(x=>x!==propId);
+  const el = document.getElementById('int-list');
+  if (el && window.renderInteresadosList) el.innerHTML = window.renderInteresadosList();
+  toast('✓ Removido');
+}
+function removeClientInterest(clientId, propId) {
+  const c = DATA.clients.find(x=>x.id===clientId);
+  if (c) c.interestedProps = (c.interestedProps||[]).filter(x=>x!==propId);
+  const el = document.getElementById('int-list');
+  if (el && window.renderInteresadosList) el.innerHTML = window.renderInteresadosList();
+  toast('✓ Removido');
+}
+function addInteresado(propId) {
+  const sel = document.getElementById('int-add-sel');
+  const val = sel && sel.value;
+  if (!val) { toast('⚠ Seleccioná un lead o cliente'); return; }
+  const type = val[0]; // 'L' or 'C'
+  const id = parseInt(val.slice(1));
+  if (type === 'L') {
+    const l = DATA.leads.find(x=>x.id===id);
+    if (!l) return;
+    l.interestedProps = l.interestedProps||[];
+    if (!l.interestedProps.includes(propId)) l.interestedProps.push(propId);
+  } else {
+    const c = DATA.clients.find(x=>x.id===id);
+    if (!c) return;
+    c.interestedProps = c.interestedProps||[];
+    if (!c.interestedProps.includes(propId)) c.interestedProps.push(propId);
+  }
+  // Refresh the modal
+  const listEl = document.getElementById('int-list');
+  if (listEl && window.renderInteresadosList) listEl.innerHTML = window.renderInteresadosList();
+  // Update select: remove assigned option
+  sel.querySelector('option[value="'+val+'"]')&&sel.querySelector('option[value="'+val+'"]').remove();
+  sel.value = '';
+  toast('✓ Asignado como interesado');
+}
+function openPropAssignModal(leadId) {
+  // Quick assign properties to a lead from the leads table
+  const l = DATA.leads.find(x=>x.id===leadId);
+  if (!l) return;
+  l.interestedProps = l.interestedProps||[];
+  document.getElementById('modal-title').textContent = 'Propiedades de interés — '+l.name;
+  const assigned = l.interestedProps.map(pid=>{
+    const p = DATA.mlsProperties.find(x=>x.id===pid);
+    if (!p) return '';
+    return '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:6px;font-size:13px;">'+
+      '<span>'+countryFlag(p.country)+' <strong>'+p.address+'</strong> <span style="color:var(--text-3);">$'+p.listPrice.toLocaleString()+'</span></span>'+
+      '<button onclick="removePropFromLead('+leadId+','+pid+');openPropAssignModal('+leadId+')" style="background:none;border:none;cursor:pointer;color:var(--red);font-size:16px;">✕</button>'+
+      '</div>';
+  }).join('') || '<div style="font-size:13px;color:var(--text-3);padding:8px 0;">Sin propiedades asignadas</div>';
+  const available = DATA.mlsProperties.filter(p=>!l.interestedProps.includes(p.id)).map(p=>
+    '<option value="'+p.id+'">'+countryFlag(p.country)+' '+p.address+' — $'+p.listPrice.toLocaleString()+' ('+p.type+')</option>'
+  ).join('');
+  document.getElementById('modal-body').innerHTML =
+    '<div style="display:flex;gap:8px;margin-bottom:14px;">'+
+      '<select id="pam-sel-'+leadId+'" class="form-input" style="flex:1;">'+
+        '<option value="">Seleccionar propiedad…</option>'+available+
+      '</select>'+
+      '<button class="btn btn-primary" onclick="quickAddPropLead('+leadId+')">+ Agregar</button>'+
+    '</div>'+
+    '<div id="pam-list-'+leadId+'">'+assigned+'</div>'+
+    '<div class="form-actions"><button class="btn btn-secondary" onclick="closeModal()">Cerrar</button></div>';
+  document.getElementById('modal-overlay').classList.remove('hidden');
+}
+function quickAddPropLead(leadId) {
+  const sel = document.getElementById('pam-sel-'+leadId);
+  const pid = parseInt(sel&&sel.value);
+  if (!pid) { toast('⚠ Seleccioná una propiedad'); return; }
+  const l = DATA.leads.find(x=>x.id===leadId);
+  if (!l) return;
+  l.interestedProps = l.interestedProps||[];
+  if (!l.interestedProps.includes(pid)) l.interestedProps.push(pid);
+  openPropAssignModal(leadId);
+  toast('✓ Propiedad asignada');
+}
+function changeClienteStatus(id, newStatus) {
+  const c = DATA.clients.find(x=>x.id===id);
+  if (!c) return;
+  c.status = newStatus;
+  const si = CLIENT_STAGES.find(s=>s.id===newStatus);
+  toast('✓ '+c.name+' → '+(si?si.label:newStatus));
+}
+function registrarContactoCliente(id, notes) {
+  const c = DATA.clients.find(x=>x.id===id);
+  if (!c) return;
+  c.contactHistory = c.contactHistory||[];
+  const today = new Date().toISOString().slice(0,10);
+  const notesVal = notes || (document.getElementById('ch-notes-'+id) ? document.getElementById('ch-notes-'+id).value : '');
+  c.contactHistory.push({date:today, notes:notesVal||'Contacto registrado'});
+  toast('📞 Contacto registrado — '+c.name+' ('+today+')');
+  // Refresh table if visible
+  const tbl = document.getElementById('clientes-table');
+  if (tbl) tbl.innerHTML = clientesTable(DATA.clients);
+  // Refresh modal if open
+  const mTitle = document.getElementById('modal-title');
+  if (mTitle && mTitle.textContent===c.name) openClienteDetail(id);
+}
+function openPropAssignModalCliente(clientId) {
+  const c = DATA.clients.find(x=>x.id===clientId);
+  if (!c) return;
+  c.interestedProps = c.interestedProps||[];
+  document.getElementById('modal-title').textContent = 'Propiedades de interés — '+c.name;
+  const assigned = c.interestedProps.map(pid=>{
+    const p = DATA.mlsProperties.find(x=>x.id===pid);
+    if (!p) return '';
+    return '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:6px;font-size:13px;">'+
+      '<span>'+countryFlag(p.country)+' <strong>'+p.address+'</strong> <span style="color:var(--text-3);">$'+p.listPrice.toLocaleString()+'</span></span>'+
+      '<button onclick="removePropFromCliente('+clientId+','+pid+');openPropAssignModalCliente('+clientId+')" style="background:none;border:none;cursor:pointer;color:var(--red);font-size:16px;">✕</button>'+
+      '</div>';
+  }).join('') || '<div style="font-size:13px;color:var(--text-3);padding:8px 0;">Sin propiedades asignadas</div>';
+  const available = DATA.mlsProperties.filter(p=>!c.interestedProps.includes(p.id)).map(p=>
+    '<option value="'+p.id+'">'+countryFlag(p.country)+' '+p.address+' — $'+p.listPrice.toLocaleString()+' ('+p.type+')</option>'
+  ).join('');
+  document.getElementById('modal-body').innerHTML =
+    '<div style="display:flex;gap:8px;margin-bottom:14px;">'+
+      '<select id="pac-sel-'+clientId+'" class="form-input" style="flex:1;">'+
+        '<option value="">Seleccionar propiedad…</option>'+available+
+      '</select>'+
+      '<button class="btn btn-primary" onclick="quickAddPropCliente('+clientId+')">+ Agregar</button>'+
+    '</div>'+
+    '<div id="pac-list-'+clientId+'">'+assigned+'</div>'+
+    '<div class="form-actions"><button class="btn btn-secondary" onclick="closeModal()">Cerrar</button></div>';
+  document.getElementById('modal-overlay').classList.remove('hidden');
+}
+function quickAddPropCliente(clientId) {
+  const sel = document.getElementById('pac-sel-'+clientId);
+  const pid = parseInt(sel&&sel.value);
+  if (!pid) { toast('⚠ Seleccioná una propiedad'); return; }
+  const c = DATA.clients.find(x=>x.id===clientId);
+  if (!c) return;
+  c.interestedProps = c.interestedProps||[];
+  if (!c.interestedProps.includes(pid)) c.interestedProps.push(pid);
+  openPropAssignModalCliente(clientId);
+  toast('✓ Propiedad asignada');
+}
+function openModalPasarOperacion(mlsId) {
+  const p = DATA.mlsProperties.find(x=>x.id===mlsId);
+  document.getElementById('modal-title').textContent = `Pasar a operación activa — ${p.address}`;
+  document.getElementById('modal-body').innerHTML = `
+    <div style="background:var(--gold-light);padding:12px 20px;font-size:13px;color:var(--gold-dark);">
+      Esta propiedad pasará al módulo de Operaciones con estado <strong>ACTIVA</strong>. Completá los datos de la transacción.
+    </div>
+    <div class="form-section"><div class="form-section-title">Datos de la transacción</div></div>
+    <div class="form-grid">
+      <div class="form-group"><div class="form-label">Precio de venta *</div><input class="form-input" type="number" value="${p.listPrice}"></div>
+      <div class="form-group"><div class="form-label">Tipo de financiamiento *</div>
+        <select class="form-input"><option value="">Seleccionar…</option><option>Cash</option><option>Conventional</option><option>FHA</option><option>VA Loan</option><option>Fixed Loan</option><option>DSCR Loan</option></select></div>
+      <div class="form-group"><div class="form-label">Title Company</div>
+        <select class="form-input"><option>Lore</option><option>Otro</option></select></div>
+      <div class="form-group"><div class="form-label">Compensation %</div><input class="form-input" placeholder="3"></div>
+      <div class="form-group"><div class="form-label">Fecha de ejecución</div><input class="form-input" type="date"></div>
+      <div class="form-group"><div class="form-label">Closing Date *</div><input class="form-input" type="date"></div>
+      <div class="form-group form-full"><div class="form-label">Cliente (Buyer/Seller) *</div>
+        <select class="form-input"><option value="">Buscar cliente…</option>${DATA.clients.map(c=>`<option value="${c.id}">${c.name} — ${c.type==='buyer'?'Comprador':c.type==='seller'?'Vendedor':'Inversor'}</option>`).join('')}<option value="new">+ Crear nuevo cliente</option></select></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="toast('✓ Propiedad pasada a Operaciones activas');closeModal()">Crear operación activa</button>
+    </div>`;
+  document.getElementById('modal-overlay').classList.remove('hidden');
+}
+
+// ─── OPERACIONES ───────────────────────────────────────────────────────────
+let _opFilter = 'ACTIVA';
+function renderOperaciones(el, actions) {
+  actions.innerHTML = `<button class="btn btn-secondary" onclick="goTo('mls')" style="font-size:12px;">+ Desde MLS</button>`;
+  const counts = {
+    ACTIVA: DATA.operations.filter(o=>o.status==='ACTIVA').length,
+    CERRADA: DATA.operations.filter(o=>o.status==='CERRADA').length,
+    CANCELADA: DATA.operations.filter(o=>o.status==='CANCELADA').length,
+  };
+  el.innerHTML = `
+    <div style="display:flex;gap:8px;margin-bottom:16px;">
+      <button class="btn ${_opFilter==='ACTIVA'?'btn-primary':'btn-secondary'}" onclick="setOpFilter('ACTIVA')">Activas <span style="opacity:0.7;">${counts.ACTIVA}</span></button>
+      <button class="btn ${_opFilter==='CERRADA'?'btn-primary':'btn-secondary'}" onclick="setOpFilter('CERRADA')">Cerradas <span style="opacity:0.7;">${counts.CERRADA}</span></button>
+      <button class="btn ${_opFilter==='CANCELADA'?'btn-primary':'btn-secondary'}" onclick="setOpFilter('CANCELADA')">Canceladas <span style="opacity:0.7;">${counts.CANCELADA}</span></button>
+    </div>
+    <div class="card" style="overflow-x:auto;" id="ops-table-card">
+      ${opsTableInner(_opFilter)}
+    </div>`;
+}
+function setOpFilter(status) {
+  _opFilter = status;
+  const card = document.getElementById('ops-table-card');
+  if (card) card.innerHTML = opsTableInner(status);
+  // update tab button styles
+  document.querySelectorAll('.ops-filter-btn').forEach(b => {
+    b.classList.toggle('btn-primary', b.dataset.status === status);
+    b.classList.toggle('btn-secondary', b.dataset.status !== status);
+  });
+  // re-render the whole view to update button styles cleanly
+  const el = document.getElementById('content');
+  const actions = document.getElementById('topbar-actions');
+  renderOperaciones(el, actions);
+}
+function opsTableInner(status) {
+  const list = DATA.operations.filter(o=>o.status===status);
+  if (!list.length) return `<div style="padding:40px;text-align:center;color:var(--text-3);font-size:13px;">No hay operaciones ${status==='ACTIVA'?'activas':status==='CERRADA'?'cerradas':'canceladas'}.</div>`;
+  return `
+    <div class="card-header"><span class="card-title">${list.length} operacion${list.length===1?'':'es'} ${status==='ACTIVA'?'activas':status==='CERRADA'?'cerradas':'canceladas'}</span></div>
+    <div class="card-body">
+      <table style="min-width:1200px;">
+        <thead><tr>
+          <th>Propiedad</th><th>Cliente</th><th>Agente</th><th>Realtor</th><th>Financ.</th><th>Comp%</th>
+          <th>Escrow</th><th>LBP</th><th>SD</th><th>Flood</th>
+          <th>Insp.</th><th>Appraisal</th><th>Closing</th><th>Pendientes</th>
+        </tr></thead>
+        <tbody>
+          ${list.map(o=>{
+            const prog = calcProgress(o);
+            return `<tr onclick="goTo('op-detail',${o.id})" style="cursor:pointer;">
+              <td>
+                <div class="prop-name">${o.address}</div>
+                <div class="prop-sub">${o.type} · ${prog.pct}% completo</div>
+              </td>
+              <td style="font-size:12px;">
+                <div style="font-weight:600;color:var(--blue);">${o.buyerName||clientName(o.clientId)}</div>
+                ${o.buyerName&&o.buyerName!==clientName(o.clientId)?'<div style="font-size:10px;color:var(--text-3);">cliente: '+clientName(o.clientId)+'</div>':''}
+              </td>
+              <td><div class="agent-chip">${agentDot(o.agent)} ${agentName(o.agent)}</div></td>
+              <td style="font-size:12px;color:var(--text-2);">${realtorName(o.realtor)}</td>
+              <td style="color:var(--text-2);white-space:nowrap;">${o.financing}</td>
+              <td>${o.compPct}%</td>
+              <td>${chkCell(o.escrow,o.id,'escrow')}</td>
+              <td>${chkCell(o.lbp,o.id,'lbp')}</td>
+              <td>${chkCell(o.sd,o.id,'sd')}</td>
+              <td>${chkCell(o.flood,o.id,'flood')}</td>
+              <td>${chkCell(o.inspDone,o.id,'inspDone')}</td>
+              <td style="font-size:12px;color:var(--text-2);">${o.appraisal==='na'?'<span style="color:var(--text-3);font-size:11px;">N/A</span>':o.appraisal||'—'}</td>
+              <td class="${o.closingNear?'closing-near':'closing-ok'}">${o.closingDate}${(()=>{if(!o.closingDateISO)return'';const d=getDaysUntil(o.closingDateISO);return d!==null&&d<=2?`<div style="font-size:10px;color:var(--red);font-weight:700;">${d<0?'VENCIDO':d===0?'HOY':''+d+' día'+(d===1?'':'s')}</div>`:'';})()} </td>
+              <td style="font-size:12px;color:${o.pending?'var(--amber)':'var(--text-3)'};">${o.pending||'—'}</td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>
+    </div>`;
+}
+
+// ─── OP DETAIL ─────────────────────────────────────────────────────────────
+function renderOpDetail(el, actions, id) {
+  const o = DATA.operations.find(x=>x.id===id);
+  if (!o) { el.innerHTML='<div style="padding:40px;text-align:center;color:var(--text-3);">No encontrado.</div>'; return; }
+  document.getElementById('page-title').textContent = o.address;
+  actions.innerHTML = `<button class="btn btn-secondary" onclick="goTo('operaciones')">← Volver</button>`;
+
+  const chkItems = [
+    { label:'Comp. Firmado', key:'compSigned' },
+    { label:'Escrow', key:'escrow' },
+    { label:'LBP', key:'lbp' },
+    { label:'Seller Disclosure', key:'sd' },
+    { label:'Flood Disc.', key:'flood' },
+    { label:'Condo Docs', key:'condoDocs' },
+    { label:'Condo Rider', key:'condoRider' },
+    { label:'Inspección', key:'inspDone' },
+    { label:'Re-inspección', key:'reinsp' },
+  ];
+  const prog = calcProgress(o);
+  const inspOptions = ['Pendiente','Hecha - OK','Reparaciones en curso','Hecha - arreglos en proceso','Re-inspección pendiente','No aplica'];
+  const appraisalOptions = ['Pendiente','Ok','No aplica','Falta ok lender'];
+
+  el.innerHTML = `
+    <div class="detail-grid">
+      <div>
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-header">
+            <span class="card-title">Datos generales</span>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span style="font-size:11px;color:var(--text-3);">Estado:</span>
+              <select id="status-select-${o.id}" onchange="changeStatus(${o.id},this.value)"
+                style="font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;border:1.5px solid ${o.status==='ACTIVA'?'var(--amber)':o.status==='CERRADA'?'var(--green)':'var(--red)'};color:${o.status==='ACTIVA'?'var(--amber)':o.status==='CERRADA'?'var(--green)':'var(--red)'};cursor:pointer;background:var(--surface);">
+                <option value="ACTIVA" ${o.status==='ACTIVA'?'selected':''}>🟡 Activa</option>
+                <option value="CERRADA" ${o.status==='CERRADA'?'selected':''}>🟢 Cerrada</option>
+                <option value="CANCELADA" ${o.status==='CANCELADA'?'selected':''}>🔴 Cancelada</option>
+              </select>
+            </div>
+          </div>
+          <div class="card-body" style="padding:0 18px;">
+            <div class="detail-row">
+              <span class="detail-key">Comprador</span>
+              <input class="insp-select" style="flex:1;min-width:160px;"
+                value="${o.buyerName||clientName(o.clientId)}"
+                placeholder="Nombre del comprador…"
+                onchange="o_buyerName(${o.id},this.value)"
+                onclick="event.stopPropagation()">
+            </div>
+            <div class="detail-row"><span class="detail-key">Tipo</span><span class="detail-val">${o.type}</span></div>
+            <div class="detail-row"><span class="detail-key">Precio</span><span class="detail-val">${o.price?'$'+o.price.toLocaleString():'—'}</span></div>
+            <div class="detail-row">
+              <span class="detail-key">Financiamiento</span>
+              <select class="insp-select" onchange="o_financing(${o.id},this.value)">
+                ${['Cash','Conventional','FHA','VA Loan','Fixed Loan','DSCR Loan'].map(f=>`<option ${o.financing===f?'selected':''}>${f}</option>`).join('')}
+              </select>
+            </div>
+            <div class="detail-row"><span class="detail-key">Agente</span><span class="detail-val">${agentName(o.agent)}</span></div>
+            <div class="detail-row">
+              <span class="detail-key">Realtor</span>
+              <select class="insp-select" onchange="changeRealtor(${o.id},this.value)">
+                ${DATA.realtors.map(r=>`<option value="${r.id}" ${(o.realtor||'none')===r.id?'selected':''}>${r.name}</option>`).join('')}
+              </select>
+            </div>
+            <div class="detail-row"><span class="detail-key">Title Company</span><span class="detail-val">${o.titleCo}</span></div>
+            <div class="detail-row"><span class="detail-key">Compensation</span><span class="detail-val">${o.compPct}%</span></div>
+            <div class="detail-row"><span class="detail-key">Fecha ejecución</span><span class="detail-val">${o.execDate}</span></div>
+            <div class="detail-row"><span class="detail-key">Closing Date</span><span class="detail-val ${o.closingNear?'closing-near':''}">${o.closingDate}</span></div>
+          </div>
+        </div>
+
+        <!-- RENTADA -->
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-header"><span class="card-title">Propiedad rentada</span></div>
+          <div class="card-body" style="padding:0 18px;">
+            <div class="detail-row">
+              <span class="detail-key">¿Está rentada?</span>
+              <div class="toggle ${o.isRented?'on':''}" id="toggle-rented-${o.id}" onclick="toggleRented(${o.id})"></div>
+            </div>
+            <div id="rental-docs-${o.id}" style="${o.isRented?'':'display:none'}">
+              <div class="detail-row">
+                <span class="detail-key">Lease Agreement enviado</span>
+                <span id="chk-${o.id}-leaseAgreementSent">${chkCell(o.leaseAgreementSent,o.id,'leaseAgreementSent')}</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-key">Estoppel Letter enviada</span>
+                <span id="chk-${o.id}-estoppelSent">${chkCell(o.estoppelSent,o.id,'estoppelSent')}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        ${o.pending?`<div class="alert-box alert-warning" style="margin-bottom:16px;">⚠ ${o.pending}</div>`:''}
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Documentos</span>
+            <label class="btn btn-secondary" style="font-size:11px;padding:4px 10px;cursor:pointer;">
+              + Subir PDF
+              <input type="file" accept=".pdf,image/*" multiple style="display:none;" onchange="handleDocUpload(${o.id},this)">
+            </label>
+          </div>
+          <div class="card-body" id="docs-list-${o.id}">
+            <div class="doc-item"><span>📄 Listing Agreement.pdf</span><span style="font-size:11px;color:var(--text-3)">Abr 2</span></div>
+            <div class="doc-item"><span>📄 Inspection Report.pdf</span><span style="font-size:11px;color:var(--text-3)">Abr 18</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <!-- CHECKLIST -->
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-header">
+            <span class="card-title">Checklist</span>
+            <span id="chk-count" style="font-size:12px;color:var(--text-2);">${prog.done}/${prog.total} completados</span>
+          </div>
+          <div class="card-body" style="padding:12px 18px;">
+            <div style="margin-bottom:14px;">
+              <div class="progress-wrap"><div class="progress-fill" id="chk-bar" style="width:${prog.pct}%"></div></div>
+              <div style="display:flex;justify-content:space-between;margin-top:4px;">
+                <div id="chk-pct" style="font-size:11px;color:var(--text-3);">${prog.pct}% completado</div>
+                <div class="chk-hint">Click en cada ítem para cambiar · ✓ Hecho · – Pendiente · N/A No aplica</div>
+              </div>
+            </div>
+            ${chkItems.map(c=>`
+              <div class="detail-row" style="cursor:default;">
+                <span class="detail-key">${c.label}</span>
+                <span id="chk-${o.id}-${c.key}">${chkCell(o[c.key],o.id,c.key)}</span>
+              </div>`).join('')}
+            <div class="detail-row">
+              <span class="detail-key">Appraisal</span>
+              <select class="insp-select" id="appraisal-sel-${o.id}" onchange="changeAppraisal(${o.id},this.value)">
+                ${appraisalOptions.map(opt=>`<option value="${opt}" ${o.appraisal===opt||(opt==='No aplica'&&o.appraisal==='na')?'selected':''}>${opt}</option>`).join('')}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- INSPECCIÓN -->
+        <div class="card">
+          <div class="card-header"><span class="card-title">Inspección</span></div>
+          <div class="card-body" style="padding:14px 18px;">
+            <div class="detail-row">
+              <span class="detail-key">Estado</span>
+              <select class="insp-select" id="insp-status-${o.id}" onchange="changeInspStatus(${o.id},this.value)">
+                ${inspOptions.map(opt=>`<option value="${opt}" ${o.inspStatus===opt?'selected':''}>${opt}</option>`).join('')}
+              </select>
+            </div>
+            <div class="detail-row">
+              <span class="detail-key" style="display:flex;align-items:center;gap:6px;">🔍 Fecha estimada<span style="font-size:10px;color:var(--text-3);">(alerta 2 días antes)</span></span>
+              <input type="date" class="insp-select" id="insp-date-${o.id}"
+                value="${o.inspEstimatedDate||''}"
+                onchange="changeInspEstimatedDate(${o.id},this.value)"
+                style="cursor:pointer;">
+            </div>
+            ${o.inspEstimatedDate?(()=>{const d=getDaysUntil(o.inspEstimatedDate);return d!==null&&d<=2?`<div class="alert-box alert-${d<0?'danger':'warning'}" style="margin:4px 0 8px;">${d<0?`⚠ Fecha de inspección vencida hace ${Math.abs(d)} día${Math.abs(d)===1?'':'s'}`:d===0?'🔍 Inspección estimada HOY':`🔍 Inspección estimada en ${d} día${d===1?'':'s'}`}</div>`:'';})():''}
+            <div style="padding:10px 0 4px;">
+              <div class="form-label" style="margin-bottom:6px;">Comentarios</div>
+              <textarea class="form-input" id="insp-notes-${o.id}" onchange="changeInspNotes(${o.id},this.value)" style="min-height:70px;">${o.inspNotes||''}</textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+// ─── INTERACTION HANDLERS ──────────────────────────────────────────────────
+function cycleChk(opId, key) {
+  const o = DATA.operations.find(x=>x.id===opId);
+  if (!o) return;
+  // Lease y estoppel solo tienen dos estados: true/false
+  const boolOnly = ['leaseAgreementSent','estoppelSent'];
+  if (boolOnly.includes(key)) {
+    o[key] = !o[key];
+  } else {
+    const cycle = { true: false, false: 'na', na: true };
+    o[key] = cycle[String(o[key])];
+  }
+  const cell = document.getElementById(`chk-${opId}-${key}`);
+  if (cell) cell.innerHTML = chkCell(o[key], opId, key);
+  refreshProgress(opId);
+}
+function refreshProgress(opId) {
+  const o = DATA.operations.find(x=>x.id===opId);
+  if (!o) return;
+  const prog = calcProgress(o);
+  const bar = document.getElementById('chk-bar');
+  const pctEl = document.getElementById('chk-pct');
+  const countEl = document.getElementById('chk-count');
+  if (bar) bar.style.width = prog.pct + '%';
+  if (pctEl) pctEl.textContent = prog.pct + '% completado';
+  if (countEl) countEl.textContent = prog.done + '/' + prog.total + ' completados';
+}
+function changeStatus(opId, newStatus) {
+  const o = DATA.operations.find(x=>x.id===opId);
+  if (!o) return;
+  const prev = o.status;
+  o.status = newStatus;
+  const colors = { ACTIVA:'var(--amber)', CERRADA:'var(--green)', CANCELADA:'var(--red)' };
+  const sel = document.getElementById(`status-select-${opId}`);
+  if (sel) { sel.style.borderColor = colors[newStatus]; sel.style.color = colors[newStatus]; }
+  toast(`Estado cambiado: ${prev} → ${newStatus}`);
+}
+function changeInspStatus(opId, val) {
+  const o = DATA.operations.find(x=>x.id===opId);
+  if (o) { o.inspStatus = val; toast('✓ Estado de inspección actualizado'); }
+}
+function changeInspNotes(opId, val) {
+  const o = DATA.operations.find(x=>x.id===opId);
+  if (o) o.inspNotes = val;
+}
+function changeAppraisal(opId, val) {
+  const o = DATA.operations.find(x=>x.id===opId);
+  if (o) { o.appraisal = val === 'No aplica' ? 'na' : val; toast('✓ Appraisal actualizado'); }
+}
+function o_financing(opId, val) {
+  const o = DATA.operations.find(x=>x.id===opId);
+  if (o) { o.financing = val; toast('✓ Financiamiento actualizado'); }
+}
+function changeRealtor(opId, val) {
+  const o = DATA.operations.find(x=>x.id===opId);
+  if (o) { o.realtor = val; toast('✓ Realtor actualizado'); }
+}
+function handleDocUpload(opId, input) {
+  const files = Array.from(input.files);
+  if (!files.length) return;
+  const list = document.getElementById(`docs-list-${opId}`);
+  if (!list) return;
+  const today = new Date().toLocaleDateString('es-AR',{day:'numeric',month:'short'});
+  files.forEach(f => {
+    const item = document.createElement('div');
+    item.className = 'doc-item';
+    item.innerHTML = `<span>📄 ${f.name}</span><span style="font-size:11px;color:var(--green);">✓ Subido ${today}</span>`;
+    list.appendChild(item);
+  });
+  toast(`✓ ${files.length} documento${files.length>1?'s':''} subido${files.length>1?'s':''}`);
+  input.value = '';
+}
+function changeInspEstimatedDate(opId, val) {
+  const o = DATA.operations.find(x=>x.id===opId);
+  if (!o) return;
+  o.inspEstimatedDate = val;
+  // Re-render the alert inline inside the inspection card
+  const dateInput = document.getElementById(`insp-date-${opId}`);
+  if (dateInput) dateInput.value = val;
+  if (val) {
+    const days = getDaysUntil(val);
+    if (days !== null && days <= 2) {
+      const txt = days < 0 ? `⚠ Fecha de inspección vencida hace ${Math.abs(days)} día${Math.abs(days)===1?'':'s'}` :
+                  days === 0 ? '🔍 Inspección estimada HOY' :
+                               `🔍 Inspección estimada en ${days} día${days===1?'':'s'}`;
+      const cls = days < 0 ? 'danger' : 'warning';
+      toast(`🔍 Recordatorio guardado — ${txt.replace(/^[^\s]+\s/,'')}`);
+    } else {
+      toast('✓ Fecha de inspección guardada');
+    }
+  } else {
+    toast('Fecha de inspección borrada');
+  }
+}
+
+function toggleRented(opId) {
+  const o = DATA.operations.find(x=>x.id===opId);
+  if (!o) return;
+  o.isRented = !o.isRented;
+  const toggle = document.getElementById(`toggle-rented-${opId}`);
+  const docs = document.getElementById(`rental-docs-${opId}`);
+  if (toggle) toggle.classList.toggle('on', o.isRented);
+  if (docs) docs.style.display = o.isRented ? '' : 'none';
+}
+
+// ─── DOCUMENTOS ────────────────────────────────────────────────────────────
+function renderDocumentos(el, actions) {
+  actions.innerHTML = `<button class="btn btn-primary">+ Subir documento</button>`;
+  const docs = [
+    { prop:'5319 Arrowsmith Rd', type:'Inspection Report', date:'Abr 18', agent:'Diego' },
+    { prop:'3151 Paradox #401', type:'Comp Agreement', date:'Abr 10', agent:'Gastón' },
+    { prop:'214 E 2nd St', type:'Closing Docs', date:'Abr 9', agent:'Gastón' },
+    { prop:'1279 W 20th St', type:'Listing Agreement', date:'Abr 16', agent:'Leo' },
+    { prop:'2307 Linton Ridge C4', type:'Seller Disclosure', date:'Abr 22', agent:'Sabrina' },
+  ];
+  el.innerHTML = `
+    <div class="card">
+      <div class="card-header"><span class="card-title">Documentos recientes</span></div>
+      <div class="card-body">
+        <table>
+          <thead><tr><th>Propiedad</th><th>Tipo</th><th>Fecha</th><th>Agente</th><th>Acción</th></tr></thead>
+          <tbody>${docs.map(d=>`<tr>
+            <td class="prop-name">${d.prop}</td>
+            <td style="color:var(--text-2);">${d.type}</td>
+            <td style="color:var(--text-3);">${d.date}</td>
+            <td>${d.agent}</td>
+            <td><button class="btn btn-ghost" style="font-size:12px;padding:4px 10px;">Ver PDF</button></td>
+          </tr>`).join('')}</tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+// ─── ZILLOW ────────────────────────────────────────────────────────────────
+const ZILLOW_DATA = {
+  1:{ zestimate:168000, daysOnMarket:28, zoneAvgDays:22, views:312, saves:18, pricePerSqft:142, zoneAvgPpsf:138 },
+  2:{ zestimate:295000, daysOnMarket:51, zoneAvgDays:30, views:187, saves:9,  pricePerSqft:210, zoneAvgPpsf:225 },
+  3:{ zestimate:318000, daysOnMarket:27, zoneAvgDays:35, views:441, saves:31, pricePerSqft:285, zoneAvgPpsf:270 },
+  4:{ zestimate:91000,  daysOnMarket:20, zoneAvgDays:18, views:528, saves:42, pricePerSqft:73,  zoneAvgPpsf:78  },
+  5:{ zestimate:158000, daysOnMarket:14, zoneAvgDays:28, views:263, saves:15, pricePerSqft:155, zoneAvgPpsf:160 },
+};
+function downloadZillowReport() {
+  const activas = DATA.operations.filter(o=>o.status==='ACTIVA'&&ZILLOW_DATA[o.id]);
+  let csv = 'Propiedad,Precio,Zestimate,Diferencia,Días mercado,Vistas,Guardados,Precio/sqft\n';
+  activas.forEach(o=>{
+    const z=ZILLOW_DATA[o.id];
+    const diff=o.price-z.zestimate;
+    csv += `"${o.address}",${o.price},${z.zestimate},${diff},${z.daysOnMarket},${z.views},${z.saves},${z.pricePerSqft}\n`;
+  });
+  // Sin visitas
+  const sinVisitas = DATA.mlsProperties.filter(p=>p.country==='US'&&(p.zillowViews||0)<30);
+  if(sinVisitas.length) {
+    csv += '\nPROPIEDADES CON POCAS VISTAS (<30)\n';
+    sinVisitas.forEach(p=>{ csv += `"${p.address}",${p.zillowViews||0} vistas\n`; });
+  }
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = `zillow_reporte_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click(); toast('✓ Reporte descargado');
+}
+function renderZillow(el, actions) {
+  actions.innerHTML = `
+    <button class="btn btn-secondary" onclick="downloadZillowReport()" style="font-size:12px;">⬇ Descargar reporte</button>
+    <button class="btn btn-secondary" onclick="toast('Actualizando datos de Zillow…')" style="font-size:12px;">↻ Actualizar</button>`;
+  const activas = DATA.operations.filter(o=>o.status==='ACTIVA'&&ZILLOW_DATA[o.id]);
+  const alertas = activas.filter(o=>ZILLOW_DATA[o.id].daysOnMarket>ZILLOW_DATA[o.id].zoneAvgDays+7);
+  const rows = activas.map(o=>{
+    const z=ZILLOW_DATA[o.id];
+    const diff=o.price-z.zestimate; const pct=((diff/z.zestimate)*100).toFixed(1);
+    const daysDiff=z.daysOnMarket-z.zoneAvgDays;
+    const pColor=diff>0?'var(--red)':'var(--green)';
+    const dColor=daysDiff>5?'var(--red)':daysDiff<-3?'var(--green)':'var(--amber)';
+    return `<tr onclick="goTo('op-detail',${o.id})" style="cursor:pointer;">
+      <td><div class="prop-name">${o.address}</div><div class="prop-sub">${o.type} · ${agentName(o.agent)}</div></td>
+      <td><div style="font-weight:600;">$${o.price.toLocaleString()}</div></td>
+      <td><div style="font-weight:600;">$${z.zestimate.toLocaleString()}</div></td>
+      <td><div style="font-weight:700;color:${pColor};">${diff>0?'+':''}$${Math.abs(diff).toLocaleString()}</div><div style="font-size:11px;color:${pColor};">${diff>0?'+':''}${pct}%</div></td>
+      <td><div style="font-weight:600;color:${dColor};">${z.daysOnMarket} días</div><div style="font-size:11px;color:var(--text-3);">Zona: ${z.zoneAvgDays} días</div></td>
+      <td><div style="font-weight:600;">${z.views}</div><div style="font-size:11px;color:var(--text-3);">${z.saves} guardados</div></td>
+      <td><div style="font-weight:600;">$${z.pricePerSqft}/sqft</div><div style="font-size:11px;color:var(--text-3);">Zona: $${z.zoneAvgPpsf}</div></td>
+    </tr>`;
+  }).join('');
+  el.innerHTML = `
+    ${alertas.length?`<div style="margin-bottom:16px;">${alertas.map(o=>{const z=ZILLOW_DATA[o.id];return`<div class="alert-box alert-warning" style="margin-bottom:8px;">⚠ <strong>${o.address}</strong> lleva ${z.daysOnMarket} días en el mercado (promedio zona: ${z.zoneAvgDays} días). Puede necesitar ajuste de precio.</div>`;}).join('')}</div>`:''}
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-label">Propiedades analizadas</div><div class="stat-val gold">${activas.length}</div></div>
+      <div class="stat-card"><div class="stat-label">Precio sobre mercado</div><div class="stat-val red">${activas.filter(o=>o.price>ZILLOW_DATA[o.id].zestimate).length}</div></div>
+      <div class="stat-card"><div class="stat-label">Días prom. en mercado</div><div class="stat-val">${Math.round(activas.reduce((s,o)=>s+ZILLOW_DATA[o.id].daysOnMarket,0)/activas.length)}</div></div>
+      <div class="stat-card"><div class="stat-label">Total vistas Zillow</div><div class="stat-val">${activas.reduce((s,o)=>s+ZILLOW_DATA[o.id].views,0).toLocaleString()}</div></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="card-title">Comparación vs. mercado</span><span style="font-size:11px;color:var(--text-3);">Datos: Zillow · Actualizado hoy</span></div>
+      <div class="card-body" style="overflow-x:auto;">
+        <table style="min-width:800px;">
+          <thead><tr><th>Propiedad</th><th>Precio lista</th><th>Zestimate</th><th>Diferencia</th><th>Días mercado</th><th>Vistas</th><th>Precio/sqft</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--text-3);text-align:center;margin-top:8px;">* Datos estimativos. En la versión final se actualizan automáticamente via API.</div>`;
+}
+
+// ─── USUARIOS ──────────────────────────────────────────────────────────────
+function renderUsuarios(el, actions) {
+  actions.innerHTML = `<button class="btn btn-primary">+ Nuevo usuario</button>`;
+  const users = [
+    { name:'Ximena', email:'accountant@managementjax.com', role:'admin' },
+    { name:'Gustavo', email:'gustavo@miamitango.com', role:'admin' },
+    { name:'Diego', email:'diego@miamitango.com', role:'admin' },
+    { name:'Ana', email:'ana@miamitango.com', role:'ops' },
+    { name:'Ceci', email:'ceci@miamitango.com', role:'ops' },
+    { name:'Adolfo', email:'adolfo@miamitango.com', role:'commercial' },
+    { name:'Gastón', email:'gaston@miamitango.com', role:'commercial' },
+    { name:'Ilan', email:'ilan@miamitango.com', role:'commercial' },
+  ];
+  const roleLabel = { admin:'Admin', ops:'Operaciones', commercial:'Comercial' };
+  const roleBadge = { admin:'badge-admin', ops:'badge-ops', commercial:'badge-commercial' };
+  el.innerHTML = `
+    <div class="card">
+      <div class="card-header"><span class="card-title">${users.length} usuarios</span></div>
+      <div class="card-body">
+        <table>
+          <thead><tr><th>Usuario</th><th>Email</th><th>Rol</th><th>Estado</th></tr></thead>
+          <tbody>${users.map(u=>`<tr>
+            <td><div style="display:flex;align-items:center;gap:8px;"><div class="avatar" style="width:30px;height:30px;font-size:11px;">${u.name.substring(0,2).toUpperCase()}</div><span class="prop-name">${u.name}</span></div></td>
+            <td style="color:var(--text-2);">${u.email}</td>
+            <td><span class="badge ${roleBadge[u.role]}">${roleLabel[u.role]}</span></td>
+            <td><span style="font-size:12px;color:var(--green);">● Activo</span></td>
+          </tr>`).join('')}</tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+// ─── ZONAPROP ──────────────────────────────────────────────────────────────
+function downloadZonaPropReport() {
+  const props = DATA.mlsProperties.filter(p=>p.country==='AR');
+  let csv = 'Propiedad,Ciudad,Barrio,Precio USD,Vistas ZonaProp,Días en mercado\n';
+  props.forEach(p=>{ csv += `"${p.address}","${p.city||''}","${p.barrio||''}",${p.listPrice},${p.zonaPropViews||0},${p.daysListed}\n`; });
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = `zonaprop_reporte_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click(); toast('✓ Reporte descargado');
+}
+function renderZonaProp(el, actions) {
+  actions.innerHTML = `
+    <button class="btn btn-secondary" onclick="downloadZonaPropReport()" style="font-size:12px;">⬇ Descargar reporte</button>
+    <button class="btn btn-secondary" onclick="toast('Actualizando ZonaProp…')" style="font-size:12px;">↻ Actualizar</button>`;
+  const props = DATA.mlsProperties.filter(p=>p.country==='AR');
+  const sinVisitas = props.filter(p=>(p.zonaPropViews||0)<50);
+  const rows = props.map(p=>{
+    const views = p.zonaPropViews||0;
+    const vColor = views<50?'var(--red)':views<100?'var(--amber)':'var(--green)';
+    return `<tr onclick="" style="cursor:default;">
+      <td><div class="prop-name">🇦🇷 ${p.address}</div><div class="prop-sub">${p.city||''} · ${p.barrio||''}</div></td>
+      <td><span style="font-size:11px;color:var(--text-2);">${p.type}</span></td>
+      <td style="font-weight:600;">USD ${p.listPrice.toLocaleString()}</td>
+      <td><div class="agent-chip">${agentDot(p.agent)} ${agentName(p.agent)}</div></td>
+      <td style="color:${p.daysListed>30?'var(--red)':p.daysListed>15?'var(--amber)':'var(--text-2)'};">${p.daysListed} días</td>
+      <td style="font-weight:700;color:${vColor};">${views}<div style="font-size:10px;font-weight:400;color:var(--text-3);">${views<50?'⚠ Pocas vistas':''}</div></td>
+      <td>${mlsStatusBadge(p.mlsStatus, p.country)}</td>
+    </tr>`;
+  }).join('');
+  el.innerHTML = `
+    ${sinVisitas.length?`<div style="margin-bottom:16px;">${sinVisitas.map(p=>`<div class="alert-box alert-warning" style="margin-bottom:8px;">⚠ <strong>${p.address}</strong> — solo ${p.zonaPropViews||0} vistas en ZonaProp. Revisá el precio o la publicación.</div>`).join('')}</div>`:''}
+    <div class="stats-grid" style="grid-template-columns:repeat(3,1fr);">
+      <div class="stat-card"><div class="stat-label">Propiedades Argentina</div><div class="stat-val gold">${props.length}</div></div>
+      <div class="stat-card"><div class="stat-label">Pocas vistas (&lt;50)</div><div class="stat-val red">${sinVisitas.length}</div></div>
+      <div class="stat-card"><div class="stat-label">Total vistas ZonaProp</div><div class="stat-val">${props.reduce((s,p)=>s+(p.zonaPropViews||0),0)}</div></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="card-title">Comparación ZonaProp</span><span style="font-size:11px;color:var(--text-3);">Datos estimativos · Argentina</span></div>
+      <div class="card-body" style="overflow-x:auto;">
+        <table>
+          <thead><tr><th>Propiedad</th><th>Tipo</th><th>Precio</th><th>Agente</th><th>Días</th><th>Vistas ZonaProp</th><th>Estado</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--text-3);text-align:center;margin-top:8px;">* Datos estimativos. En la versión final se actualizan automáticamente via API de ZonaProp.</div>`;
+}
+
+// ─── COMISIONES ────────────────────────────────────────────────────────────
+window._comPct = { agente:50, realtor:20, broker:30, agenteSin:70, brokerSin:30 };
+window._rowPct = {}; // per-operation overrides
+
+function _calcCom(o) {
+  const rp = window._rowPct[o.id]||{};
+  const gp = window._comPct;
+  const total = o.price * (o.compPct/100);
+  const hasR = o.realtor && o.realtor !== 'none';
+  const pA = rp.A !== undefined ? rp.A : (hasR ? gp.agente : gp.agenteSin);
+  const pR = rp.R !== undefined ? rp.R : (hasR ? gp.realtor : 0);
+  const pB = rp.B !== undefined ? rp.B : (hasR ? gp.broker : gp.brokerSin);
+  return { total, pA, pR, pB, mA:total*pA/100, mR:total*pR/100, mB:total*pB/100 };
+}
+
+function updateRowPct(opId, who, val) {
+  if (!window._rowPct[opId]) window._rowPct[opId] = {};
+  window._rowPct[opId][who] = parseFloat(val)||0;
+  const o = DATA.operations.find(x=>x.id===opId);
+  if (!o) return;
+  const c = _calcCom(o);
+  const eA=document.getElementById('cmA-'+opId);
+  const eR=document.getElementById('cmR-'+opId);
+  const eB=document.getElementById('cmB-'+opId);
+  if(eA) eA.textContent='$'+Math.round(c.mA).toLocaleString();
+  if(eR) eR.textContent='$'+Math.round(c.mR).toLocaleString();
+  if(eB) eB.textContent='$'+Math.round(c.mB).toLocaleString();
+  // update total row
+  const eT=document.getElementById('cmT-'+opId);
+  if(eT) eT.textContent='$'+Math.round(c.total).toLocaleString();
+}
+
+function recalcComisiones() {
+  const p = window._comPct;
+  p.agente   = parseFloat(document.getElementById('com-agente-con').value)||0;
+  p.realtor  = parseFloat(document.getElementById('com-realtor-con').value)||0;
+  p.broker   = parseFloat(document.getElementById('com-broker-con').value)||0;
+  p.agenteSin= parseFloat(document.getElementById('com-agente-sin').value)||0;
+  p.brokerSin= parseFloat(document.getElementById('com-broker-sin').value)||0;
+  // Reset row overrides and re-render table
+  window._rowPct = {};
+  const ops = DATA.operations.filter(o=>o.status==='ACTIVA'||o.status==='CERRADA');
+  const rows = buildComRows(ops);
+  document.getElementById('com-table-body').innerHTML = rows;
+  const totalCom = ops.reduce((s,o)=>s+o.price*(o.compPct/100),0);
+  const totalBroker = ops.reduce((s,o)=>s+_calcCom(o).mB,0);
+  document.getElementById('com-total').textContent='$'+Math.round(totalCom).toLocaleString();
+  document.getElementById('com-broker').textContent='$'+Math.round(totalBroker).toLocaleString();
+  const sumCon=p.agente+p.realtor+p.broker, sumSin=p.agenteSin+p.brokerSin;
+  const warn=document.getElementById('com-pct-warn');
+  if(warn){ if(sumCon!==100||sumSin!==100){warn.textContent='⚠ Deben sumar 100% (con realtor: '+sumCon+'%, sin realtor: '+sumSin+'%)';warn.style.display='block';}else{warn.style.display='none';}}
+}
+
+function buildComRows(ops) {
+  return ops.map(o=>{
+    const c = _calcCom(o);
+    const inp = 'type="number" style="width:52px;padding:3px 5px;font-size:11px;" class="form-input" min="0" max="100"';
+    return '<tr><td><div class="prop-name">'+o.address+'</div><div class="prop-sub">'+o.status+'</div></td>'
+      +'<td style="font-weight:600;">$'+o.price.toLocaleString()+'</td>'
+      +'<td>'+o.compPct+'%</td>'
+      +'<td style="font-weight:700;color:var(--gold-dark);" id="cmT-'+o.id+'">$'+Math.round(c.total).toLocaleString()+'</td>'
+      +'<td><div style="font-size:12px;">'+agentName(o.agent)+'</div>'
+      +'<div style="display:flex;align-items:center;gap:4px;margin-top:3px;"><input '+inp+' value="'+c.pA+'" oninput="updateRowPct('+o.id+',\'A\',this.value)"><span style="font-size:10px;color:var(--text-3);">% <span id="cmA-'+o.id+'" style="font-weight:600;">$'+Math.round(c.mA).toLocaleString()+'</span></span></div></td>'
+      +'<td><div style="font-size:12px;">'+realtorName(o.realtor)+'</div>'
+      +(c.pR>0?'<div style="display:flex;align-items:center;gap:4px;margin-top:3px;"><input '+inp+' value="'+c.pR+'" oninput="updateRowPct('+o.id+',\'R\',this.value)"><span style="font-size:10px;color:var(--text-3);">% <span id="cmR-'+o.id+'" style="font-weight:600;">$'+Math.round(c.mR).toLocaleString()+'</span></span></div>':'<div style="font-size:11px;color:var(--text-3);">—</div>')+'</td>'
+      +'<td><div style="font-size:12px;">Miami Tango</div>'
+      +'<div style="display:flex;align-items:center;gap:4px;margin-top:3px;"><input '+inp+' value="'+c.pB+'" oninput="updateRowPct('+o.id+',\'B\',this.value)"><span style="font-size:10px;color:var(--text-3);">% <span id="cmB-'+o.id+'" style="font-weight:600;">$'+Math.round(c.mB).toLocaleString()+'</span></span></div></td>'
+      +'</tr>';
+  }).join('');
+}
+
+function renderComisiones(el, actions) {
+  actions.innerHTML = '<button class="btn btn-secondary" onclick="downloadComisionesReport()" style="font-size:12px;">&#x2b07; Descargar Excel</button>';
+  const ops = DATA.operations.filter(o=>o.status==='ACTIVA'||o.status==='CERRADA');
+  const p = window._comPct;
+  const totalCom = ops.reduce((s,o)=>s+o.price*(o.compPct/100),0);
+  const totalBroker = ops.reduce((s,o)=>s+_calcCom(o).mB,0);
+  el.innerHTML = '<div class="stats-grid" style="grid-template-columns:repeat(3,1fr);">'
+    +'<div class="stat-card"><div class="stat-label">Total comisiones</div><div class="stat-val gold" id="com-total">$'+Math.round(totalCom).toLocaleString()+'</div><div class="stat-sub">Activas + cerradas</div></div>'
+    +'<div class="stat-card"><div class="stat-label">Ingresos Miami Tango</div><div class="stat-val green" id="com-broker">$'+Math.round(totalBroker).toLocaleString()+'</div><div class="stat-sub">Parte del broker</div></div>'
+    +'<div class="stat-card"><div class="stat-label">Operaciones</div><div class="stat-val">'+ops.length+'</div></div>'
+    +'</div>'
+    +'<div class="card" style="margin-bottom:16px;">'
+    +'<div class="card-header"><span class="card-title">&#9881; Porcentajes globales (editables por fila)</span></div>'
+    +'<div style="padding:14px 20px;">'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">'
+    +'<div><div style="font-size:11px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;">Con Realtor</div>'
+    +'<div style="display:flex;gap:10px;">'
+    +'<div style="flex:1;"><div style="font-size:11px;color:var(--text-2);margin-bottom:3px;">Agente %</div><input id="com-agente-con" type="number" class="form-input" value="'+p.agente+'" min="0" max="100" oninput="recalcComisiones()"></div>'
+    +'<div style="flex:1;"><div style="font-size:11px;color:var(--text-2);margin-bottom:3px;">Realtor %</div><input id="com-realtor-con" type="number" class="form-input" value="'+p.realtor+'" min="0" max="100" oninput="recalcComisiones()"></div>'
+    +'<div style="flex:1;"><div style="font-size:11px;color:var(--text-2);margin-bottom:3px;">Broker %</div><input id="com-broker-con" type="number" class="form-input" value="'+p.broker+'" min="0" max="100" oninput="recalcComisiones()"></div>'
+    +'</div></div>'
+    +'<div><div style="font-size:11px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;">Sin Realtor</div>'
+    +'<div style="display:flex;gap:10px;">'
+    +'<div style="flex:1;"><div style="font-size:11px;color:var(--text-2);margin-bottom:3px;">Agente %</div><input id="com-agente-sin" type="number" class="form-input" value="'+p.agenteSin+'" min="0" max="100" oninput="recalcComisiones()"></div>'
+    +'<div style="flex:1;"><div style="font-size:11px;color:var(--text-2);margin-bottom:3px;">Broker %</div><input id="com-broker-sin" type="number" class="form-input" value="'+p.brokerSin+'" min="0" max="100" oninput="recalcComisiones()"></div>'
+    +'</div></div>'
+    +'</div>'
+    +'<div id="com-pct-warn" style="display:none;margin-top:10px;color:var(--red);font-size:12px;font-weight:500;"></div>'
+    +'<div style="font-size:11px;color:var(--text-3);margin-top:8px;">Tip: los porcentajes globales se aplican a todas las filas. Podés editar cada fila individualmente en la tabla.</div>'
+    +'</div></div>'
+    +'<div class="card"><div class="card-header"><span class="card-title">Detalle de comisiones por operación</span></div>'
+    +'<div class="card-body" style="overflow-x:auto;"><table>'
+    +'<thead><tr><th>Propiedad</th><th>Precio venta</th><th>Comp%</th><th>Comisión total</th><th>Agente</th><th>Realtor</th><th>Broker (Miami Tango)</th></tr></thead>'
+    +'<tbody id="com-table-body">'+buildComRows(ops)+'</tbody>'
+    +'</table></div></div>';
+}
+function downloadComisionesReport() {
+  const ops = DATA.operations.filter(o=>o.status==='ACTIVA'||o.status==='CERRADA');
+  let csv = 'Propiedad,Estado,Precio,Comp%,Total,Agente,$ Agente,Realtor,$ Realtor,Broker,$ Broker\n';
+  ops.forEach(o=>{
+    const c=_calcCom(o);
+    csv+='"'+o.address+'",'+o.status+','+o.price+','+o.compPct+'%,'+Math.round(c.total)+','+agentName(o.agent)+','+Math.round(c.mA)+','+realtorName(o.realtor)+','+Math.round(c.mR)+',Miami Tango,'+Math.round(c.mB)+'\n';
+  });
+  const blob=new Blob([csv],{type:'text/csv'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='comisiones_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+  toast('\u2713 Reporte descargado');
+}
+
+// ─── MODAL & UTILS ─────────────────────────────────────────────────────────
+function registrarContactoHoy(id) {
+  const l = DATA.leads.find(x=>x.id===id);
+  if (!l) return;
+  const today = new Date().toISOString().slice(0,10);
+  l.lastContact = today;
+  l.contactHistory = l.contactHistory||[];
+  l.contactHistory.push({date:today, notes:'Contacto registrado'});
+  toast('📞 Contacto registrado — '+l.name+' ('+today+')');
+  goTo('leads');
+}
+function registrarContactoLead(id, notes) {
+  const l = DATA.leads.find(x=>x.id===id);
+  if (!l) return;
+  l.contactHistory = l.contactHistory||[];
+  const today = new Date().toISOString().slice(0,10);
+  const inp = document.getElementById('lh-notes-'+id);
+  const notesVal = (notes && notes.trim()) ? notes.trim() : (inp ? inp.value.trim() : '') || 'Contacto registrado';
+  l.contactHistory.push({date:today, notes:notesVal});
+  l.lastContact = today;
+  if (inp) inp.value = '';
+  toast('📞 '+notesVal+' — '+l.name+' ('+today+')');
+  const mTitle = document.getElementById('modal-title');
+  if (mTitle && mTitle.textContent === l.name) openLeadDetail(id);
+  else goTo('leads');
+}
+function o_buyerName(id, val) {
+  const o = DATA.operations.find(x=>x.id===id);
+  if (o) { o.buyerName = val.trim(); toast('✓ Comprador actualizado'); }
+}
+function saveAndCloseLead(id){toast('✓ Lead actualizado');closeModal();goTo('leads');}
+function saveAndCloseCliente(id){toast('✓ Cliente actualizado');closeModal();goTo('clientes');}
+function togglePaisInput(sel) {
+  var inp = document.getElementById('lead-pais-custom');
+  if (inp) inp.style.display = sel.value === 'other' ? 'block' : 'none';
+}
+function closeModal() { document.getElementById('modal-overlay').classList.add('hidden'); }
+document.getElementById('modal-overlay').addEventListener('click', function(e) { if(e.target===this) closeModal(); });
+function toast(msg) {
+  const t = document.createElement('div');
+  t.textContent = msg;
+  t.style.cssText = 'position:fixed;bottom:24px;right:24px;background:#1A1A18;color:#fff;padding:10px 18px;border-radius:8px;font-size:13px;z-index:999;box-shadow:0 4px 16px rgba(0,0,0,0.2);';
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(), 2500);
+}
+
+goTo('dashboard');
+</script>
+</body>
+</html>
