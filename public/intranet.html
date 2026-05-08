@@ -150,6 +150,115 @@
   .alerts-panel-header { font-size: 12px; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
   .alert-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--red); margin-right: 6px; animation: pulse 1.4s infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  /* ── LOGIN SCREEN ─────────────────────────────── */
+  .login-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1a1a18;
+    background-image:
+      radial-gradient(ellipse 80% 60% at 60% 40%, rgba(195,155,60,0.13) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 40% at 20% 80%, rgba(195,155,60,0.07) 0%, transparent 60%);
+    min-height: 100vh;
+  }
+  .login-box {
+    background: #23231f;
+    border: 1px solid rgba(195,155,60,0.25);
+    border-radius: 16px;
+    padding: 48px 44px 40px;
+    width: 380px;
+    max-width: 94vw;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(195,155,60,0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .login-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 32px;
+    gap: 6px;
+  }
+  .login-logo-dot {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #C39B3C 0%, #A07828 100%);
+    display: block;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 20px rgba(195,155,60,0.35);
+  }
+  .login-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #f0e6c8;
+    letter-spacing: 0.02em;
+  }
+  .login-sub {
+    font-size: 12px;
+    color: rgba(240,230,200,0.45);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .login-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  .login-field label {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(240,230,200,0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .login-field input {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(195,155,60,0.2);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 14px;
+    color: #f0e6c8;
+    font-family: inherit;
+    transition: border-color 0.2s, background 0.2s;
+    outline: none;
+  }
+  .login-field input::placeholder { color: rgba(240,230,200,0.25); }
+  .login-field input:focus {
+    border-color: rgba(195,155,60,0.6);
+    background: rgba(255,255,255,0.08);
+  }
+  .login-btn {
+    width: 100%;
+    padding: 13px;
+    margin-top: 8px;
+    background: linear-gradient(135deg, #C39B3C 0%, #A07828 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    transition: opacity 0.2s, transform 0.1s;
+    font-family: inherit;
+  }
+  .login-btn:hover { opacity: 0.92; }
+  .login-btn:active { transform: scale(0.98); }
+  .login-error {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #e07070;
+    text-align: center;
+    min-height: 18px;
+  }
+
 </style>
 </head>
 <body>
@@ -158,7 +267,7 @@
     <div class="login-logo">
       <span class="login-logo-dot"></span>
       <span class="login-title">Miami Tango</span>
-      <div class="login-sub">Investments — Acceso interno</div>
+      <div class="login-sub">Investments &mdash; Acceso interno</div>
     </div>
     <div class="login-field">
       <label>Usuario</label>
