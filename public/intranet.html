@@ -153,7 +153,27 @@
 </style>
 </head>
 <body>
-<div class="app">
+<div class="login-overlay" id="login-overlay">
+  <div class="login-box">
+    <div class="login-logo">
+      <span class="login-logo-dot"></span>
+      <span class="login-title">Miami Tango</span>
+      <div class="login-sub">Investments — Acceso interno</div>
+    </div>
+    <div class="login-field">
+      <label>Usuario</label>
+      <input type="text" id="login-user" placeholder="tu usuario" autocomplete="username" onkeydown="if(event.key==='Enter')document.getElementById('login-pass').focus()">
+    </div>
+    <div class="login-field">
+      <label>Contraseña</label>
+      <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="login-btn" onclick="doLogin()">Ingresar</button>
+    <div class="login-error" id="login-error"></div>
+  </div>
+</div>
+
+<div class="app" id="app-shell">
   <aside class="sidebar">
     <div class="sidebar-logo">
       <div class="logo-mark">
@@ -164,29 +184,32 @@
     <nav>
       <div class="nav-section">
         <div class="nav-label">Principal</div>
-        <div class="nav-item active" onclick="goTo('dashboard')"><span class="nav-icon">▦</span> Dashboard</div>
+        <div class="nav-item active" onclick="goTo('dashboard')" data-view="dashboard"><span class="nav-icon">▦</span> Dashboard</div>
       </div>
       <div class="nav-section">
         <div class="nav-label">Gestión</div>
-        <div class="nav-item" onclick="goTo('mls')"><span class="nav-icon">⌂</span> Propiedades / MLS</div>
-        <div class="nav-item" onclick="goTo('operaciones')"><span class="nav-icon">≡</span> Operaciones</div>
-        <div class="nav-item" onclick="goTo('documentos')"><span class="nav-icon">◻</span> Documentos</div>
+        <div class="nav-item" onclick="goTo('mls')" data-view="mls"><span class="nav-icon">⌂</span> Propiedades / MLS</div>
+        <div class="nav-item" onclick="goTo('operaciones')" data-view="operaciones"><span class="nav-icon">≡</span> Operaciones</div>
+        <div class="nav-item" onclick="goTo('documentos')" data-view="documentos"><span class="nav-icon">◻</span> Documentos</div>
       </div>
       <div class="nav-section">
         <div class="nav-label">Análisis</div>
-        <div class="nav-item" onclick="goTo('zillow')"><span class="nav-icon">◈</span> Mercado / Zillow</div>
-        <div class="nav-item" onclick="goTo('zonaprop')"><span class="nav-icon">◈</span> ZonaProp 🇦🇷</div>
-        <div class="nav-item" onclick="goTo('comisiones')"><span class="nav-icon">$</span> Comisiones</div>
+        <div class="nav-item" onclick="goTo('zillow')" data-view="zillow"><span class="nav-icon">◈</span> Mercado / Zillow</div>
+        <div class="nav-item" onclick="goTo('zonaprop')" data-view="zonaprop"><span class="nav-icon">◈</span> ZonaProp 🇦🇷</div>
+        <div class="nav-item" onclick="goTo('comisiones')" data-view="comisiones"><span class="nav-icon">$</span> Comisiones</div>
       </div>
       <div class="nav-section">
         <div class="nav-label">Admin</div>
-        <div class="nav-item" onclick="goTo('usuarios')"><span class="nav-icon">☰</span> Usuarios</div>
+        <div class="nav-item" onclick="goTo('usuarios')" data-view="usuarios"><span class="nav-icon">☰</span> Usuarios</div>
       </div>
     </nav>
     <div class="sidebar-footer">
-      <div class="user-badge">
-        <div class="avatar">XM</div>
-        <div><div style="color:#ccc;font-size:12px;font-weight:500;">Ximena</div><div style="color:#666;font-size:10px;">Admin</div></div>
+      <div class="user-badge" style="justify-content:space-between;align-items:center;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="avatar" id="sidebar-avatar">XM</div>
+          <div><div style="color:#ccc;font-size:12px;font-weight:500;" id="sidebar-name">Ximena</div><div style="color:#666;font-size:10px;" id="sidebar-role">Admin</div></div>
+        </div>
+        <button onclick="doLogout()" title="Cerrar sesión" style="background:none;border:none;color:#666;cursor:pointer;font-size:16px;padding:4px;">⏻</button>
       </div>
     </div>
   </aside>
@@ -211,6 +234,66 @@
 </div>
 
 <script>
+// ─── AUTH ───────────────────────────────────────────────────────────────────
+const USERS = {
+  'gustavo':  { pass:'MT2026gus', role:'admin',   name:'Gustavo',  initials:'GU' },
+  'diego':    { pass:'MT2026die', role:'admin',   name:'Diego',    initials:'DI' },
+  'ximena':   { pass:'MT2026xim', role:'admin',   name:'Ximena',   initials:'XM' },
+  'sabrina':  { pass:'MT2026sab', role:'admin',   name:'Sabrina',  initials:'SA' },
+  'ilay':     { pass:'MT2026ila', role:'admin',   name:'Ilay',     initials:'IL' },
+  'cecilia':  { pass:'MT2026cec', role:'manager', name:'Cecilia',  initials:'CE' },
+  'gaston':   { pass:'MT2026gas', role:'agente',  name:'Gastón',   initials:'GA' },
+  'adolfo':   { pass:'MT2026ado', role:'agente',  name:'Adolfo',   initials:'AD' },
+  'leo':      { pass:'MT2026leo', role:'agente',  name:'Leo',      initials:'LE' },
+  'carlos':   { pass:'MT2026car', role:'agente',  name:'Carlos',   initials:'CA' },
+  'elizabeth':{ pass:'MT2026eli', role:'agente',  name:'Elizabeth',initials:'EL' },
+};
+const NAV_ACCESS = {
+  admin:   ['dashboard','mls','operaciones','documentos','zillow','zonaprop','comisiones','usuarios'],
+  manager: ['dashboard','mls','operaciones','documentos','zillow','zonaprop','usuarios'],
+  agente:  ['mls','operaciones','documentos','zillow','zonaprop'],
+};
+let currentUser = null;
+
+function doLogin() {
+  const u = (document.getElementById('login-user').value||'').trim().toLowerCase();
+  const p = document.getElementById('login-pass').value||'';
+  const err = document.getElementById('login-error');
+  if (!USERS[u] || USERS[u].pass !== p) {
+    err.textContent = 'Usuario o contraseña incorrectos';
+    document.getElementById('login-pass').value='';
+    return;
+  }
+  currentUser = { username:u, ...USERS[u] };
+  document.getElementById('login-overlay').style.display='none';
+  applyRoleUI();
+  goTo('dashboard');
+}
+
+function doLogout() {
+  currentUser = null;
+  document.getElementById('login-overlay').style.display='flex';
+  document.getElementById('login-user').value='';
+  document.getElementById('login-pass').value='';
+  document.getElementById('login-error').textContent='';
+}
+
+function applyRoleUI() {
+  if (!currentUser) return;
+  const allowed = NAV_ACCESS[currentUser.role]||[];
+  // Show/hide nav items
+  document.querySelectorAll('.nav-item[data-view]').forEach(el=>{
+    el.style.display = allowed.includes(el.dataset.view) ? '' : 'none';
+  });
+  // Update sidebar user info
+  document.getElementById('sidebar-avatar').textContent = currentUser.initials;
+  document.getElementById('sidebar-name').textContent = currentUser.name;
+  const roleLabel = {admin:'Admin',manager:'Manager',agente:'Agente'};
+  document.getElementById('sidebar-role').textContent = roleLabel[currentUser.role]||currentUser.role;
+}
+
+function canEdit() { return currentUser && (currentUser.role==='admin'||currentUser.role==='manager'); }
+
 // ─── DATA ──────────────────────────────────────────────────────────────────
 const DATA = {
   agents: [
@@ -1661,7 +1744,7 @@ function renderOpDetail(el, actions, id) {
   const o = DATA.operations.find(x=>x.id===id);
   if (!o) { el.innerHTML='<div style="padding:40px;text-align:center;color:var(--text-3);">No encontrado.</div>'; return; }
   document.getElementById('page-title').textContent = o.address;
-  actions.innerHTML = `<button class="btn btn-secondary" onclick="goTo('operaciones')">← Volver</button>`;
+  actions.innerHTML = `<button class="btn btn-secondary" onclick="goTo('operaciones')" data-view="operaciones">← Volver</button>`;
 
   const chkItems = [
     { label:'Comp. Firmado', key:'compSigned' },
