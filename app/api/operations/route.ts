@@ -3,7 +3,10 @@ import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/lib/auth-server";
 
 export async function GET() {
-  const ops = await prisma.operation.findMany({ orderBy: { id: "asc" } });
+  const ops = await prisma.operation.findMany({
+    where: { deletedAt: null },
+    orderBy: { id: "asc" },
+  });
   return NextResponse.json(ops);
 }
 

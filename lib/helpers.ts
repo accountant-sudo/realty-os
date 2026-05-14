@@ -16,7 +16,7 @@ export function countryFlag(c: string): string {
 }
 
 export function calcProgress(o: Operation): { done: number; total: number; pct: number } {
-  const keys: (keyof Operation)[] = ['compSigned', 'escrow', 'lbp', 'sd', 'flood', 'condoDocs', 'condoRider', 'inspDone', 'reinsp']
+  const keys: (keyof Operation)[] = ['compSigned', 'escrow', 'lbp', 'sd', 'flood', 'condoDocs', 'condoRider', 'inspDone', 'reinspection']
   const relevant = keys.filter(k => o[k] !== 'na')
   const done = relevant.filter(k => o[k] === true).length
   const pct = relevant.length ? Math.round(done / relevant.length * 100) : 0

@@ -4,15 +4,17 @@ import { mlsStatusClass, mlsStatusLabel, countryFlag, fmtPrice } from '@/lib/hel
 import type { MlsProperty, Agent } from '@/lib/types'
 
 const BTN_GHOST = 'inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-[6px] text-[13px] font-medium cursor-pointer border transition-all bg-transparent text-text-2 border-transparent hover:bg-bg'
+const BTN_DANGER = 'inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-[6px] text-[13px] font-medium cursor-pointer border transition-all bg-transparent text-red-400 border-transparent hover:bg-red-950/30'
 
 interface Props {
   properties: MlsProperty[]
   agents: Agent[]
   canEdit: boolean
   onEdit: (p: MlsProperty) => void
+  onDelete: (p: MlsProperty) => void
 }
 
-export default function MlsTable({ properties, agents, canEdit, onEdit }: Props) {
+export default function MlsTable({ properties, agents, canEdit, onEdit, onDelete }: Props) {
   return (
     <div className="overflow-x-auto">
       <table>
@@ -56,7 +58,10 @@ export default function MlsTable({ properties, agents, canEdit, onEdit }: Props)
               <td className="text-[12px] text-text-3">{p.listingExp || '—'}</td>
               {canEdit && (
                 <td>
-                  <button className={BTN_GHOST} onClick={() => onEdit(p)}>Editar</button>
+                  <div className="flex items-center gap-1">
+                    <button className={BTN_GHOST} onClick={() => onEdit(p)}>Editar</button>
+                    <button className={BTN_DANGER} onClick={() => onDelete(p)}>Eliminar</button>
+                  </div>
                 </td>
               )}
             </tr>

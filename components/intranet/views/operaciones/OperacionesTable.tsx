@@ -11,9 +11,11 @@ import type { Operation, Agent } from '@/lib/types'
 interface Props {
   operations: Operation[]
   agents: Agent[]
+  canEdit?: boolean
+  onDelete?: (o: Operation) => void
 }
 
-export default function OperacionesTable({ operations, agents }: Props) {
+export default function OperacionesTable({ operations, agents, canEdit, onDelete }: Props) {
   const { cycleChk } = useData()
   const router = useRouter()
 
@@ -35,6 +37,7 @@ export default function OperacionesTable({ operations, agents }: Props) {
               <th>Progreso</th>
               <th>Closing</th>
               <th>Estado</th>
+              {canEdit && <th></th>}
             </tr>
           </thead>
           <tbody>
@@ -80,6 +83,14 @@ export default function OperacionesTable({ operations, agents }: Props) {
                     {o.closingDate || '—'}
                   </td>
                   <td><Badge cls={statusBadgeClass(o.status)}>{o.status}</Badge></td>
+                  {canEdit && (
+                    <td onClick={e => e.stopPropagation()}>
+                      <button
+                        className="inline-flex items-center px-3 py-1.5 rounded-[6px] text-[12px] font-medium cursor-pointer border bg-transparent text-red-400 border-transparent hover:bg-red-950/30"
+                        onClick={() => onDelete?.(o)}
+                      >Eliminar</button>
+                    </td>
+                  )}
                 </tr>
               )
             })}

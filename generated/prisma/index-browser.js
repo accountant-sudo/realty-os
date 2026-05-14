@@ -152,6 +152,7 @@ exports.Prisma.MlsPropertyScalarFieldEnum = {
   agentRaw: 'agentRaw',
   admin: 'admin',
   listingExp: 'listingExp',
+  listingStart: 'listingStart',
   showingInst: 'showingInst',
   mlsStatus: 'mlsStatus',
   mlsNum: 'mlsNum',
@@ -162,8 +163,38 @@ exports.Prisma.MlsPropertyScalarFieldEnum = {
   city: 'city',
   daysListed: 'daysListed',
   zillowViews: 'zillowViews',
+  typology: 'typology',
+  rentalStatus: 'rentalStatus',
+  rentalEstimate: 'rentalEstimate',
+  rentalContractEnd: 'rentalContractEnd',
+  annualTax: 'annualTax',
+  lockbox: 'lockbox',
+  tour360: 'tour360',
+  tourLink: 'tourLink',
+  sellerName: 'sellerName',
+  sellerPhone: 'sellerPhone',
+  sellerEmail: 'sellerEmail',
+  ownerName: 'ownerName',
+  neighborhood: 'neighborhood',
+  rooms: 'rooms',
+  bedrooms: 'bedrooms',
+  bathrooms: 'bathrooms',
+  toilets: 'toilets',
+  parkingSpots: 'parkingSpots',
+  condition: 'condition',
+  floors: 'floors',
+  buildingAge: 'buildingAge',
+  occupancyStatus: 'occupancyStatus',
+  hoaFees: 'hoaFees',
+  orientation: 'orientation',
+  layout: 'layout',
+  coveredArea: 'coveredArea',
+  semiCoveredArea: 'semiCoveredArea',
+  totalArea: 'totalArea',
+  openArea: 'openArea',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
 };
 
 exports.Prisma.OperationScalarFieldEnum = {
@@ -174,7 +205,7 @@ exports.Prisma.OperationScalarFieldEnum = {
   financing: 'financing',
   agent: 'agent',
   realtor: 'realtor',
-  titleCo: 'titleCo',
+  titleCompany: 'titleCompany',
   clientId: 'clientId',
   buyerName: 'buyerName',
   execDate: 'execDate',
@@ -195,14 +226,15 @@ exports.Prisma.OperationScalarFieldEnum = {
   inspStatus: 'inspStatus',
   inspNotes: 'inspNotes',
   appraisal: 'appraisal',
-  reinsp: 'reinsp',
+  reinspection: 'reinspection',
   pending: 'pending',
   closingNear: 'closingNear',
   isRented: 'isRented',
   leaseAgreementSent: 'leaseAgreementSent',
   estoppelSent: 'estoppelSent',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -213,6 +245,11 @@ exports.Prisma.SortOrder = {
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
 };
 
 

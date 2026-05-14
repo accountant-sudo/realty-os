@@ -11,8 +11,11 @@ interface DataContextValue {
   loading: boolean
   cycleChk: (opId: number, key: keyof Operation) => void
   updateOperation: (opId: number, fields: Partial<Operation>) => void
+  addOperation: (op: Omit<Operation, 'id'>) => Promise<void>
+  deleteOperation: (opId: number) => void
   updateMlsProperty: (propId: number, fields: Partial<MlsProperty>) => void
   addMlsProperty: (prop: Omit<MlsProperty, 'id'>) => void
+  deleteMlsProperty: (propId: number) => void
 }
 
 const DataContext = createContext<DataContextValue | null>(null)
@@ -26,7 +29,7 @@ function dbToOperation(row: Record<string, unknown>): Operation {
     ...row,
     compSigned: chk(row.compSigned), escrow: chk(row.escrow), lbp: chk(row.lbp),
     sd: chk(row.sd), flood: chk(row.flood), condoDocs: chk(row.condoDocs),
-    condoRider: chk(row.condoRider), inspDone: chk(row.inspDone), reinsp: chk(row.reinsp),
+    condoRider: chk(row.condoRider), inspDone: chk(row.inspDone), reinspection: chk(row.reinspection),
   } as Operation
 }
 
@@ -92,6 +95,29 @@ export function DataProvider({ children }: { children: ReactNode }) {
     setMlsProperties(prev => [...prev, created])
   }, [])
 
+  const deleteMlsProperty = useCallback((propId: number) => {
+    setMlsProperties(prev => prev.filter(p => p.id !== propId))
+    fetch(`/api/mls/${propId}`, { method: 'DELETE' }).catch(console.error)
+  }, [])
+
+  const addOperation = useCallback(async (op: Omit<Operation, 'id'>) => {
+    const dbFields = Object.fromEntries(
+      Object.entries(op).map(([k, v]) => [k, typeof v === 'boolean' ? String(v) : v])
+    )
+    const res = await fetch('/api/operations', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(dbFields),
+    })
+    const created = await res.json() as Record<string, unknown>
+    setOperations(prev => [...prev, dbToOperation(created)])
+  }, [])
+
+  const deleteOperation = useCallback((opId: number) => {
+    setOperations(prev => prev.filter(o => o.id !== opId))
+    fetch(`/api/operations/${opId}`, { method: 'DELETE' }).catch(console.error)
+  }, [])
+
   const realtors: Realtor[] = [
     { id: 'carlos', name: 'Carlos' },
     { id: 'elisabeth', name: 'Elisabeth' },
@@ -101,7 +127,8 @@ export function DataProvider({ children }: { children: ReactNode }) {
   return (
     <DataContext.Provider value={{
       operations, mlsProperties, agents, realtors, loading,
-      cycleChk, updateOperation, updateMlsProperty, addMlsProperty,
+      cycleChk, updateOperation, addOperation, deleteOperation,
+      updateMlsProperty, addMlsProperty, deleteMlsProperty,
     }}>
       {children}
     </DataContext.Provider>

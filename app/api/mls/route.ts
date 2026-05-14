@@ -3,7 +3,10 @@ import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/lib/auth-server";
 
 export async function GET() {
-  const props = await prisma.mlsProperty.findMany({ orderBy: { id: "asc" } });
+  const props = await prisma.mlsProperty.findMany({
+    where: { deletedAt: null },
+    orderBy: { id: "asc" },
+  });
   return NextResponse.json(props);
 }
 

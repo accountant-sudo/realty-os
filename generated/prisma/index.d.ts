@@ -4306,6 +4306,17 @@ export namespace Prisma {
     listPrice: number | null
     daysListed: number | null
     zillowViews: number | null
+    rooms: number | null
+    bedrooms: number | null
+    bathrooms: number | null
+    toilets: number | null
+    parkingSpots: number | null
+    floors: number | null
+    hoaFees: number | null
+    coveredArea: number | null
+    semiCoveredArea: number | null
+    totalArea: number | null
+    openArea: number | null
   }
 
   export type MlsPropertySumAggregateOutputType = {
@@ -4313,6 +4324,17 @@ export namespace Prisma {
     listPrice: number | null
     daysListed: number | null
     zillowViews: number | null
+    rooms: number | null
+    bedrooms: number | null
+    bathrooms: number | null
+    toilets: number | null
+    parkingSpots: number | null
+    floors: number | null
+    hoaFees: number | null
+    coveredArea: number | null
+    semiCoveredArea: number | null
+    totalArea: number | null
+    openArea: number | null
   }
 
   export type MlsPropertyMinAggregateOutputType = {
@@ -4324,6 +4346,7 @@ export namespace Prisma {
     agentRaw: string | null
     admin: string | null
     listingExp: string | null
+    listingStart: string | null
     showingInst: string | null
     mlsStatus: string | null
     mlsNum: string | null
@@ -4334,8 +4357,38 @@ export namespace Prisma {
     city: string | null
     daysListed: number | null
     zillowViews: number | null
+    typology: string | null
+    rentalStatus: string | null
+    rentalEstimate: string | null
+    rentalContractEnd: string | null
+    annualTax: string | null
+    lockbox: string | null
+    tour360: string | null
+    tourLink: string | null
+    sellerName: string | null
+    sellerPhone: string | null
+    sellerEmail: string | null
+    ownerName: string | null
+    neighborhood: string | null
+    rooms: number | null
+    bedrooms: number | null
+    bathrooms: number | null
+    toilets: number | null
+    parkingSpots: number | null
+    condition: string | null
+    floors: number | null
+    buildingAge: string | null
+    occupancyStatus: string | null
+    hoaFees: number | null
+    orientation: string | null
+    layout: string | null
+    coveredArea: number | null
+    semiCoveredArea: number | null
+    totalArea: number | null
+    openArea: number | null
     createdAt: Date | null
     updatedAt: Date | null
+    deletedAt: Date | null
   }
 
   export type MlsPropertyMaxAggregateOutputType = {
@@ -4347,6 +4400,7 @@ export namespace Prisma {
     agentRaw: string | null
     admin: string | null
     listingExp: string | null
+    listingStart: string | null
     showingInst: string | null
     mlsStatus: string | null
     mlsNum: string | null
@@ -4357,8 +4411,38 @@ export namespace Prisma {
     city: string | null
     daysListed: number | null
     zillowViews: number | null
+    typology: string | null
+    rentalStatus: string | null
+    rentalEstimate: string | null
+    rentalContractEnd: string | null
+    annualTax: string | null
+    lockbox: string | null
+    tour360: string | null
+    tourLink: string | null
+    sellerName: string | null
+    sellerPhone: string | null
+    sellerEmail: string | null
+    ownerName: string | null
+    neighborhood: string | null
+    rooms: number | null
+    bedrooms: number | null
+    bathrooms: number | null
+    toilets: number | null
+    parkingSpots: number | null
+    condition: string | null
+    floors: number | null
+    buildingAge: string | null
+    occupancyStatus: string | null
+    hoaFees: number | null
+    orientation: string | null
+    layout: string | null
+    coveredArea: number | null
+    semiCoveredArea: number | null
+    totalArea: number | null
+    openArea: number | null
     createdAt: Date | null
     updatedAt: Date | null
+    deletedAt: Date | null
   }
 
   export type MlsPropertyCountAggregateOutputType = {
@@ -4370,6 +4454,7 @@ export namespace Prisma {
     agentRaw: number
     admin: number
     listingExp: number
+    listingStart: number
     showingInst: number
     mlsStatus: number
     mlsNum: number
@@ -4380,8 +4465,38 @@ export namespace Prisma {
     city: number
     daysListed: number
     zillowViews: number
+    typology: number
+    rentalStatus: number
+    rentalEstimate: number
+    rentalContractEnd: number
+    annualTax: number
+    lockbox: number
+    tour360: number
+    tourLink: number
+    sellerName: number
+    sellerPhone: number
+    sellerEmail: number
+    ownerName: number
+    neighborhood: number
+    rooms: number
+    bedrooms: number
+    bathrooms: number
+    toilets: number
+    parkingSpots: number
+    condition: number
+    floors: number
+    buildingAge: number
+    occupancyStatus: number
+    hoaFees: number
+    orientation: number
+    layout: number
+    coveredArea: number
+    semiCoveredArea: number
+    totalArea: number
+    openArea: number
     createdAt: number
     updatedAt: number
+    deletedAt: number
     _all: number
   }
 
@@ -4391,6 +4506,17 @@ export namespace Prisma {
     listPrice?: true
     daysListed?: true
     zillowViews?: true
+    rooms?: true
+    bedrooms?: true
+    bathrooms?: true
+    toilets?: true
+    parkingSpots?: true
+    floors?: true
+    hoaFees?: true
+    coveredArea?: true
+    semiCoveredArea?: true
+    totalArea?: true
+    openArea?: true
   }
 
   export type MlsPropertySumAggregateInputType = {
@@ -4398,6 +4524,17 @@ export namespace Prisma {
     listPrice?: true
     daysListed?: true
     zillowViews?: true
+    rooms?: true
+    bedrooms?: true
+    bathrooms?: true
+    toilets?: true
+    parkingSpots?: true
+    floors?: true
+    hoaFees?: true
+    coveredArea?: true
+    semiCoveredArea?: true
+    totalArea?: true
+    openArea?: true
   }
 
   export type MlsPropertyMinAggregateInputType = {
@@ -4409,6 +4546,7 @@ export namespace Prisma {
     agentRaw?: true
     admin?: true
     listingExp?: true
+    listingStart?: true
     showingInst?: true
     mlsStatus?: true
     mlsNum?: true
@@ -4419,8 +4557,38 @@ export namespace Prisma {
     city?: true
     daysListed?: true
     zillowViews?: true
+    typology?: true
+    rentalStatus?: true
+    rentalEstimate?: true
+    rentalContractEnd?: true
+    annualTax?: true
+    lockbox?: true
+    tour360?: true
+    tourLink?: true
+    sellerName?: true
+    sellerPhone?: true
+    sellerEmail?: true
+    ownerName?: true
+    neighborhood?: true
+    rooms?: true
+    bedrooms?: true
+    bathrooms?: true
+    toilets?: true
+    parkingSpots?: true
+    condition?: true
+    floors?: true
+    buildingAge?: true
+    occupancyStatus?: true
+    hoaFees?: true
+    orientation?: true
+    layout?: true
+    coveredArea?: true
+    semiCoveredArea?: true
+    totalArea?: true
+    openArea?: true
     createdAt?: true
     updatedAt?: true
+    deletedAt?: true
   }
 
   export type MlsPropertyMaxAggregateInputType = {
@@ -4432,6 +4600,7 @@ export namespace Prisma {
     agentRaw?: true
     admin?: true
     listingExp?: true
+    listingStart?: true
     showingInst?: true
     mlsStatus?: true
     mlsNum?: true
@@ -4442,8 +4611,38 @@ export namespace Prisma {
     city?: true
     daysListed?: true
     zillowViews?: true
+    typology?: true
+    rentalStatus?: true
+    rentalEstimate?: true
+    rentalContractEnd?: true
+    annualTax?: true
+    lockbox?: true
+    tour360?: true
+    tourLink?: true
+    sellerName?: true
+    sellerPhone?: true
+    sellerEmail?: true
+    ownerName?: true
+    neighborhood?: true
+    rooms?: true
+    bedrooms?: true
+    bathrooms?: true
+    toilets?: true
+    parkingSpots?: true
+    condition?: true
+    floors?: true
+    buildingAge?: true
+    occupancyStatus?: true
+    hoaFees?: true
+    orientation?: true
+    layout?: true
+    coveredArea?: true
+    semiCoveredArea?: true
+    totalArea?: true
+    openArea?: true
     createdAt?: true
     updatedAt?: true
+    deletedAt?: true
   }
 
   export type MlsPropertyCountAggregateInputType = {
@@ -4455,6 +4654,7 @@ export namespace Prisma {
     agentRaw?: true
     admin?: true
     listingExp?: true
+    listingStart?: true
     showingInst?: true
     mlsStatus?: true
     mlsNum?: true
@@ -4465,8 +4665,38 @@ export namespace Prisma {
     city?: true
     daysListed?: true
     zillowViews?: true
+    typology?: true
+    rentalStatus?: true
+    rentalEstimate?: true
+    rentalContractEnd?: true
+    annualTax?: true
+    lockbox?: true
+    tour360?: true
+    tourLink?: true
+    sellerName?: true
+    sellerPhone?: true
+    sellerEmail?: true
+    ownerName?: true
+    neighborhood?: true
+    rooms?: true
+    bedrooms?: true
+    bathrooms?: true
+    toilets?: true
+    parkingSpots?: true
+    condition?: true
+    floors?: true
+    buildingAge?: true
+    occupancyStatus?: true
+    hoaFees?: true
+    orientation?: true
+    layout?: true
+    coveredArea?: true
+    semiCoveredArea?: true
+    totalArea?: true
+    openArea?: true
     createdAt?: true
     updatedAt?: true
+    deletedAt?: true
     _all?: true
   }
 
@@ -4565,6 +4795,7 @@ export namespace Prisma {
     agentRaw: string
     admin: string
     listingExp: string
+    listingStart: string
     showingInst: string
     mlsStatus: string
     mlsNum: string
@@ -4575,8 +4806,38 @@ export namespace Prisma {
     city: string
     daysListed: number
     zillowViews: number
+    typology: string
+    rentalStatus: string
+    rentalEstimate: string
+    rentalContractEnd: string
+    annualTax: string
+    lockbox: string
+    tour360: string
+    tourLink: string
+    sellerName: string
+    sellerPhone: string
+    sellerEmail: string
+    ownerName: string
+    neighborhood: string
+    rooms: number
+    bedrooms: number
+    bathrooms: number
+    toilets: number
+    parkingSpots: number
+    condition: string
+    floors: number
+    buildingAge: string
+    occupancyStatus: string
+    hoaFees: number
+    orientation: string
+    layout: string
+    coveredArea: number
+    semiCoveredArea: number
+    totalArea: number
+    openArea: number
     createdAt: Date
     updatedAt: Date
+    deletedAt: Date | null
     _count: MlsPropertyCountAggregateOutputType | null
     _avg: MlsPropertyAvgAggregateOutputType | null
     _sum: MlsPropertySumAggregateOutputType | null
@@ -4607,6 +4868,7 @@ export namespace Prisma {
     agentRaw?: boolean
     admin?: boolean
     listingExp?: boolean
+    listingStart?: boolean
     showingInst?: boolean
     mlsStatus?: boolean
     mlsNum?: boolean
@@ -4617,8 +4879,38 @@ export namespace Prisma {
     city?: boolean
     daysListed?: boolean
     zillowViews?: boolean
+    typology?: boolean
+    rentalStatus?: boolean
+    rentalEstimate?: boolean
+    rentalContractEnd?: boolean
+    annualTax?: boolean
+    lockbox?: boolean
+    tour360?: boolean
+    tourLink?: boolean
+    sellerName?: boolean
+    sellerPhone?: boolean
+    sellerEmail?: boolean
+    ownerName?: boolean
+    neighborhood?: boolean
+    rooms?: boolean
+    bedrooms?: boolean
+    bathrooms?: boolean
+    toilets?: boolean
+    parkingSpots?: boolean
+    condition?: boolean
+    floors?: boolean
+    buildingAge?: boolean
+    occupancyStatus?: boolean
+    hoaFees?: boolean
+    orientation?: boolean
+    layout?: boolean
+    coveredArea?: boolean
+    semiCoveredArea?: boolean
+    totalArea?: boolean
+    openArea?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    deletedAt?: boolean
   }, ExtArgs["result"]["mlsProperty"]>
 
   export type MlsPropertySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4630,6 +4922,7 @@ export namespace Prisma {
     agentRaw?: boolean
     admin?: boolean
     listingExp?: boolean
+    listingStart?: boolean
     showingInst?: boolean
     mlsStatus?: boolean
     mlsNum?: boolean
@@ -4640,8 +4933,38 @@ export namespace Prisma {
     city?: boolean
     daysListed?: boolean
     zillowViews?: boolean
+    typology?: boolean
+    rentalStatus?: boolean
+    rentalEstimate?: boolean
+    rentalContractEnd?: boolean
+    annualTax?: boolean
+    lockbox?: boolean
+    tour360?: boolean
+    tourLink?: boolean
+    sellerName?: boolean
+    sellerPhone?: boolean
+    sellerEmail?: boolean
+    ownerName?: boolean
+    neighborhood?: boolean
+    rooms?: boolean
+    bedrooms?: boolean
+    bathrooms?: boolean
+    toilets?: boolean
+    parkingSpots?: boolean
+    condition?: boolean
+    floors?: boolean
+    buildingAge?: boolean
+    occupancyStatus?: boolean
+    hoaFees?: boolean
+    orientation?: boolean
+    layout?: boolean
+    coveredArea?: boolean
+    semiCoveredArea?: boolean
+    totalArea?: boolean
+    openArea?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    deletedAt?: boolean
   }, ExtArgs["result"]["mlsProperty"]>
 
   export type MlsPropertySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4653,6 +4976,7 @@ export namespace Prisma {
     agentRaw?: boolean
     admin?: boolean
     listingExp?: boolean
+    listingStart?: boolean
     showingInst?: boolean
     mlsStatus?: boolean
     mlsNum?: boolean
@@ -4663,8 +4987,38 @@ export namespace Prisma {
     city?: boolean
     daysListed?: boolean
     zillowViews?: boolean
+    typology?: boolean
+    rentalStatus?: boolean
+    rentalEstimate?: boolean
+    rentalContractEnd?: boolean
+    annualTax?: boolean
+    lockbox?: boolean
+    tour360?: boolean
+    tourLink?: boolean
+    sellerName?: boolean
+    sellerPhone?: boolean
+    sellerEmail?: boolean
+    ownerName?: boolean
+    neighborhood?: boolean
+    rooms?: boolean
+    bedrooms?: boolean
+    bathrooms?: boolean
+    toilets?: boolean
+    parkingSpots?: boolean
+    condition?: boolean
+    floors?: boolean
+    buildingAge?: boolean
+    occupancyStatus?: boolean
+    hoaFees?: boolean
+    orientation?: boolean
+    layout?: boolean
+    coveredArea?: boolean
+    semiCoveredArea?: boolean
+    totalArea?: boolean
+    openArea?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    deletedAt?: boolean
   }, ExtArgs["result"]["mlsProperty"]>
 
   export type MlsPropertySelectScalar = {
@@ -4676,6 +5030,7 @@ export namespace Prisma {
     agentRaw?: boolean
     admin?: boolean
     listingExp?: boolean
+    listingStart?: boolean
     showingInst?: boolean
     mlsStatus?: boolean
     mlsNum?: boolean
@@ -4686,11 +5041,41 @@ export namespace Prisma {
     city?: boolean
     daysListed?: boolean
     zillowViews?: boolean
+    typology?: boolean
+    rentalStatus?: boolean
+    rentalEstimate?: boolean
+    rentalContractEnd?: boolean
+    annualTax?: boolean
+    lockbox?: boolean
+    tour360?: boolean
+    tourLink?: boolean
+    sellerName?: boolean
+    sellerPhone?: boolean
+    sellerEmail?: boolean
+    ownerName?: boolean
+    neighborhood?: boolean
+    rooms?: boolean
+    bedrooms?: boolean
+    bathrooms?: boolean
+    toilets?: boolean
+    parkingSpots?: boolean
+    condition?: boolean
+    floors?: boolean
+    buildingAge?: boolean
+    occupancyStatus?: boolean
+    hoaFees?: boolean
+    orientation?: boolean
+    layout?: boolean
+    coveredArea?: boolean
+    semiCoveredArea?: boolean
+    totalArea?: boolean
+    openArea?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    deletedAt?: boolean
   }
 
-  export type MlsPropertyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "address" | "type" | "listPrice" | "agent" | "agentRaw" | "admin" | "listingExp" | "showingInst" | "mlsStatus" | "mlsNum" | "zillow" | "notes" | "country" | "usState" | "city" | "daysListed" | "zillowViews" | "createdAt" | "updatedAt", ExtArgs["result"]["mlsProperty"]>
+  export type MlsPropertyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "address" | "type" | "listPrice" | "agent" | "agentRaw" | "admin" | "listingExp" | "listingStart" | "showingInst" | "mlsStatus" | "mlsNum" | "zillow" | "notes" | "country" | "usState" | "city" | "daysListed" | "zillowViews" | "typology" | "rentalStatus" | "rentalEstimate" | "rentalContractEnd" | "annualTax" | "lockbox" | "tour360" | "tourLink" | "sellerName" | "sellerPhone" | "sellerEmail" | "ownerName" | "neighborhood" | "rooms" | "bedrooms" | "bathrooms" | "toilets" | "parkingSpots" | "condition" | "floors" | "buildingAge" | "occupancyStatus" | "hoaFees" | "orientation" | "layout" | "coveredArea" | "semiCoveredArea" | "totalArea" | "openArea" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["mlsProperty"]>
 
   export type $MlsPropertyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "MlsProperty"
@@ -4704,6 +5089,7 @@ export namespace Prisma {
       agentRaw: string
       admin: string
       listingExp: string
+      listingStart: string
       showingInst: string
       mlsStatus: string
       mlsNum: string
@@ -4714,8 +5100,38 @@ export namespace Prisma {
       city: string
       daysListed: number
       zillowViews: number
+      typology: string
+      rentalStatus: string
+      rentalEstimate: string
+      rentalContractEnd: string
+      annualTax: string
+      lockbox: string
+      tour360: string
+      tourLink: string
+      sellerName: string
+      sellerPhone: string
+      sellerEmail: string
+      ownerName: string
+      neighborhood: string
+      rooms: number
+      bedrooms: number
+      bathrooms: number
+      toilets: number
+      parkingSpots: number
+      condition: string
+      floors: number
+      buildingAge: string
+      occupancyStatus: string
+      hoaFees: number
+      orientation: string
+      layout: string
+      coveredArea: number
+      semiCoveredArea: number
+      totalArea: number
+      openArea: number
       createdAt: Date
       updatedAt: Date
+      deletedAt: Date | null
     }, ExtArgs["result"]["mlsProperty"]>
     composites: {}
   }
@@ -5147,6 +5563,7 @@ export namespace Prisma {
     readonly agentRaw: FieldRef<"MlsProperty", 'String'>
     readonly admin: FieldRef<"MlsProperty", 'String'>
     readonly listingExp: FieldRef<"MlsProperty", 'String'>
+    readonly listingStart: FieldRef<"MlsProperty", 'String'>
     readonly showingInst: FieldRef<"MlsProperty", 'String'>
     readonly mlsStatus: FieldRef<"MlsProperty", 'String'>
     readonly mlsNum: FieldRef<"MlsProperty", 'String'>
@@ -5157,8 +5574,38 @@ export namespace Prisma {
     readonly city: FieldRef<"MlsProperty", 'String'>
     readonly daysListed: FieldRef<"MlsProperty", 'Int'>
     readonly zillowViews: FieldRef<"MlsProperty", 'Int'>
+    readonly typology: FieldRef<"MlsProperty", 'String'>
+    readonly rentalStatus: FieldRef<"MlsProperty", 'String'>
+    readonly rentalEstimate: FieldRef<"MlsProperty", 'String'>
+    readonly rentalContractEnd: FieldRef<"MlsProperty", 'String'>
+    readonly annualTax: FieldRef<"MlsProperty", 'String'>
+    readonly lockbox: FieldRef<"MlsProperty", 'String'>
+    readonly tour360: FieldRef<"MlsProperty", 'String'>
+    readonly tourLink: FieldRef<"MlsProperty", 'String'>
+    readonly sellerName: FieldRef<"MlsProperty", 'String'>
+    readonly sellerPhone: FieldRef<"MlsProperty", 'String'>
+    readonly sellerEmail: FieldRef<"MlsProperty", 'String'>
+    readonly ownerName: FieldRef<"MlsProperty", 'String'>
+    readonly neighborhood: FieldRef<"MlsProperty", 'String'>
+    readonly rooms: FieldRef<"MlsProperty", 'Int'>
+    readonly bedrooms: FieldRef<"MlsProperty", 'Int'>
+    readonly bathrooms: FieldRef<"MlsProperty", 'Int'>
+    readonly toilets: FieldRef<"MlsProperty", 'Int'>
+    readonly parkingSpots: FieldRef<"MlsProperty", 'Int'>
+    readonly condition: FieldRef<"MlsProperty", 'String'>
+    readonly floors: FieldRef<"MlsProperty", 'Int'>
+    readonly buildingAge: FieldRef<"MlsProperty", 'String'>
+    readonly occupancyStatus: FieldRef<"MlsProperty", 'String'>
+    readonly hoaFees: FieldRef<"MlsProperty", 'Float'>
+    readonly orientation: FieldRef<"MlsProperty", 'String'>
+    readonly layout: FieldRef<"MlsProperty", 'String'>
+    readonly coveredArea: FieldRef<"MlsProperty", 'Float'>
+    readonly semiCoveredArea: FieldRef<"MlsProperty", 'Float'>
+    readonly totalArea: FieldRef<"MlsProperty", 'Float'>
+    readonly openArea: FieldRef<"MlsProperty", 'Float'>
     readonly createdAt: FieldRef<"MlsProperty", 'DateTime'>
     readonly updatedAt: FieldRef<"MlsProperty", 'DateTime'>
+    readonly deletedAt: FieldRef<"MlsProperty", 'DateTime'>
   }
     
 
@@ -5566,7 +6013,7 @@ export namespace Prisma {
     financing: string | null
     agent: string | null
     realtor: string | null
-    titleCo: string | null
+    titleCompany: string | null
     clientId: number | null
     buyerName: string | null
     execDate: string | null
@@ -5587,7 +6034,7 @@ export namespace Prisma {
     inspStatus: string | null
     inspNotes: string | null
     appraisal: string | null
-    reinsp: string | null
+    reinspection: string | null
     pending: string | null
     closingNear: boolean | null
     isRented: boolean | null
@@ -5595,6 +6042,7 @@ export namespace Prisma {
     estoppelSent: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
+    deletedAt: Date | null
   }
 
   export type OperationMaxAggregateOutputType = {
@@ -5605,7 +6053,7 @@ export namespace Prisma {
     financing: string | null
     agent: string | null
     realtor: string | null
-    titleCo: string | null
+    titleCompany: string | null
     clientId: number | null
     buyerName: string | null
     execDate: string | null
@@ -5626,7 +6074,7 @@ export namespace Prisma {
     inspStatus: string | null
     inspNotes: string | null
     appraisal: string | null
-    reinsp: string | null
+    reinspection: string | null
     pending: string | null
     closingNear: boolean | null
     isRented: boolean | null
@@ -5634,6 +6082,7 @@ export namespace Prisma {
     estoppelSent: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
+    deletedAt: Date | null
   }
 
   export type OperationCountAggregateOutputType = {
@@ -5644,7 +6093,7 @@ export namespace Prisma {
     financing: number
     agent: number
     realtor: number
-    titleCo: number
+    titleCompany: number
     clientId: number
     buyerName: number
     execDate: number
@@ -5665,7 +6114,7 @@ export namespace Prisma {
     inspStatus: number
     inspNotes: number
     appraisal: number
-    reinsp: number
+    reinspection: number
     pending: number
     closingNear: number
     isRented: number
@@ -5673,6 +6122,7 @@ export namespace Prisma {
     estoppelSent: number
     createdAt: number
     updatedAt: number
+    deletedAt: number
     _all: number
   }
 
@@ -5701,7 +6151,7 @@ export namespace Prisma {
     financing?: true
     agent?: true
     realtor?: true
-    titleCo?: true
+    titleCompany?: true
     clientId?: true
     buyerName?: true
     execDate?: true
@@ -5722,7 +6172,7 @@ export namespace Prisma {
     inspStatus?: true
     inspNotes?: true
     appraisal?: true
-    reinsp?: true
+    reinspection?: true
     pending?: true
     closingNear?: true
     isRented?: true
@@ -5730,6 +6180,7 @@ export namespace Prisma {
     estoppelSent?: true
     createdAt?: true
     updatedAt?: true
+    deletedAt?: true
   }
 
   export type OperationMaxAggregateInputType = {
@@ -5740,7 +6191,7 @@ export namespace Prisma {
     financing?: true
     agent?: true
     realtor?: true
-    titleCo?: true
+    titleCompany?: true
     clientId?: true
     buyerName?: true
     execDate?: true
@@ -5761,7 +6212,7 @@ export namespace Prisma {
     inspStatus?: true
     inspNotes?: true
     appraisal?: true
-    reinsp?: true
+    reinspection?: true
     pending?: true
     closingNear?: true
     isRented?: true
@@ -5769,6 +6220,7 @@ export namespace Prisma {
     estoppelSent?: true
     createdAt?: true
     updatedAt?: true
+    deletedAt?: true
   }
 
   export type OperationCountAggregateInputType = {
@@ -5779,7 +6231,7 @@ export namespace Prisma {
     financing?: true
     agent?: true
     realtor?: true
-    titleCo?: true
+    titleCompany?: true
     clientId?: true
     buyerName?: true
     execDate?: true
@@ -5800,7 +6252,7 @@ export namespace Prisma {
     inspStatus?: true
     inspNotes?: true
     appraisal?: true
-    reinsp?: true
+    reinspection?: true
     pending?: true
     closingNear?: true
     isRented?: true
@@ -5808,6 +6260,7 @@ export namespace Prisma {
     estoppelSent?: true
     createdAt?: true
     updatedAt?: true
+    deletedAt?: true
     _all?: true
   }
 
@@ -5905,7 +6358,7 @@ export namespace Prisma {
     financing: string
     agent: string
     realtor: string
-    titleCo: string
+    titleCompany: string
     clientId: number
     buyerName: string
     execDate: string
@@ -5926,7 +6379,7 @@ export namespace Prisma {
     inspStatus: string
     inspNotes: string
     appraisal: string
-    reinsp: string
+    reinspection: string
     pending: string
     closingNear: boolean
     isRented: boolean
@@ -5934,6 +6387,7 @@ export namespace Prisma {
     estoppelSent: boolean
     createdAt: Date
     updatedAt: Date
+    deletedAt: Date | null
     _count: OperationCountAggregateOutputType | null
     _avg: OperationAvgAggregateOutputType | null
     _sum: OperationSumAggregateOutputType | null
@@ -5963,7 +6417,7 @@ export namespace Prisma {
     financing?: boolean
     agent?: boolean
     realtor?: boolean
-    titleCo?: boolean
+    titleCompany?: boolean
     clientId?: boolean
     buyerName?: boolean
     execDate?: boolean
@@ -5984,7 +6438,7 @@ export namespace Prisma {
     inspStatus?: boolean
     inspNotes?: boolean
     appraisal?: boolean
-    reinsp?: boolean
+    reinspection?: boolean
     pending?: boolean
     closingNear?: boolean
     isRented?: boolean
@@ -5992,6 +6446,7 @@ export namespace Prisma {
     estoppelSent?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    deletedAt?: boolean
   }, ExtArgs["result"]["operation"]>
 
   export type OperationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6002,7 +6457,7 @@ export namespace Prisma {
     financing?: boolean
     agent?: boolean
     realtor?: boolean
-    titleCo?: boolean
+    titleCompany?: boolean
     clientId?: boolean
     buyerName?: boolean
     execDate?: boolean
@@ -6023,7 +6478,7 @@ export namespace Prisma {
     inspStatus?: boolean
     inspNotes?: boolean
     appraisal?: boolean
-    reinsp?: boolean
+    reinspection?: boolean
     pending?: boolean
     closingNear?: boolean
     isRented?: boolean
@@ -6031,6 +6486,7 @@ export namespace Prisma {
     estoppelSent?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    deletedAt?: boolean
   }, ExtArgs["result"]["operation"]>
 
   export type OperationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6041,7 +6497,7 @@ export namespace Prisma {
     financing?: boolean
     agent?: boolean
     realtor?: boolean
-    titleCo?: boolean
+    titleCompany?: boolean
     clientId?: boolean
     buyerName?: boolean
     execDate?: boolean
@@ -6062,7 +6518,7 @@ export namespace Prisma {
     inspStatus?: boolean
     inspNotes?: boolean
     appraisal?: boolean
-    reinsp?: boolean
+    reinspection?: boolean
     pending?: boolean
     closingNear?: boolean
     isRented?: boolean
@@ -6070,6 +6526,7 @@ export namespace Prisma {
     estoppelSent?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    deletedAt?: boolean
   }, ExtArgs["result"]["operation"]>
 
   export type OperationSelectScalar = {
@@ -6080,7 +6537,7 @@ export namespace Prisma {
     financing?: boolean
     agent?: boolean
     realtor?: boolean
-    titleCo?: boolean
+    titleCompany?: boolean
     clientId?: boolean
     buyerName?: boolean
     execDate?: boolean
@@ -6101,7 +6558,7 @@ export namespace Prisma {
     inspStatus?: boolean
     inspNotes?: boolean
     appraisal?: boolean
-    reinsp?: boolean
+    reinspection?: boolean
     pending?: boolean
     closingNear?: boolean
     isRented?: boolean
@@ -6109,9 +6566,10 @@ export namespace Prisma {
     estoppelSent?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    deletedAt?: boolean
   }
 
-  export type OperationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "address" | "type" | "price" | "financing" | "agent" | "realtor" | "titleCo" | "clientId" | "buyerName" | "execDate" | "closingDate" | "closingDateISO" | "status" | "commissionPaid" | "compSigned" | "compPct" | "compFixed" | "escrow" | "lbp" | "sd" | "flood" | "condoDocs" | "condoRider" | "inspDone" | "inspStatus" | "inspNotes" | "appraisal" | "reinsp" | "pending" | "closingNear" | "isRented" | "leaseAgreementSent" | "estoppelSent" | "createdAt" | "updatedAt", ExtArgs["result"]["operation"]>
+  export type OperationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "address" | "type" | "price" | "financing" | "agent" | "realtor" | "titleCompany" | "clientId" | "buyerName" | "execDate" | "closingDate" | "closingDateISO" | "status" | "commissionPaid" | "compSigned" | "compPct" | "compFixed" | "escrow" | "lbp" | "sd" | "flood" | "condoDocs" | "condoRider" | "inspDone" | "inspStatus" | "inspNotes" | "appraisal" | "reinspection" | "pending" | "closingNear" | "isRented" | "leaseAgreementSent" | "estoppelSent" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["operation"]>
 
   export type $OperationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Operation"
@@ -6124,7 +6582,7 @@ export namespace Prisma {
       financing: string
       agent: string
       realtor: string
-      titleCo: string
+      titleCompany: string
       clientId: number
       buyerName: string
       execDate: string
@@ -6145,7 +6603,7 @@ export namespace Prisma {
       inspStatus: string
       inspNotes: string
       appraisal: string
-      reinsp: string
+      reinspection: string
       pending: string
       closingNear: boolean
       isRented: boolean
@@ -6153,6 +6611,7 @@ export namespace Prisma {
       estoppelSent: boolean
       createdAt: Date
       updatedAt: Date
+      deletedAt: Date | null
     }, ExtArgs["result"]["operation"]>
     composites: {}
   }
@@ -6583,7 +7042,7 @@ export namespace Prisma {
     readonly financing: FieldRef<"Operation", 'String'>
     readonly agent: FieldRef<"Operation", 'String'>
     readonly realtor: FieldRef<"Operation", 'String'>
-    readonly titleCo: FieldRef<"Operation", 'String'>
+    readonly titleCompany: FieldRef<"Operation", 'String'>
     readonly clientId: FieldRef<"Operation", 'Int'>
     readonly buyerName: FieldRef<"Operation", 'String'>
     readonly execDate: FieldRef<"Operation", 'String'>
@@ -6604,7 +7063,7 @@ export namespace Prisma {
     readonly inspStatus: FieldRef<"Operation", 'String'>
     readonly inspNotes: FieldRef<"Operation", 'String'>
     readonly appraisal: FieldRef<"Operation", 'String'>
-    readonly reinsp: FieldRef<"Operation", 'String'>
+    readonly reinspection: FieldRef<"Operation", 'String'>
     readonly pending: FieldRef<"Operation", 'String'>
     readonly closingNear: FieldRef<"Operation", 'Boolean'>
     readonly isRented: FieldRef<"Operation", 'Boolean'>
@@ -6612,6 +7071,7 @@ export namespace Prisma {
     readonly estoppelSent: FieldRef<"Operation", 'Boolean'>
     readonly createdAt: FieldRef<"Operation", 'DateTime'>
     readonly updatedAt: FieldRef<"Operation", 'DateTime'>
+    readonly deletedAt: FieldRef<"Operation", 'DateTime'>
   }
     
 
@@ -7038,6 +7498,7 @@ export namespace Prisma {
     agentRaw: 'agentRaw',
     admin: 'admin',
     listingExp: 'listingExp',
+    listingStart: 'listingStart',
     showingInst: 'showingInst',
     mlsStatus: 'mlsStatus',
     mlsNum: 'mlsNum',
@@ -7048,8 +7509,38 @@ export namespace Prisma {
     city: 'city',
     daysListed: 'daysListed',
     zillowViews: 'zillowViews',
+    typology: 'typology',
+    rentalStatus: 'rentalStatus',
+    rentalEstimate: 'rentalEstimate',
+    rentalContractEnd: 'rentalContractEnd',
+    annualTax: 'annualTax',
+    lockbox: 'lockbox',
+    tour360: 'tour360',
+    tourLink: 'tourLink',
+    sellerName: 'sellerName',
+    sellerPhone: 'sellerPhone',
+    sellerEmail: 'sellerEmail',
+    ownerName: 'ownerName',
+    neighborhood: 'neighborhood',
+    rooms: 'rooms',
+    bedrooms: 'bedrooms',
+    bathrooms: 'bathrooms',
+    toilets: 'toilets',
+    parkingSpots: 'parkingSpots',
+    condition: 'condition',
+    floors: 'floors',
+    buildingAge: 'buildingAge',
+    occupancyStatus: 'occupancyStatus',
+    hoaFees: 'hoaFees',
+    orientation: 'orientation',
+    layout: 'layout',
+    coveredArea: 'coveredArea',
+    semiCoveredArea: 'semiCoveredArea',
+    totalArea: 'totalArea',
+    openArea: 'openArea',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    deletedAt: 'deletedAt'
   };
 
   export type MlsPropertyScalarFieldEnum = (typeof MlsPropertyScalarFieldEnum)[keyof typeof MlsPropertyScalarFieldEnum]
@@ -7063,7 +7554,7 @@ export namespace Prisma {
     financing: 'financing',
     agent: 'agent',
     realtor: 'realtor',
-    titleCo: 'titleCo',
+    titleCompany: 'titleCompany',
     clientId: 'clientId',
     buyerName: 'buyerName',
     execDate: 'execDate',
@@ -7084,14 +7575,15 @@ export namespace Prisma {
     inspStatus: 'inspStatus',
     inspNotes: 'inspNotes',
     appraisal: 'appraisal',
-    reinsp: 'reinsp',
+    reinspection: 'reinspection',
     pending: 'pending',
     closingNear: 'closingNear',
     isRented: 'isRented',
     leaseAgreementSent: 'leaseAgreementSent',
     estoppelSent: 'estoppelSent',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    deletedAt: 'deletedAt'
   };
 
   export type OperationScalarFieldEnum = (typeof OperationScalarFieldEnum)[keyof typeof OperationScalarFieldEnum]
@@ -7111,6 +7603,14 @@ export namespace Prisma {
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -7351,6 +7851,7 @@ export namespace Prisma {
     agentRaw?: StringFilter<"MlsProperty"> | string
     admin?: StringFilter<"MlsProperty"> | string
     listingExp?: StringFilter<"MlsProperty"> | string
+    listingStart?: StringFilter<"MlsProperty"> | string
     showingInst?: StringFilter<"MlsProperty"> | string
     mlsStatus?: StringFilter<"MlsProperty"> | string
     mlsNum?: StringFilter<"MlsProperty"> | string
@@ -7361,8 +7862,38 @@ export namespace Prisma {
     city?: StringFilter<"MlsProperty"> | string
     daysListed?: IntFilter<"MlsProperty"> | number
     zillowViews?: IntFilter<"MlsProperty"> | number
+    typology?: StringFilter<"MlsProperty"> | string
+    rentalStatus?: StringFilter<"MlsProperty"> | string
+    rentalEstimate?: StringFilter<"MlsProperty"> | string
+    rentalContractEnd?: StringFilter<"MlsProperty"> | string
+    annualTax?: StringFilter<"MlsProperty"> | string
+    lockbox?: StringFilter<"MlsProperty"> | string
+    tour360?: StringFilter<"MlsProperty"> | string
+    tourLink?: StringFilter<"MlsProperty"> | string
+    sellerName?: StringFilter<"MlsProperty"> | string
+    sellerPhone?: StringFilter<"MlsProperty"> | string
+    sellerEmail?: StringFilter<"MlsProperty"> | string
+    ownerName?: StringFilter<"MlsProperty"> | string
+    neighborhood?: StringFilter<"MlsProperty"> | string
+    rooms?: IntFilter<"MlsProperty"> | number
+    bedrooms?: IntFilter<"MlsProperty"> | number
+    bathrooms?: IntFilter<"MlsProperty"> | number
+    toilets?: IntFilter<"MlsProperty"> | number
+    parkingSpots?: IntFilter<"MlsProperty"> | number
+    condition?: StringFilter<"MlsProperty"> | string
+    floors?: IntFilter<"MlsProperty"> | number
+    buildingAge?: StringFilter<"MlsProperty"> | string
+    occupancyStatus?: StringFilter<"MlsProperty"> | string
+    hoaFees?: FloatFilter<"MlsProperty"> | number
+    orientation?: StringFilter<"MlsProperty"> | string
+    layout?: StringFilter<"MlsProperty"> | string
+    coveredArea?: FloatFilter<"MlsProperty"> | number
+    semiCoveredArea?: FloatFilter<"MlsProperty"> | number
+    totalArea?: FloatFilter<"MlsProperty"> | number
+    openArea?: FloatFilter<"MlsProperty"> | number
     createdAt?: DateTimeFilter<"MlsProperty"> | Date | string
     updatedAt?: DateTimeFilter<"MlsProperty"> | Date | string
+    deletedAt?: DateTimeNullableFilter<"MlsProperty"> | Date | string | null
   }
 
   export type MlsPropertyOrderByWithRelationInput = {
@@ -7374,6 +7905,7 @@ export namespace Prisma {
     agentRaw?: SortOrder
     admin?: SortOrder
     listingExp?: SortOrder
+    listingStart?: SortOrder
     showingInst?: SortOrder
     mlsStatus?: SortOrder
     mlsNum?: SortOrder
@@ -7384,8 +7916,38 @@ export namespace Prisma {
     city?: SortOrder
     daysListed?: SortOrder
     zillowViews?: SortOrder
+    typology?: SortOrder
+    rentalStatus?: SortOrder
+    rentalEstimate?: SortOrder
+    rentalContractEnd?: SortOrder
+    annualTax?: SortOrder
+    lockbox?: SortOrder
+    tour360?: SortOrder
+    tourLink?: SortOrder
+    sellerName?: SortOrder
+    sellerPhone?: SortOrder
+    sellerEmail?: SortOrder
+    ownerName?: SortOrder
+    neighborhood?: SortOrder
+    rooms?: SortOrder
+    bedrooms?: SortOrder
+    bathrooms?: SortOrder
+    toilets?: SortOrder
+    parkingSpots?: SortOrder
+    condition?: SortOrder
+    floors?: SortOrder
+    buildingAge?: SortOrder
+    occupancyStatus?: SortOrder
+    hoaFees?: SortOrder
+    orientation?: SortOrder
+    layout?: SortOrder
+    coveredArea?: SortOrder
+    semiCoveredArea?: SortOrder
+    totalArea?: SortOrder
+    openArea?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    deletedAt?: SortOrderInput | SortOrder
   }
 
   export type MlsPropertyWhereUniqueInput = Prisma.AtLeast<{
@@ -7400,6 +7962,7 @@ export namespace Prisma {
     agentRaw?: StringFilter<"MlsProperty"> | string
     admin?: StringFilter<"MlsProperty"> | string
     listingExp?: StringFilter<"MlsProperty"> | string
+    listingStart?: StringFilter<"MlsProperty"> | string
     showingInst?: StringFilter<"MlsProperty"> | string
     mlsStatus?: StringFilter<"MlsProperty"> | string
     mlsNum?: StringFilter<"MlsProperty"> | string
@@ -7410,8 +7973,38 @@ export namespace Prisma {
     city?: StringFilter<"MlsProperty"> | string
     daysListed?: IntFilter<"MlsProperty"> | number
     zillowViews?: IntFilter<"MlsProperty"> | number
+    typology?: StringFilter<"MlsProperty"> | string
+    rentalStatus?: StringFilter<"MlsProperty"> | string
+    rentalEstimate?: StringFilter<"MlsProperty"> | string
+    rentalContractEnd?: StringFilter<"MlsProperty"> | string
+    annualTax?: StringFilter<"MlsProperty"> | string
+    lockbox?: StringFilter<"MlsProperty"> | string
+    tour360?: StringFilter<"MlsProperty"> | string
+    tourLink?: StringFilter<"MlsProperty"> | string
+    sellerName?: StringFilter<"MlsProperty"> | string
+    sellerPhone?: StringFilter<"MlsProperty"> | string
+    sellerEmail?: StringFilter<"MlsProperty"> | string
+    ownerName?: StringFilter<"MlsProperty"> | string
+    neighborhood?: StringFilter<"MlsProperty"> | string
+    rooms?: IntFilter<"MlsProperty"> | number
+    bedrooms?: IntFilter<"MlsProperty"> | number
+    bathrooms?: IntFilter<"MlsProperty"> | number
+    toilets?: IntFilter<"MlsProperty"> | number
+    parkingSpots?: IntFilter<"MlsProperty"> | number
+    condition?: StringFilter<"MlsProperty"> | string
+    floors?: IntFilter<"MlsProperty"> | number
+    buildingAge?: StringFilter<"MlsProperty"> | string
+    occupancyStatus?: StringFilter<"MlsProperty"> | string
+    hoaFees?: FloatFilter<"MlsProperty"> | number
+    orientation?: StringFilter<"MlsProperty"> | string
+    layout?: StringFilter<"MlsProperty"> | string
+    coveredArea?: FloatFilter<"MlsProperty"> | number
+    semiCoveredArea?: FloatFilter<"MlsProperty"> | number
+    totalArea?: FloatFilter<"MlsProperty"> | number
+    openArea?: FloatFilter<"MlsProperty"> | number
     createdAt?: DateTimeFilter<"MlsProperty"> | Date | string
     updatedAt?: DateTimeFilter<"MlsProperty"> | Date | string
+    deletedAt?: DateTimeNullableFilter<"MlsProperty"> | Date | string | null
   }, "id">
 
   export type MlsPropertyOrderByWithAggregationInput = {
@@ -7423,6 +8016,7 @@ export namespace Prisma {
     agentRaw?: SortOrder
     admin?: SortOrder
     listingExp?: SortOrder
+    listingStart?: SortOrder
     showingInst?: SortOrder
     mlsStatus?: SortOrder
     mlsNum?: SortOrder
@@ -7433,8 +8027,38 @@ export namespace Prisma {
     city?: SortOrder
     daysListed?: SortOrder
     zillowViews?: SortOrder
+    typology?: SortOrder
+    rentalStatus?: SortOrder
+    rentalEstimate?: SortOrder
+    rentalContractEnd?: SortOrder
+    annualTax?: SortOrder
+    lockbox?: SortOrder
+    tour360?: SortOrder
+    tourLink?: SortOrder
+    sellerName?: SortOrder
+    sellerPhone?: SortOrder
+    sellerEmail?: SortOrder
+    ownerName?: SortOrder
+    neighborhood?: SortOrder
+    rooms?: SortOrder
+    bedrooms?: SortOrder
+    bathrooms?: SortOrder
+    toilets?: SortOrder
+    parkingSpots?: SortOrder
+    condition?: SortOrder
+    floors?: SortOrder
+    buildingAge?: SortOrder
+    occupancyStatus?: SortOrder
+    hoaFees?: SortOrder
+    orientation?: SortOrder
+    layout?: SortOrder
+    coveredArea?: SortOrder
+    semiCoveredArea?: SortOrder
+    totalArea?: SortOrder
+    openArea?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    deletedAt?: SortOrderInput | SortOrder
     _count?: MlsPropertyCountOrderByAggregateInput
     _avg?: MlsPropertyAvgOrderByAggregateInput
     _max?: MlsPropertyMaxOrderByAggregateInput
@@ -7454,6 +8078,7 @@ export namespace Prisma {
     agentRaw?: StringWithAggregatesFilter<"MlsProperty"> | string
     admin?: StringWithAggregatesFilter<"MlsProperty"> | string
     listingExp?: StringWithAggregatesFilter<"MlsProperty"> | string
+    listingStart?: StringWithAggregatesFilter<"MlsProperty"> | string
     showingInst?: StringWithAggregatesFilter<"MlsProperty"> | string
     mlsStatus?: StringWithAggregatesFilter<"MlsProperty"> | string
     mlsNum?: StringWithAggregatesFilter<"MlsProperty"> | string
@@ -7464,8 +8089,38 @@ export namespace Prisma {
     city?: StringWithAggregatesFilter<"MlsProperty"> | string
     daysListed?: IntWithAggregatesFilter<"MlsProperty"> | number
     zillowViews?: IntWithAggregatesFilter<"MlsProperty"> | number
+    typology?: StringWithAggregatesFilter<"MlsProperty"> | string
+    rentalStatus?: StringWithAggregatesFilter<"MlsProperty"> | string
+    rentalEstimate?: StringWithAggregatesFilter<"MlsProperty"> | string
+    rentalContractEnd?: StringWithAggregatesFilter<"MlsProperty"> | string
+    annualTax?: StringWithAggregatesFilter<"MlsProperty"> | string
+    lockbox?: StringWithAggregatesFilter<"MlsProperty"> | string
+    tour360?: StringWithAggregatesFilter<"MlsProperty"> | string
+    tourLink?: StringWithAggregatesFilter<"MlsProperty"> | string
+    sellerName?: StringWithAggregatesFilter<"MlsProperty"> | string
+    sellerPhone?: StringWithAggregatesFilter<"MlsProperty"> | string
+    sellerEmail?: StringWithAggregatesFilter<"MlsProperty"> | string
+    ownerName?: StringWithAggregatesFilter<"MlsProperty"> | string
+    neighborhood?: StringWithAggregatesFilter<"MlsProperty"> | string
+    rooms?: IntWithAggregatesFilter<"MlsProperty"> | number
+    bedrooms?: IntWithAggregatesFilter<"MlsProperty"> | number
+    bathrooms?: IntWithAggregatesFilter<"MlsProperty"> | number
+    toilets?: IntWithAggregatesFilter<"MlsProperty"> | number
+    parkingSpots?: IntWithAggregatesFilter<"MlsProperty"> | number
+    condition?: StringWithAggregatesFilter<"MlsProperty"> | string
+    floors?: IntWithAggregatesFilter<"MlsProperty"> | number
+    buildingAge?: StringWithAggregatesFilter<"MlsProperty"> | string
+    occupancyStatus?: StringWithAggregatesFilter<"MlsProperty"> | string
+    hoaFees?: FloatWithAggregatesFilter<"MlsProperty"> | number
+    orientation?: StringWithAggregatesFilter<"MlsProperty"> | string
+    layout?: StringWithAggregatesFilter<"MlsProperty"> | string
+    coveredArea?: FloatWithAggregatesFilter<"MlsProperty"> | number
+    semiCoveredArea?: FloatWithAggregatesFilter<"MlsProperty"> | number
+    totalArea?: FloatWithAggregatesFilter<"MlsProperty"> | number
+    openArea?: FloatWithAggregatesFilter<"MlsProperty"> | number
     createdAt?: DateTimeWithAggregatesFilter<"MlsProperty"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"MlsProperty"> | Date | string
+    deletedAt?: DateTimeNullableWithAggregatesFilter<"MlsProperty"> | Date | string | null
   }
 
   export type OperationWhereInput = {
@@ -7479,7 +8134,7 @@ export namespace Prisma {
     financing?: StringFilter<"Operation"> | string
     agent?: StringFilter<"Operation"> | string
     realtor?: StringFilter<"Operation"> | string
-    titleCo?: StringFilter<"Operation"> | string
+    titleCompany?: StringFilter<"Operation"> | string
     clientId?: IntFilter<"Operation"> | number
     buyerName?: StringFilter<"Operation"> | string
     execDate?: StringFilter<"Operation"> | string
@@ -7500,7 +8155,7 @@ export namespace Prisma {
     inspStatus?: StringFilter<"Operation"> | string
     inspNotes?: StringFilter<"Operation"> | string
     appraisal?: StringFilter<"Operation"> | string
-    reinsp?: StringFilter<"Operation"> | string
+    reinspection?: StringFilter<"Operation"> | string
     pending?: StringFilter<"Operation"> | string
     closingNear?: BoolFilter<"Operation"> | boolean
     isRented?: BoolFilter<"Operation"> | boolean
@@ -7508,6 +8163,7 @@ export namespace Prisma {
     estoppelSent?: BoolFilter<"Operation"> | boolean
     createdAt?: DateTimeFilter<"Operation"> | Date | string
     updatedAt?: DateTimeFilter<"Operation"> | Date | string
+    deletedAt?: DateTimeNullableFilter<"Operation"> | Date | string | null
   }
 
   export type OperationOrderByWithRelationInput = {
@@ -7518,7 +8174,7 @@ export namespace Prisma {
     financing?: SortOrder
     agent?: SortOrder
     realtor?: SortOrder
-    titleCo?: SortOrder
+    titleCompany?: SortOrder
     clientId?: SortOrder
     buyerName?: SortOrder
     execDate?: SortOrder
@@ -7539,7 +8195,7 @@ export namespace Prisma {
     inspStatus?: SortOrder
     inspNotes?: SortOrder
     appraisal?: SortOrder
-    reinsp?: SortOrder
+    reinspection?: SortOrder
     pending?: SortOrder
     closingNear?: SortOrder
     isRented?: SortOrder
@@ -7547,6 +8203,7 @@ export namespace Prisma {
     estoppelSent?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    deletedAt?: SortOrderInput | SortOrder
   }
 
   export type OperationWhereUniqueInput = Prisma.AtLeast<{
@@ -7560,7 +8217,7 @@ export namespace Prisma {
     financing?: StringFilter<"Operation"> | string
     agent?: StringFilter<"Operation"> | string
     realtor?: StringFilter<"Operation"> | string
-    titleCo?: StringFilter<"Operation"> | string
+    titleCompany?: StringFilter<"Operation"> | string
     clientId?: IntFilter<"Operation"> | number
     buyerName?: StringFilter<"Operation"> | string
     execDate?: StringFilter<"Operation"> | string
@@ -7581,7 +8238,7 @@ export namespace Prisma {
     inspStatus?: StringFilter<"Operation"> | string
     inspNotes?: StringFilter<"Operation"> | string
     appraisal?: StringFilter<"Operation"> | string
-    reinsp?: StringFilter<"Operation"> | string
+    reinspection?: StringFilter<"Operation"> | string
     pending?: StringFilter<"Operation"> | string
     closingNear?: BoolFilter<"Operation"> | boolean
     isRented?: BoolFilter<"Operation"> | boolean
@@ -7589,6 +8246,7 @@ export namespace Prisma {
     estoppelSent?: BoolFilter<"Operation"> | boolean
     createdAt?: DateTimeFilter<"Operation"> | Date | string
     updatedAt?: DateTimeFilter<"Operation"> | Date | string
+    deletedAt?: DateTimeNullableFilter<"Operation"> | Date | string | null
   }, "id">
 
   export type OperationOrderByWithAggregationInput = {
@@ -7599,7 +8257,7 @@ export namespace Prisma {
     financing?: SortOrder
     agent?: SortOrder
     realtor?: SortOrder
-    titleCo?: SortOrder
+    titleCompany?: SortOrder
     clientId?: SortOrder
     buyerName?: SortOrder
     execDate?: SortOrder
@@ -7620,7 +8278,7 @@ export namespace Prisma {
     inspStatus?: SortOrder
     inspNotes?: SortOrder
     appraisal?: SortOrder
-    reinsp?: SortOrder
+    reinspection?: SortOrder
     pending?: SortOrder
     closingNear?: SortOrder
     isRented?: SortOrder
@@ -7628,6 +8286,7 @@ export namespace Prisma {
     estoppelSent?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    deletedAt?: SortOrderInput | SortOrder
     _count?: OperationCountOrderByAggregateInput
     _avg?: OperationAvgOrderByAggregateInput
     _max?: OperationMaxOrderByAggregateInput
@@ -7646,7 +8305,7 @@ export namespace Prisma {
     financing?: StringWithAggregatesFilter<"Operation"> | string
     agent?: StringWithAggregatesFilter<"Operation"> | string
     realtor?: StringWithAggregatesFilter<"Operation"> | string
-    titleCo?: StringWithAggregatesFilter<"Operation"> | string
+    titleCompany?: StringWithAggregatesFilter<"Operation"> | string
     clientId?: IntWithAggregatesFilter<"Operation"> | number
     buyerName?: StringWithAggregatesFilter<"Operation"> | string
     execDate?: StringWithAggregatesFilter<"Operation"> | string
@@ -7667,7 +8326,7 @@ export namespace Prisma {
     inspStatus?: StringWithAggregatesFilter<"Operation"> | string
     inspNotes?: StringWithAggregatesFilter<"Operation"> | string
     appraisal?: StringWithAggregatesFilter<"Operation"> | string
-    reinsp?: StringWithAggregatesFilter<"Operation"> | string
+    reinspection?: StringWithAggregatesFilter<"Operation"> | string
     pending?: StringWithAggregatesFilter<"Operation"> | string
     closingNear?: BoolWithAggregatesFilter<"Operation"> | boolean
     isRented?: BoolWithAggregatesFilter<"Operation"> | boolean
@@ -7675,6 +8334,7 @@ export namespace Prisma {
     estoppelSent?: BoolWithAggregatesFilter<"Operation"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Operation"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Operation"> | Date | string
+    deletedAt?: DateTimeNullableWithAggregatesFilter<"Operation"> | Date | string | null
   }
 
   export type UserCreateInput = {
@@ -7843,6 +8503,7 @@ export namespace Prisma {
     agentRaw?: string
     admin?: string
     listingExp?: string
+    listingStart?: string
     showingInst?: string
     mlsStatus?: string
     mlsNum?: string
@@ -7853,8 +8514,38 @@ export namespace Prisma {
     city?: string
     daysListed?: number
     zillowViews?: number
+    typology?: string
+    rentalStatus?: string
+    rentalEstimate?: string
+    rentalContractEnd?: string
+    annualTax?: string
+    lockbox?: string
+    tour360?: string
+    tourLink?: string
+    sellerName?: string
+    sellerPhone?: string
+    sellerEmail?: string
+    ownerName?: string
+    neighborhood?: string
+    rooms?: number
+    bedrooms?: number
+    bathrooms?: number
+    toilets?: number
+    parkingSpots?: number
+    condition?: string
+    floors?: number
+    buildingAge?: string
+    occupancyStatus?: string
+    hoaFees?: number
+    orientation?: string
+    layout?: string
+    coveredArea?: number
+    semiCoveredArea?: number
+    totalArea?: number
+    openArea?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
   }
 
   export type MlsPropertyUncheckedCreateInput = {
@@ -7866,6 +8557,7 @@ export namespace Prisma {
     agentRaw?: string
     admin?: string
     listingExp?: string
+    listingStart?: string
     showingInst?: string
     mlsStatus?: string
     mlsNum?: string
@@ -7876,8 +8568,38 @@ export namespace Prisma {
     city?: string
     daysListed?: number
     zillowViews?: number
+    typology?: string
+    rentalStatus?: string
+    rentalEstimate?: string
+    rentalContractEnd?: string
+    annualTax?: string
+    lockbox?: string
+    tour360?: string
+    tourLink?: string
+    sellerName?: string
+    sellerPhone?: string
+    sellerEmail?: string
+    ownerName?: string
+    neighborhood?: string
+    rooms?: number
+    bedrooms?: number
+    bathrooms?: number
+    toilets?: number
+    parkingSpots?: number
+    condition?: string
+    floors?: number
+    buildingAge?: string
+    occupancyStatus?: string
+    hoaFees?: number
+    orientation?: string
+    layout?: string
+    coveredArea?: number
+    semiCoveredArea?: number
+    totalArea?: number
+    openArea?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
   }
 
   export type MlsPropertyUpdateInput = {
@@ -7888,6 +8610,7 @@ export namespace Prisma {
     agentRaw?: StringFieldUpdateOperationsInput | string
     admin?: StringFieldUpdateOperationsInput | string
     listingExp?: StringFieldUpdateOperationsInput | string
+    listingStart?: StringFieldUpdateOperationsInput | string
     showingInst?: StringFieldUpdateOperationsInput | string
     mlsStatus?: StringFieldUpdateOperationsInput | string
     mlsNum?: StringFieldUpdateOperationsInput | string
@@ -7898,8 +8621,38 @@ export namespace Prisma {
     city?: StringFieldUpdateOperationsInput | string
     daysListed?: IntFieldUpdateOperationsInput | number
     zillowViews?: IntFieldUpdateOperationsInput | number
+    typology?: StringFieldUpdateOperationsInput | string
+    rentalStatus?: StringFieldUpdateOperationsInput | string
+    rentalEstimate?: StringFieldUpdateOperationsInput | string
+    rentalContractEnd?: StringFieldUpdateOperationsInput | string
+    annualTax?: StringFieldUpdateOperationsInput | string
+    lockbox?: StringFieldUpdateOperationsInput | string
+    tour360?: StringFieldUpdateOperationsInput | string
+    tourLink?: StringFieldUpdateOperationsInput | string
+    sellerName?: StringFieldUpdateOperationsInput | string
+    sellerPhone?: StringFieldUpdateOperationsInput | string
+    sellerEmail?: StringFieldUpdateOperationsInput | string
+    ownerName?: StringFieldUpdateOperationsInput | string
+    neighborhood?: StringFieldUpdateOperationsInput | string
+    rooms?: IntFieldUpdateOperationsInput | number
+    bedrooms?: IntFieldUpdateOperationsInput | number
+    bathrooms?: IntFieldUpdateOperationsInput | number
+    toilets?: IntFieldUpdateOperationsInput | number
+    parkingSpots?: IntFieldUpdateOperationsInput | number
+    condition?: StringFieldUpdateOperationsInput | string
+    floors?: IntFieldUpdateOperationsInput | number
+    buildingAge?: StringFieldUpdateOperationsInput | string
+    occupancyStatus?: StringFieldUpdateOperationsInput | string
+    hoaFees?: FloatFieldUpdateOperationsInput | number
+    orientation?: StringFieldUpdateOperationsInput | string
+    layout?: StringFieldUpdateOperationsInput | string
+    coveredArea?: FloatFieldUpdateOperationsInput | number
+    semiCoveredArea?: FloatFieldUpdateOperationsInput | number
+    totalArea?: FloatFieldUpdateOperationsInput | number
+    openArea?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type MlsPropertyUncheckedUpdateInput = {
@@ -7911,6 +8664,7 @@ export namespace Prisma {
     agentRaw?: StringFieldUpdateOperationsInput | string
     admin?: StringFieldUpdateOperationsInput | string
     listingExp?: StringFieldUpdateOperationsInput | string
+    listingStart?: StringFieldUpdateOperationsInput | string
     showingInst?: StringFieldUpdateOperationsInput | string
     mlsStatus?: StringFieldUpdateOperationsInput | string
     mlsNum?: StringFieldUpdateOperationsInput | string
@@ -7921,8 +8675,38 @@ export namespace Prisma {
     city?: StringFieldUpdateOperationsInput | string
     daysListed?: IntFieldUpdateOperationsInput | number
     zillowViews?: IntFieldUpdateOperationsInput | number
+    typology?: StringFieldUpdateOperationsInput | string
+    rentalStatus?: StringFieldUpdateOperationsInput | string
+    rentalEstimate?: StringFieldUpdateOperationsInput | string
+    rentalContractEnd?: StringFieldUpdateOperationsInput | string
+    annualTax?: StringFieldUpdateOperationsInput | string
+    lockbox?: StringFieldUpdateOperationsInput | string
+    tour360?: StringFieldUpdateOperationsInput | string
+    tourLink?: StringFieldUpdateOperationsInput | string
+    sellerName?: StringFieldUpdateOperationsInput | string
+    sellerPhone?: StringFieldUpdateOperationsInput | string
+    sellerEmail?: StringFieldUpdateOperationsInput | string
+    ownerName?: StringFieldUpdateOperationsInput | string
+    neighborhood?: StringFieldUpdateOperationsInput | string
+    rooms?: IntFieldUpdateOperationsInput | number
+    bedrooms?: IntFieldUpdateOperationsInput | number
+    bathrooms?: IntFieldUpdateOperationsInput | number
+    toilets?: IntFieldUpdateOperationsInput | number
+    parkingSpots?: IntFieldUpdateOperationsInput | number
+    condition?: StringFieldUpdateOperationsInput | string
+    floors?: IntFieldUpdateOperationsInput | number
+    buildingAge?: StringFieldUpdateOperationsInput | string
+    occupancyStatus?: StringFieldUpdateOperationsInput | string
+    hoaFees?: FloatFieldUpdateOperationsInput | number
+    orientation?: StringFieldUpdateOperationsInput | string
+    layout?: StringFieldUpdateOperationsInput | string
+    coveredArea?: FloatFieldUpdateOperationsInput | number
+    semiCoveredArea?: FloatFieldUpdateOperationsInput | number
+    totalArea?: FloatFieldUpdateOperationsInput | number
+    openArea?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type MlsPropertyCreateManyInput = {
@@ -7934,6 +8718,7 @@ export namespace Prisma {
     agentRaw?: string
     admin?: string
     listingExp?: string
+    listingStart?: string
     showingInst?: string
     mlsStatus?: string
     mlsNum?: string
@@ -7944,8 +8729,38 @@ export namespace Prisma {
     city?: string
     daysListed?: number
     zillowViews?: number
+    typology?: string
+    rentalStatus?: string
+    rentalEstimate?: string
+    rentalContractEnd?: string
+    annualTax?: string
+    lockbox?: string
+    tour360?: string
+    tourLink?: string
+    sellerName?: string
+    sellerPhone?: string
+    sellerEmail?: string
+    ownerName?: string
+    neighborhood?: string
+    rooms?: number
+    bedrooms?: number
+    bathrooms?: number
+    toilets?: number
+    parkingSpots?: number
+    condition?: string
+    floors?: number
+    buildingAge?: string
+    occupancyStatus?: string
+    hoaFees?: number
+    orientation?: string
+    layout?: string
+    coveredArea?: number
+    semiCoveredArea?: number
+    totalArea?: number
+    openArea?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
   }
 
   export type MlsPropertyUpdateManyMutationInput = {
@@ -7956,6 +8771,7 @@ export namespace Prisma {
     agentRaw?: StringFieldUpdateOperationsInput | string
     admin?: StringFieldUpdateOperationsInput | string
     listingExp?: StringFieldUpdateOperationsInput | string
+    listingStart?: StringFieldUpdateOperationsInput | string
     showingInst?: StringFieldUpdateOperationsInput | string
     mlsStatus?: StringFieldUpdateOperationsInput | string
     mlsNum?: StringFieldUpdateOperationsInput | string
@@ -7966,8 +8782,38 @@ export namespace Prisma {
     city?: StringFieldUpdateOperationsInput | string
     daysListed?: IntFieldUpdateOperationsInput | number
     zillowViews?: IntFieldUpdateOperationsInput | number
+    typology?: StringFieldUpdateOperationsInput | string
+    rentalStatus?: StringFieldUpdateOperationsInput | string
+    rentalEstimate?: StringFieldUpdateOperationsInput | string
+    rentalContractEnd?: StringFieldUpdateOperationsInput | string
+    annualTax?: StringFieldUpdateOperationsInput | string
+    lockbox?: StringFieldUpdateOperationsInput | string
+    tour360?: StringFieldUpdateOperationsInput | string
+    tourLink?: StringFieldUpdateOperationsInput | string
+    sellerName?: StringFieldUpdateOperationsInput | string
+    sellerPhone?: StringFieldUpdateOperationsInput | string
+    sellerEmail?: StringFieldUpdateOperationsInput | string
+    ownerName?: StringFieldUpdateOperationsInput | string
+    neighborhood?: StringFieldUpdateOperationsInput | string
+    rooms?: IntFieldUpdateOperationsInput | number
+    bedrooms?: IntFieldUpdateOperationsInput | number
+    bathrooms?: IntFieldUpdateOperationsInput | number
+    toilets?: IntFieldUpdateOperationsInput | number
+    parkingSpots?: IntFieldUpdateOperationsInput | number
+    condition?: StringFieldUpdateOperationsInput | string
+    floors?: IntFieldUpdateOperationsInput | number
+    buildingAge?: StringFieldUpdateOperationsInput | string
+    occupancyStatus?: StringFieldUpdateOperationsInput | string
+    hoaFees?: FloatFieldUpdateOperationsInput | number
+    orientation?: StringFieldUpdateOperationsInput | string
+    layout?: StringFieldUpdateOperationsInput | string
+    coveredArea?: FloatFieldUpdateOperationsInput | number
+    semiCoveredArea?: FloatFieldUpdateOperationsInput | number
+    totalArea?: FloatFieldUpdateOperationsInput | number
+    openArea?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type MlsPropertyUncheckedUpdateManyInput = {
@@ -7979,6 +8825,7 @@ export namespace Prisma {
     agentRaw?: StringFieldUpdateOperationsInput | string
     admin?: StringFieldUpdateOperationsInput | string
     listingExp?: StringFieldUpdateOperationsInput | string
+    listingStart?: StringFieldUpdateOperationsInput | string
     showingInst?: StringFieldUpdateOperationsInput | string
     mlsStatus?: StringFieldUpdateOperationsInput | string
     mlsNum?: StringFieldUpdateOperationsInput | string
@@ -7989,8 +8836,38 @@ export namespace Prisma {
     city?: StringFieldUpdateOperationsInput | string
     daysListed?: IntFieldUpdateOperationsInput | number
     zillowViews?: IntFieldUpdateOperationsInput | number
+    typology?: StringFieldUpdateOperationsInput | string
+    rentalStatus?: StringFieldUpdateOperationsInput | string
+    rentalEstimate?: StringFieldUpdateOperationsInput | string
+    rentalContractEnd?: StringFieldUpdateOperationsInput | string
+    annualTax?: StringFieldUpdateOperationsInput | string
+    lockbox?: StringFieldUpdateOperationsInput | string
+    tour360?: StringFieldUpdateOperationsInput | string
+    tourLink?: StringFieldUpdateOperationsInput | string
+    sellerName?: StringFieldUpdateOperationsInput | string
+    sellerPhone?: StringFieldUpdateOperationsInput | string
+    sellerEmail?: StringFieldUpdateOperationsInput | string
+    ownerName?: StringFieldUpdateOperationsInput | string
+    neighborhood?: StringFieldUpdateOperationsInput | string
+    rooms?: IntFieldUpdateOperationsInput | number
+    bedrooms?: IntFieldUpdateOperationsInput | number
+    bathrooms?: IntFieldUpdateOperationsInput | number
+    toilets?: IntFieldUpdateOperationsInput | number
+    parkingSpots?: IntFieldUpdateOperationsInput | number
+    condition?: StringFieldUpdateOperationsInput | string
+    floors?: IntFieldUpdateOperationsInput | number
+    buildingAge?: StringFieldUpdateOperationsInput | string
+    occupancyStatus?: StringFieldUpdateOperationsInput | string
+    hoaFees?: FloatFieldUpdateOperationsInput | number
+    orientation?: StringFieldUpdateOperationsInput | string
+    layout?: StringFieldUpdateOperationsInput | string
+    coveredArea?: FloatFieldUpdateOperationsInput | number
+    semiCoveredArea?: FloatFieldUpdateOperationsInput | number
+    totalArea?: FloatFieldUpdateOperationsInput | number
+    openArea?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type OperationCreateInput = {
@@ -8000,7 +8877,7 @@ export namespace Prisma {
     financing?: string
     agent?: string
     realtor?: string
-    titleCo?: string
+    titleCompany?: string
     clientId?: number
     buyerName?: string
     execDate?: string
@@ -8021,7 +8898,7 @@ export namespace Prisma {
     inspStatus?: string
     inspNotes?: string
     appraisal?: string
-    reinsp?: string
+    reinspection?: string
     pending?: string
     closingNear?: boolean
     isRented?: boolean
@@ -8029,6 +8906,7 @@ export namespace Prisma {
     estoppelSent?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
   }
 
   export type OperationUncheckedCreateInput = {
@@ -8039,7 +8917,7 @@ export namespace Prisma {
     financing?: string
     agent?: string
     realtor?: string
-    titleCo?: string
+    titleCompany?: string
     clientId?: number
     buyerName?: string
     execDate?: string
@@ -8060,7 +8938,7 @@ export namespace Prisma {
     inspStatus?: string
     inspNotes?: string
     appraisal?: string
-    reinsp?: string
+    reinspection?: string
     pending?: string
     closingNear?: boolean
     isRented?: boolean
@@ -8068,6 +8946,7 @@ export namespace Prisma {
     estoppelSent?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
   }
 
   export type OperationUpdateInput = {
@@ -8077,7 +8956,7 @@ export namespace Prisma {
     financing?: StringFieldUpdateOperationsInput | string
     agent?: StringFieldUpdateOperationsInput | string
     realtor?: StringFieldUpdateOperationsInput | string
-    titleCo?: StringFieldUpdateOperationsInput | string
+    titleCompany?: StringFieldUpdateOperationsInput | string
     clientId?: IntFieldUpdateOperationsInput | number
     buyerName?: StringFieldUpdateOperationsInput | string
     execDate?: StringFieldUpdateOperationsInput | string
@@ -8098,7 +8977,7 @@ export namespace Prisma {
     inspStatus?: StringFieldUpdateOperationsInput | string
     inspNotes?: StringFieldUpdateOperationsInput | string
     appraisal?: StringFieldUpdateOperationsInput | string
-    reinsp?: StringFieldUpdateOperationsInput | string
+    reinspection?: StringFieldUpdateOperationsInput | string
     pending?: StringFieldUpdateOperationsInput | string
     closingNear?: BoolFieldUpdateOperationsInput | boolean
     isRented?: BoolFieldUpdateOperationsInput | boolean
@@ -8106,6 +8985,7 @@ export namespace Prisma {
     estoppelSent?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type OperationUncheckedUpdateInput = {
@@ -8116,7 +8996,7 @@ export namespace Prisma {
     financing?: StringFieldUpdateOperationsInput | string
     agent?: StringFieldUpdateOperationsInput | string
     realtor?: StringFieldUpdateOperationsInput | string
-    titleCo?: StringFieldUpdateOperationsInput | string
+    titleCompany?: StringFieldUpdateOperationsInput | string
     clientId?: IntFieldUpdateOperationsInput | number
     buyerName?: StringFieldUpdateOperationsInput | string
     execDate?: StringFieldUpdateOperationsInput | string
@@ -8137,7 +9017,7 @@ export namespace Prisma {
     inspStatus?: StringFieldUpdateOperationsInput | string
     inspNotes?: StringFieldUpdateOperationsInput | string
     appraisal?: StringFieldUpdateOperationsInput | string
-    reinsp?: StringFieldUpdateOperationsInput | string
+    reinspection?: StringFieldUpdateOperationsInput | string
     pending?: StringFieldUpdateOperationsInput | string
     closingNear?: BoolFieldUpdateOperationsInput | boolean
     isRented?: BoolFieldUpdateOperationsInput | boolean
@@ -8145,6 +9025,7 @@ export namespace Prisma {
     estoppelSent?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type OperationCreateManyInput = {
@@ -8155,7 +9036,7 @@ export namespace Prisma {
     financing?: string
     agent?: string
     realtor?: string
-    titleCo?: string
+    titleCompany?: string
     clientId?: number
     buyerName?: string
     execDate?: string
@@ -8176,7 +9057,7 @@ export namespace Prisma {
     inspStatus?: string
     inspNotes?: string
     appraisal?: string
-    reinsp?: string
+    reinspection?: string
     pending?: string
     closingNear?: boolean
     isRented?: boolean
@@ -8184,6 +9065,7 @@ export namespace Prisma {
     estoppelSent?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deletedAt?: Date | string | null
   }
 
   export type OperationUpdateManyMutationInput = {
@@ -8193,7 +9075,7 @@ export namespace Prisma {
     financing?: StringFieldUpdateOperationsInput | string
     agent?: StringFieldUpdateOperationsInput | string
     realtor?: StringFieldUpdateOperationsInput | string
-    titleCo?: StringFieldUpdateOperationsInput | string
+    titleCompany?: StringFieldUpdateOperationsInput | string
     clientId?: IntFieldUpdateOperationsInput | number
     buyerName?: StringFieldUpdateOperationsInput | string
     execDate?: StringFieldUpdateOperationsInput | string
@@ -8214,7 +9096,7 @@ export namespace Prisma {
     inspStatus?: StringFieldUpdateOperationsInput | string
     inspNotes?: StringFieldUpdateOperationsInput | string
     appraisal?: StringFieldUpdateOperationsInput | string
-    reinsp?: StringFieldUpdateOperationsInput | string
+    reinspection?: StringFieldUpdateOperationsInput | string
     pending?: StringFieldUpdateOperationsInput | string
     closingNear?: BoolFieldUpdateOperationsInput | boolean
     isRented?: BoolFieldUpdateOperationsInput | boolean
@@ -8222,6 +9104,7 @@ export namespace Prisma {
     estoppelSent?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type OperationUncheckedUpdateManyInput = {
@@ -8232,7 +9115,7 @@ export namespace Prisma {
     financing?: StringFieldUpdateOperationsInput | string
     agent?: StringFieldUpdateOperationsInput | string
     realtor?: StringFieldUpdateOperationsInput | string
-    titleCo?: StringFieldUpdateOperationsInput | string
+    titleCompany?: StringFieldUpdateOperationsInput | string
     clientId?: IntFieldUpdateOperationsInput | number
     buyerName?: StringFieldUpdateOperationsInput | string
     execDate?: StringFieldUpdateOperationsInput | string
@@ -8253,7 +9136,7 @@ export namespace Prisma {
     inspStatus?: StringFieldUpdateOperationsInput | string
     inspNotes?: StringFieldUpdateOperationsInput | string
     appraisal?: StringFieldUpdateOperationsInput | string
-    reinsp?: StringFieldUpdateOperationsInput | string
+    reinspection?: StringFieldUpdateOperationsInput | string
     pending?: StringFieldUpdateOperationsInput | string
     closingNear?: BoolFieldUpdateOperationsInput | boolean
     isRented?: BoolFieldUpdateOperationsInput | boolean
@@ -8261,6 +9144,7 @@ export namespace Prisma {
     estoppelSent?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -8446,6 +9330,22 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type MlsPropertyCountOrderByAggregateInput = {
     id?: SortOrder
     address?: SortOrder
@@ -8455,6 +9355,7 @@ export namespace Prisma {
     agentRaw?: SortOrder
     admin?: SortOrder
     listingExp?: SortOrder
+    listingStart?: SortOrder
     showingInst?: SortOrder
     mlsStatus?: SortOrder
     mlsNum?: SortOrder
@@ -8465,8 +9366,38 @@ export namespace Prisma {
     city?: SortOrder
     daysListed?: SortOrder
     zillowViews?: SortOrder
+    typology?: SortOrder
+    rentalStatus?: SortOrder
+    rentalEstimate?: SortOrder
+    rentalContractEnd?: SortOrder
+    annualTax?: SortOrder
+    lockbox?: SortOrder
+    tour360?: SortOrder
+    tourLink?: SortOrder
+    sellerName?: SortOrder
+    sellerPhone?: SortOrder
+    sellerEmail?: SortOrder
+    ownerName?: SortOrder
+    neighborhood?: SortOrder
+    rooms?: SortOrder
+    bedrooms?: SortOrder
+    bathrooms?: SortOrder
+    toilets?: SortOrder
+    parkingSpots?: SortOrder
+    condition?: SortOrder
+    floors?: SortOrder
+    buildingAge?: SortOrder
+    occupancyStatus?: SortOrder
+    hoaFees?: SortOrder
+    orientation?: SortOrder
+    layout?: SortOrder
+    coveredArea?: SortOrder
+    semiCoveredArea?: SortOrder
+    totalArea?: SortOrder
+    openArea?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    deletedAt?: SortOrder
   }
 
   export type MlsPropertyAvgOrderByAggregateInput = {
@@ -8474,6 +9405,17 @@ export namespace Prisma {
     listPrice?: SortOrder
     daysListed?: SortOrder
     zillowViews?: SortOrder
+    rooms?: SortOrder
+    bedrooms?: SortOrder
+    bathrooms?: SortOrder
+    toilets?: SortOrder
+    parkingSpots?: SortOrder
+    floors?: SortOrder
+    hoaFees?: SortOrder
+    coveredArea?: SortOrder
+    semiCoveredArea?: SortOrder
+    totalArea?: SortOrder
+    openArea?: SortOrder
   }
 
   export type MlsPropertyMaxOrderByAggregateInput = {
@@ -8485,6 +9427,7 @@ export namespace Prisma {
     agentRaw?: SortOrder
     admin?: SortOrder
     listingExp?: SortOrder
+    listingStart?: SortOrder
     showingInst?: SortOrder
     mlsStatus?: SortOrder
     mlsNum?: SortOrder
@@ -8495,8 +9438,38 @@ export namespace Prisma {
     city?: SortOrder
     daysListed?: SortOrder
     zillowViews?: SortOrder
+    typology?: SortOrder
+    rentalStatus?: SortOrder
+    rentalEstimate?: SortOrder
+    rentalContractEnd?: SortOrder
+    annualTax?: SortOrder
+    lockbox?: SortOrder
+    tour360?: SortOrder
+    tourLink?: SortOrder
+    sellerName?: SortOrder
+    sellerPhone?: SortOrder
+    sellerEmail?: SortOrder
+    ownerName?: SortOrder
+    neighborhood?: SortOrder
+    rooms?: SortOrder
+    bedrooms?: SortOrder
+    bathrooms?: SortOrder
+    toilets?: SortOrder
+    parkingSpots?: SortOrder
+    condition?: SortOrder
+    floors?: SortOrder
+    buildingAge?: SortOrder
+    occupancyStatus?: SortOrder
+    hoaFees?: SortOrder
+    orientation?: SortOrder
+    layout?: SortOrder
+    coveredArea?: SortOrder
+    semiCoveredArea?: SortOrder
+    totalArea?: SortOrder
+    openArea?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    deletedAt?: SortOrder
   }
 
   export type MlsPropertyMinOrderByAggregateInput = {
@@ -8508,6 +9481,7 @@ export namespace Prisma {
     agentRaw?: SortOrder
     admin?: SortOrder
     listingExp?: SortOrder
+    listingStart?: SortOrder
     showingInst?: SortOrder
     mlsStatus?: SortOrder
     mlsNum?: SortOrder
@@ -8518,8 +9492,38 @@ export namespace Prisma {
     city?: SortOrder
     daysListed?: SortOrder
     zillowViews?: SortOrder
+    typology?: SortOrder
+    rentalStatus?: SortOrder
+    rentalEstimate?: SortOrder
+    rentalContractEnd?: SortOrder
+    annualTax?: SortOrder
+    lockbox?: SortOrder
+    tour360?: SortOrder
+    tourLink?: SortOrder
+    sellerName?: SortOrder
+    sellerPhone?: SortOrder
+    sellerEmail?: SortOrder
+    ownerName?: SortOrder
+    neighborhood?: SortOrder
+    rooms?: SortOrder
+    bedrooms?: SortOrder
+    bathrooms?: SortOrder
+    toilets?: SortOrder
+    parkingSpots?: SortOrder
+    condition?: SortOrder
+    floors?: SortOrder
+    buildingAge?: SortOrder
+    occupancyStatus?: SortOrder
+    hoaFees?: SortOrder
+    orientation?: SortOrder
+    layout?: SortOrder
+    coveredArea?: SortOrder
+    semiCoveredArea?: SortOrder
+    totalArea?: SortOrder
+    openArea?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    deletedAt?: SortOrder
   }
 
   export type MlsPropertySumOrderByAggregateInput = {
@@ -8527,6 +9531,17 @@ export namespace Prisma {
     listPrice?: SortOrder
     daysListed?: SortOrder
     zillowViews?: SortOrder
+    rooms?: SortOrder
+    bedrooms?: SortOrder
+    bathrooms?: SortOrder
+    toilets?: SortOrder
+    parkingSpots?: SortOrder
+    floors?: SortOrder
+    hoaFees?: SortOrder
+    coveredArea?: SortOrder
+    semiCoveredArea?: SortOrder
+    totalArea?: SortOrder
+    openArea?: SortOrder
   }
 
   export type FloatWithAggregatesFilter<$PrismaModel = never> = {
@@ -8545,6 +9560,20 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
   export type BoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
@@ -8558,7 +9587,7 @@ export namespace Prisma {
     financing?: SortOrder
     agent?: SortOrder
     realtor?: SortOrder
-    titleCo?: SortOrder
+    titleCompany?: SortOrder
     clientId?: SortOrder
     buyerName?: SortOrder
     execDate?: SortOrder
@@ -8579,7 +9608,7 @@ export namespace Prisma {
     inspStatus?: SortOrder
     inspNotes?: SortOrder
     appraisal?: SortOrder
-    reinsp?: SortOrder
+    reinspection?: SortOrder
     pending?: SortOrder
     closingNear?: SortOrder
     isRented?: SortOrder
@@ -8587,6 +9616,7 @@ export namespace Prisma {
     estoppelSent?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    deletedAt?: SortOrder
   }
 
   export type OperationAvgOrderByAggregateInput = {
@@ -8605,7 +9635,7 @@ export namespace Prisma {
     financing?: SortOrder
     agent?: SortOrder
     realtor?: SortOrder
-    titleCo?: SortOrder
+    titleCompany?: SortOrder
     clientId?: SortOrder
     buyerName?: SortOrder
     execDate?: SortOrder
@@ -8626,7 +9656,7 @@ export namespace Prisma {
     inspStatus?: SortOrder
     inspNotes?: SortOrder
     appraisal?: SortOrder
-    reinsp?: SortOrder
+    reinspection?: SortOrder
     pending?: SortOrder
     closingNear?: SortOrder
     isRented?: SortOrder
@@ -8634,6 +9664,7 @@ export namespace Prisma {
     estoppelSent?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    deletedAt?: SortOrder
   }
 
   export type OperationMinOrderByAggregateInput = {
@@ -8644,7 +9675,7 @@ export namespace Prisma {
     financing?: SortOrder
     agent?: SortOrder
     realtor?: SortOrder
-    titleCo?: SortOrder
+    titleCompany?: SortOrder
     clientId?: SortOrder
     buyerName?: SortOrder
     execDate?: SortOrder
@@ -8665,7 +9696,7 @@ export namespace Prisma {
     inspStatus?: SortOrder
     inspNotes?: SortOrder
     appraisal?: SortOrder
-    reinsp?: SortOrder
+    reinspection?: SortOrder
     pending?: SortOrder
     closingNear?: SortOrder
     isRented?: SortOrder
@@ -8673,6 +9704,7 @@ export namespace Prisma {
     estoppelSent?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    deletedAt?: SortOrder
   }
 
   export type OperationSumOrderByAggregateInput = {
@@ -8713,6 +9745,10 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
   }
 
   export type BoolFieldUpdateOperationsInput = {
@@ -8813,6 +9849,17 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -8827,6 +9874,31 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedBoolFilter<$PrismaModel = never> = {

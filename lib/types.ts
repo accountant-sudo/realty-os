@@ -33,12 +33,13 @@ export interface Realtor {
 export interface MlsProperty {
   id: number
   address: string
-  type: 'SF' | 'Condo' | 'TH'
+  type: string
   listPrice: number
   agent: string
   agentRaw: string
   admin: string
   listingExp: string
+  listingStart?: string
   showingInst: string
   mlsStatus: 'published' | 'under_contract' | 'withdrawn'
   mlsNum: string
@@ -49,6 +50,37 @@ export interface MlsProperty {
   city: string
   daysListed: number
   zillowViews: number
+  // US-specific
+  typology?: string
+  rentalStatus?: string
+  rentalEstimate?: string
+  rentalContractEnd?: string
+  annualTax?: string
+  lockbox?: string
+  tour360?: string
+  tourLink?: string
+  sellerName?: string
+  sellerPhone?: string
+  sellerEmail?: string
+  // AR-specific
+  ownerName?: string
+  neighborhood?: string
+  rooms?: number
+  bedrooms?: number
+  bathrooms?: number
+  toilets?: number
+  parkingSpots?: number
+  condition?: string
+  floors?: number
+  buildingAge?: string
+  occupancyStatus?: string
+  hoaFees?: number
+  orientation?: string
+  layout?: string
+  coveredArea?: number
+  semiCoveredArea?: number
+  totalArea?: number
+  openArea?: number
 }
 
 export type ChkValue = boolean | 'na'
@@ -61,7 +93,7 @@ export interface Operation {
   financing: string
   agent: string
   realtor: string
-  titleCo: string
+  titleCompany: string
   clientId: number
   buyerName: string
   execDate: string
@@ -82,7 +114,7 @@ export interface Operation {
   inspStatus: string
   inspNotes: string
   appraisal: string
-  reinsp: ChkValue
+  reinspection: ChkValue
   pending: string
   closingNear: boolean
   isRented: boolean
@@ -98,4 +130,3 @@ export interface Alert {
   icon: string
   kind: 'closing' | 'insp'
 }
-

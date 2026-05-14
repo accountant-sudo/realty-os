@@ -61,7 +61,7 @@ export default function OpDetail({ opId }: { opId: number | null }) {
               </div>
               <div className={detailRow}>
                 <span className="text-text-2 font-medium">Title Co.</span>
-                <span className="font-medium text-right">{op.titleCo || '—'}</span>
+                <span className="font-medium text-right">{op.titleCompany || '—'}</span>
               </div>
               <div className={detailRow}>
                 <span className="text-text-2 font-medium">Exec. Date</span>
@@ -138,7 +138,7 @@ export default function OpDetail({ opId }: { opId: number | null }) {
               )}
               <div className={detailRow}>
                 <span className="text-text-2 font-medium">Reinspección</span>
-                <span className="font-medium text-right">{chk('reinsp')}</span>
+                <span className="font-medium text-right">{chk('reinspection')}</span>
               </div>
               <div className={detailRow}>
                 <span className="text-text-2 font-medium">Appraisal</span>
@@ -167,7 +167,7 @@ export default function OpDetail({ opId }: { opId: number | null }) {
                 ['condoDocs', 'Condo Docs'],
                 ['condoRider', 'Condo Rider'],
                 ['inspDone', 'Inspección'],
-                ['reinsp', 'Reinspección'],
+                ['reinspection', 'Reinspección'],
               ] as [keyof Operation, string][]).map(([key, label]) => (
                 <div className={detailRow} key={key}>
                   <span className="text-text-2 font-medium">{label}</span>
