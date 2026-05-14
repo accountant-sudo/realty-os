@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { prisma } from "@/lib/prisma";
+import { NAV_ACCESS } from "@/lib/users";
+import type { Role } from "@/lib/types";
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 const COOKIE_NAME = "mt_session";
@@ -13,8 +15,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Faltan credenciales" }, { status: 400 });
   }
 
-  const user = await prisma.user.findUnique({
-    where: { username: username.trim().toLowerCase() },
+  const user = await prisma.user.findFirst({
+    where: { username: username.trim().toLowerCase(), deletedAt: null },
   });
 
   if (!user || !(await bcrypt.compare(password, user.password))) {
@@ -24,12 +26,27 @@ export async function POST(req: Request) {
     );
   }
 
+  // Embed allowed views from role_permissions (dynamic) or fallback to NAV_ACCESS
+  let allowedViews: string[]
+  let canEdit = false
+
+  if (user.role === "super_admin") {
+    allowedViews = NAV_ACCESS.super_admin
+    canEdit = true
+  } else {
+    const perms = await prisma.rolePermission.findUnique({ where: { role: user.role } })
+    allowedViews = perms?.allowedViews ?? (NAV_ACCESS[user.role as Role] ?? [])
+    canEdit = perms?.canEdit ?? (user.role === "admin" || user.role === "manager")
+  }
+
   const payload = {
     id: user.id,
     username: user.username,
     role: user.role,
     name: user.name,
     initials: user.initials,
+    allowedViews,
+    canEdit,
   };
   const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "7d" });
 

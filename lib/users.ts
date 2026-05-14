@@ -15,6 +15,7 @@ export const USERS: Record<string, User> = {
 }
 
 export const NAV_ACCESS: Record<Role, NavView[]> = {
+  super_admin: ['dashboard', 'mls', 'operaciones', 'documentos', 'zillow', 'zonaprop', 'comisiones', 'usuarios', 'permisos', 'actividad'],
   admin:   ['dashboard', 'mls', 'operaciones', 'documentos', 'zillow', 'zonaprop', 'comisiones', 'usuarios'],
   manager: ['dashboard', 'mls', 'operaciones', 'documentos', 'zillow', 'zonaprop', 'usuarios'],
   agente:  ['mls', 'operaciones', 'documentos', 'zillow', 'zonaprop'],

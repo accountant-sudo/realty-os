@@ -15,10 +15,12 @@ const VIEW_PATH: Record<NavView, string> = {
   zonaprop:    '/intranet/zonaprop',
   comisiones:  '/intranet/comisiones',
   usuarios:    '/intranet/usuarios',
+  permisos:    '/intranet/permisos',
+  actividad:   '/intranet/actividad',
   'op-detail': '/intranet/operaciones',
 }
 
-const ROLE_LABEL: Record<string, string> = { admin: 'Admin', manager: 'Manager', agente: 'Agente' }
+const ROLE_LABEL: Record<string, string> = { super_admin: 'Super Admin', admin: 'Admin', manager: 'Manager', agente: 'Agente' }
 
 export default function Sidebar() {
   const { currentUser, logout, getAllowedViews } = useAuth()

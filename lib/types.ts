@@ -1,8 +1,9 @@
 
-export type Role = 'admin' | 'manager' | 'agente'
+export type Role = 'super_admin' | 'admin' | 'manager' | 'agente'
 export type NavView =
   | 'dashboard' | 'mls' | 'operaciones' | 'documentos'
-  | 'zillow' | 'zonaprop' | 'comisiones' | 'usuarios' | 'op-detail'
+  | 'zillow' | 'zonaprop' | 'comisiones' | 'usuarios'
+  | 'permisos' | 'actividad' | 'op-detail'
 
 export interface User {
   pass: string
@@ -12,10 +13,22 @@ export interface User {
 }
 
 export interface CurrentUser {
+  id: number
   username: string
   role: Role
   name: string
   initials: string
+  allowedViews?: string[]
+  canEdit?: boolean
+}
+
+export interface UserRecord {
+  id: number
+  username: string
+  role: Role
+  name: string
+  initials: string
+  createdAt: string
 }
 
 export interface Agent {

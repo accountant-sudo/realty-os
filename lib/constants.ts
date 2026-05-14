@@ -1,4 +1,4 @@
-import { LayoutDashboard, Home, ClipboardList, FileText, TrendingUp, MapPin, DollarSign, Users } from 'lucide-react'
+import { LayoutDashboard, Home, ClipboardList, FileText, TrendingUp, MapPin, DollarSign, Users, Shield, Activity } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import type { NavView } from './types'
 
@@ -22,6 +22,8 @@ export const VIEW_TITLES: Partial<Record<NavView, string>> = {
   zonaprop: 'Análisis ZonaProp 🇦🇷',
   comisiones: 'Comisiones',
   usuarios: 'Usuarios',
+  permisos: 'Permisos',
+  actividad: 'Actividad',
   'op-detail': '',
 }
 
@@ -34,4 +36,6 @@ export const NAV_ITEMS: { section: string; view: NavView; icon: LucideIcon; labe
   { section: 'Análisis',  view: 'zonaprop',    icon: MapPin,          label: 'ZonaProp 🇦🇷' },
   { section: 'Análisis',  view: 'comisiones',  icon: DollarSign,      label: 'Comisiones' },
   { section: 'Admin',     view: 'usuarios',    icon: Users,           label: 'Usuarios' },
+  { section: 'Admin',     view: 'permisos',    icon: Shield,          label: 'Permisos' },
+  { section: 'Admin',     view: 'actividad',   icon: Activity,        label: 'Actividad' },
 ]

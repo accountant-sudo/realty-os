@@ -15,6 +15,7 @@ interface AuthContextValue {
   login: (username: string, password: string) => Promise<string | null>;
   logout: () => Promise<void>;
   canEdit: () => boolean;
+  isSuperAdmin: () => boolean;
   getAllowedViews: () => NavView[];
 }
 
@@ -54,12 +55,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setCurrentUser(null);
   }, []);
 
+  const isSuperAdmin = useCallback(() => {
+    return currentUser?.role === "super_admin";
+  }, [currentUser]);
+
   const canEdit = useCallback(() => {
-    return currentUser?.role === "admin" || currentUser?.role === "manager";
+    if (!currentUser) return false;
+    if (currentUser.role === "super_admin") return true;
+    if (currentUser.canEdit !== undefined) return !!currentUser.canEdit;
+    return currentUser.role === "admin" || currentUser.role === "manager";
   }, [currentUser]);
 
   const getAllowedViews = useCallback((): NavView[] => {
     if (!currentUser) return [];
+    if (currentUser.allowedViews) return currentUser.allowedViews as NavView[];
     return NAV_ACCESS[currentUser.role as keyof typeof NAV_ACCESS] ?? [];
   }, [currentUser]);
 
@@ -67,7 +76,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ currentUser, login, logout, canEdit, getAllowedViews }}
+      value={{ currentUser, login, logout, canEdit, isSuperAdmin, getAllowedViews }}
     >
       {children}
     </AuthContext.Provider>

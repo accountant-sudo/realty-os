@@ -8,16 +8,41 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  username  String   @unique
+  id        Int       @id @default(autoincrement())
+  username  String    @unique
   password  String
   role      String
   name      String
   initials  String
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt      @map("updated_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt      @map("updated_at")
+  deletedAt DateTime?               @map("deleted_at")
 
   @@map("users")
+}
+
+model RolePermission {
+  id           Int      @id @default(autoincrement())
+  role         String   @unique
+  allowedViews String[] @map("allowed_views")
+  canEdit      Boolean  @default(false) @map("can_edit")
+  updatedAt    DateTime @updatedAt      @map("updated_at")
+  updatedById  Int?     @map("updated_by_id")
+
+  @@map("role_permissions")
+}
+
+model ActivityLog {
+  id         Int      @id @default(autoincrement())
+  userId     Int      @map("user_id")
+  username   String
+  action     String
+  resource   String
+  resourceId String?  @map("resource_id")
+  metadata   Json?
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@map("activity_logs")
 }
 
 model Agent {

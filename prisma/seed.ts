@@ -12,7 +12,7 @@ const adapter = new PrismaPg(pool)
 const prisma = new PrismaClient({ adapter })
 
 const USERS = [
-  { username: 'gustavo',   password: 'MT2026gus', role: 'admin',   name: 'Gustavo',   initials: 'GU' },
+  { username: 'gustavo',   password: 'MT2026gus', role: 'super_admin', name: 'Gustavo', initials: 'GU' },
   { username: 'diego',     password: 'MT2026die', role: 'admin',   name: 'Diego',     initials: 'DI' },
   { username: 'ximena',    password: 'MT2026xim', role: 'admin',   name: 'Ximena',    initials: 'XM' },
   { username: 'sabrina',   password: 'MT2026sab', role: 'admin',   name: 'Sabrina',   initials: 'SA' },
@@ -65,6 +65,33 @@ async function main() {
     })
   }
   console.log('✓ Users')
+
+  // Role permissions (default per-role)
+  const ROLE_PERMS = [
+    {
+      role: 'admin',
+      allowedViews: ['dashboard', 'mls', 'operaciones', 'documentos', 'zillow', 'zonaprop', 'comisiones', 'usuarios'],
+      canEdit: true,
+    },
+    {
+      role: 'manager',
+      allowedViews: ['dashboard', 'mls', 'operaciones', 'documentos', 'zillow', 'zonaprop', 'usuarios'],
+      canEdit: true,
+    },
+    {
+      role: 'agente',
+      allowedViews: ['mls', 'operaciones', 'documentos', 'zillow', 'zonaprop'],
+      canEdit: false,
+    },
+  ]
+  for (const p of ROLE_PERMS) {
+    await prisma.rolePermission.upsert({
+      where: { role: p.role },
+      create: p,
+      update: {},
+    })
+  }
+  console.log('✓ Role permissions')
 
   // Agents
   for (const a of AGENTS) {
