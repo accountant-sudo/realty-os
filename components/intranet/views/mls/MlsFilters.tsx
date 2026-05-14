@@ -1,0 +1,47 @@
+import { Search } from 'lucide-react'
+import type { Agent } from '@/lib/types'
+
+const CITIES = ['Todas', 'Jacksonville', 'South Florida', 'Orlando']
+
+const INPUT = 'px-3 py-2 border border-border rounded-[6px] text-[13px] bg-bg focus:outline-none focus:border-gold focus:ring-[3px] focus:ring-gold-light transition-colors font-[inherit]'
+
+interface Props {
+  search: string
+  cityFilter: string
+  agentFilter: string
+  statusFilter: string
+  agents: Agent[]
+  onSearch: (v: string) => void
+  onCity: (v: string) => void
+  onAgent: (v: string) => void
+  onStatus: (v: string) => void
+}
+
+export default function MlsFilters({ search, cityFilter, agentFilter, statusFilter, agents, onSearch, onCity, onAgent, onStatus }: Props) {
+  return (
+    <div className="flex items-center gap-2.5 p-3.5 border-b border-border flex-wrap">
+      <div className="relative flex-1 min-w-[180px]">
+        <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 text-text-3 w-3.5 h-3.5" />
+        <input
+          className="w-full pl-8 pr-3 py-2 border border-border rounded-[6px] text-[13px] bg-bg focus:outline-none focus:border-gold focus:bg-surface transition-colors"
+          placeholder="Buscar por dirección, MLS#…"
+          value={search}
+          onChange={e => onSearch(e.target.value)}
+        />
+      </div>
+      <select className={`${INPUT} w-[160px]`} value={cityFilter} onChange={e => onCity(e.target.value)}>
+        {CITIES.map(c => <option key={c}>{c}</option>)}
+      </select>
+      <select className={`${INPUT} w-[140px]`} value={agentFilter} onChange={e => onAgent(e.target.value)}>
+        <option>Todos</option>
+        {agents.map(a => <option key={a.id} value={a.id}>{a.name}</option>)}
+      </select>
+      <select className={`${INPUT} w-[150px]`} value={statusFilter} onChange={e => onStatus(e.target.value)}>
+        <option>Todos</option>
+        <option value="published">En MLS</option>
+        <option value="under_contract">Bajo contrato</option>
+        <option value="withdrawn">Retirada</option>
+      </select>
+    </div>
+  )
+}

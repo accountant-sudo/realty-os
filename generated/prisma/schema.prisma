@@ -1,0 +1,93 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String
+  role      String
+  name      String
+  initials  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Agent {
+  id     String @id
+  name   String
+  active Int    @default(0)
+  closed Int    @default(0)
+}
+
+model Realtor {
+  id   String @id
+  name String
+}
+
+model MlsProperty {
+  id          Int      @id @default(autoincrement())
+  address     String
+  type        String   @default("SF")
+  listPrice   Float
+  agent       String
+  agentRaw    String   @default("")
+  admin       String   @default("")
+  listingExp  String   @default("")
+  showingInst String   @default("")
+  mlsStatus   String   @default("published")
+  mlsNum      String   @default("")
+  zillow      String   @default("")
+  notes       String   @default("")
+  country     String   @default("US")
+  usState     String   @default("Florida")
+  city        String   @default("Jacksonville")
+  daysListed  Int      @default(0)
+  zillowViews Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Operation {
+  id                 Int      @id @default(autoincrement())
+  address            String
+  type               String   @default("")
+  price              Float    @default(0)
+  financing          String   @default("")
+  agent              String   @default("")
+  realtor            String   @default("")
+  titleCo            String   @default("")
+  clientId           Int      @default(0)
+  buyerName          String   @default("")
+  execDate           String   @default("")
+  closingDate        String   @default("")
+  closingDateISO     String   @default("")
+  status             String   @default("ACTIVA")
+  commissionPaid     Boolean  @default(false)
+  compSigned         String   @default("false")
+  compPct            Float    @default(0)
+  compFixed          Float    @default(0)
+  escrow             String   @default("false")
+  lbp                String   @default("false")
+  sd                 String   @default("false")
+  flood              String   @default("false")
+  condoDocs          String   @default("false")
+  condoRider         String   @default("false")
+  inspDone           String   @default("false")
+  inspStatus         String   @default("")
+  inspNotes          String   @default("")
+  appraisal          String   @default("")
+  reinsp             String   @default("false")
+  pending            String   @default("")
+  closingNear        Boolean  @default(false)
+  isRented           Boolean  @default(false)
+  leaseAgreementSent Boolean  @default(false)
+  estoppelSent       Boolean  @default(false)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}

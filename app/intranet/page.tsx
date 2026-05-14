@@ -1,5 +1,5 @@
-import IntranetShell from '@/components/intranet/shell/IntranetShell'
+import { redirect } from 'next/navigation'
 
-export default function IntranetPage() {
-  return <IntranetShell />
+export default function IntranetRoot() {
+  redirect('/intranet/dashboard')
 }

@@ -1,4 +1,3 @@
-import type { ReactNode } from 'react'
 
 export type Role = 'admin' | 'manager' | 'agente'
 export type NavView =
@@ -100,32 +99,3 @@ export interface Alert {
   kind: 'closing' | 'insp'
 }
 
-export interface ModalState {
-  open: boolean
-  title: string
-  body: ReactNode
-}
-
-export interface IntranetContextValue {
-  currentUser: CurrentUser | null
-  currentView: NavView
-  viewParam: number | null
-  modalState: ModalState
-  toast: string | null
-  operations: Operation[]
-  mlsProperties: MlsProperty[]
-  agents: Agent[]
-  realtors: Realtor[]
-  login: (username: string, password: string) => string | null
-  logout: () => void
-  goTo: (view: NavView, param?: number | null) => void
-  canEdit: () => boolean
-  getAllowedViews: () => NavView[]
-  openModal: (title: string, body: ReactNode) => void
-  closeModal: () => void
-  showToast: (msg: string) => void
-  cycleChk: (opId: number, key: keyof Operation) => void
-  updateOperation: (opId: number, fields: Partial<Operation>) => void
-  updateMlsProperty: (propId: number, fields: Partial<MlsProperty>) => void
-  addMlsProperty: (prop: Omit<MlsProperty, 'id'>) => void
-}

@@ -1,5 +1,5 @@
 'use client'
-import { useIntranet } from '@/context/IntranetContext'
+import { useData } from '@/context/DataContext'
 import type { Operation } from '@/lib/types'
 
 const DOC_TYPES: { label: string; key: keyof Operation }[] = [
@@ -14,7 +14,7 @@ const DOC_TYPES: { label: string; key: keyof Operation }[] = [
 const CHK_BASE = 'inline-flex items-center justify-center w-6 h-6 rounded-[5px] text-[12px] font-bold select-none'
 
 export default function Documentos() {
-  const { operations } = useIntranet()
+  const { operations } = useData()
   const activas = operations.filter(o => o.status === 'ACTIVA')
 
   return (
