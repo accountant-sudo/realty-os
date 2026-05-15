@@ -19,9 +19,11 @@ export default function MLS() {
   const [cityFilter, setCityFilter] = useState('Todas')
   const [agentFilter, setAgentFilter] = useState('Todos')
   const [statusFilter, setStatusFilter] = useState('Todos')
+  const [countryFilter, setCountryFilter] = useState('Todos')
   const [deleteTarget, setDeleteTarget] = useState<MlsProperty | null>(null)
 
   const filtered = mlsProperties.filter(p => {
+    if (countryFilter !== 'Todos' && p.country !== countryFilter) return false
     if (cityFilter !== 'Todas' && p.city !== cityFilter) return false
     if (agentFilter !== 'Todos' && p.agent !== agentFilter) return false
     if (statusFilter !== 'Todos' && p.mlsStatus !== statusFilter) return false
@@ -56,11 +58,13 @@ export default function MLS() {
           cityFilter={cityFilter}
           agentFilter={agentFilter}
           statusFilter={statusFilter}
+          countryFilter={countryFilter}
           agents={agents}
           onSearch={setSearch}
           onCity={setCityFilter}
           onAgent={setAgentFilter}
           onStatus={setStatusFilter}
+          onCountry={setCountryFilter}
         />
         <MlsTable
           properties={filtered}

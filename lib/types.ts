@@ -45,6 +45,7 @@ export interface Realtor {
 
 export interface MlsProperty {
   id: number
+  createdAt?: string
   address: string
   type: string
   listPrice: number
@@ -136,10 +137,10 @@ export interface Operation {
 }
 
 export interface Alert {
-  type: 'warning' | 'danger'
+  type: 'warning' | 'danger' | 'info'
   opId: number
   address: string
   msg: string
   icon: string
-  kind: 'closing' | 'insp'
+  kind: 'closing' | 'insp' | 'missing'
 }

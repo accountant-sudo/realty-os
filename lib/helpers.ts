@@ -31,8 +31,8 @@ export function getDaysUntil(isoDate: string): number | null {
   return Math.round((target.getTime() - today.getTime()) / 86400000)
 }
 
-export function getAlerts(operations: Operation[]): Alert[] {
-  const alerts: Alert[] = []
+export function getNotifications(operations: Operation[]): Alert[] {
+  const notifications: Alert[] = []
   operations.filter(o => o.status === 'ACTIVA').forEach(o => {
     if (o.closingDateISO) {
       const days = getDaysUntil(o.closingDateISO)
@@ -42,11 +42,13 @@ export function getAlerts(operations: Operation[]): Alert[] {
           ? `Closing vencido hace ${Math.abs(days)} día${Math.abs(days) === 1 ? '' : 's'}`
           : days === 0 ? 'Closing es HOY'
           : `Closing en ${days} día${days === 1 ? '' : 's'}`
-        alerts.push({ type, opId: o.id, address: o.address, msg, icon: '🔔', kind: 'closing' })
+        notifications.push({ type, opId: o.id, address: o.address, msg, icon: '🔔', kind: 'closing' })
       }
+    } else {
+      notifications.push({ type: 'info', opId: o.id, address: o.address, msg: 'Sin fecha de closing asignada', icon: '📋', kind: 'missing' })
     }
   })
-  return alerts
+  return notifications
 }
 
 export function statusBadgeClass(s: string): string {
