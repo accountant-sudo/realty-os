@@ -1,12 +1,12 @@
 'use client'
-import { useIntranet } from '@/context/IntranetContext'
+import { useData } from '@/context/DataContext'
 import { fmtPrice } from '@/lib/helpers'
 import AgentChip from '@/components/intranet/ui/AgentChip'
 
 const BTN_SECONDARY = 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[6px] text-[12px] font-medium cursor-pointer border transition-all bg-surface text-text-2 border-border hover:bg-bg'
 
 export default function Zillow() {
-  const { mlsProperties, agents } = useIntranet()
+  const { mlsProperties, agents } = useData()
   const usProps = mlsProperties.filter(p => p.country === 'US' && p.zillow && p.zillow.startsWith('http'))
 
   return (

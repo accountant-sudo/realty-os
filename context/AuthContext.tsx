@@ -1,74 +1,90 @@
-'use client'
-import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from 'react'
-import { USERS, NAV_ACCESS } from '@/lib/users'
-import type { CurrentUser, NavView, Role } from '@/lib/types'
+"use client";
+import {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useEffect,
+  type ReactNode,
+} from "react";
+import { NAV_ACCESS } from "@/lib/users";
+import type { CurrentUser, NavView } from "@/lib/types";
 
 interface AuthContextValue {
-  currentUser: CurrentUser | null
-  login: (username: string, password: string) => string | null
-  logout: () => void
-  canEdit: () => boolean
-  getAllowedViews: () => NavView[]
+  currentUser: CurrentUser | null;
+  login: (username: string, password: string) => Promise<string | null>;
+  logout: () => Promise<void>;
+  canEdit: () => boolean;
+  isSuperAdmin: () => boolean;
+  getAllowedViews: () => NavView[];
 }
 
-const AuthContext = createContext<AuthContextValue | null>(null)
-
-const SESSION_KEY = 'mt_user'
-const SESSION_COOKIE = 'mt_session'
-
-function setSessionCookie(user: CurrentUser | null) {
-  if (user) {
-    document.cookie = `${SESSION_COOKIE}=${encodeURIComponent(JSON.stringify({ role: user.role }))}; path=/; SameSite=Lax`
-  } else {
-    document.cookie = `${SESSION_COOKIE}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`
-  }
-}
+const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null)
+  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
+  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(SESSION_KEY)
-      if (stored) setCurrentUser(JSON.parse(stored))
-    } catch {}
-  }, [])
+    fetch("/api/auth/me")
+      .then((r) => r.json())
+      .then(({ user }) => {
+        if (user) setCurrentUser(user);
+      })
+      .catch(() => {})
+      .finally(() => setHydrated(true));
+  }, []);
 
-  const login = useCallback((username: string, password: string): string | null => {
-    const u = username.trim().toLowerCase()
-    const user = USERS[u]
-    if (!user || user.pass !== password) return 'Usuario o contraseña incorrectos'
-    const cu: CurrentUser = { username: u, role: user.role, name: user.name, initials: user.initials }
-    setCurrentUser(cu)
-    localStorage.setItem(SESSION_KEY, JSON.stringify(cu))
-    setSessionCookie(cu)
-    return null
-  }, [])
+  const login = useCallback(
+    async (username: string, password: string): Promise<string | null> => {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+      const data = await res.json();
+      if (!res.ok) return data.error ?? "Error al iniciar sesión";
+      setCurrentUser(data.user);
+      return null;
+    },
+    [],
+  );
 
-  const logout = useCallback(() => {
-    setCurrentUser(null)
-    localStorage.removeItem(SESSION_KEY)
-    setSessionCookie(null)
-  }, [])
+  const logout = useCallback(async () => {
+    await fetch("/api/auth/logout", { method: "POST" });
+    setCurrentUser(null);
+  }, []);
 
-  const canEdit = useCallback((): boolean => {
-    return currentUser !== null && (currentUser.role === 'admin' || currentUser.role === 'manager')
-  }, [currentUser])
+  const isSuperAdmin = useCallback(() => {
+    return currentUser?.role === "super_admin";
+  }, [currentUser]);
+
+  const canEdit = useCallback(() => {
+    if (!currentUser) return false;
+    if (currentUser.role === "super_admin") return true;
+    if (currentUser.canEdit !== undefined) return !!currentUser.canEdit;
+    return currentUser.role === "admin" || currentUser.role === "manager";
+  }, [currentUser]);
 
   const getAllowedViews = useCallback((): NavView[] => {
-    if (!currentUser) return []
-    return NAV_ACCESS[currentUser.role] || []
-  }, [currentUser])
+    if (!currentUser) return [];
+    if (currentUser.allowedViews) return currentUser.allowedViews as NavView[];
+    return NAV_ACCESS[currentUser.role as keyof typeof NAV_ACCESS] ?? [];
+  }, [currentUser]);
+
+  if (!hydrated) return null;
 
   return (
-    <AuthContext.Provider value={{ currentUser, login, logout, canEdit, getAllowedViews }}>
+    <AuthContext.Provider
+      value={{ currentUser, login, logout, canEdit, isSuperAdmin, getAllowedViews }}
+    >
       {children}
     </AuthContext.Provider>
-  )
+  );
 }
 
 export function useAuth(): AuthContextValue {
-  const ctx = useContext(AuthContext)
-  if (!ctx) throw new Error('useAuth must be used within AuthProvider')
-  return ctx
+  const ctx = useContext(AuthContext);
+  if (!ctx) throw new Error("useAuth must be used within AuthProvider");
+  return ctx;
 }

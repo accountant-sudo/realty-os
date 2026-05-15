@@ -1,23 +1,26 @@
 'use client'
-import { useIntranet } from '@/context/IntranetContext'
+import { useRouter } from 'next/navigation'
+import { useData } from '@/context/DataContext'
+import { useAuth } from '@/context/AuthContext'
 import { calcProgress, fmtPrice, statusBadgeClass } from '@/lib/helpers'
+import { INSP_OPTIONS } from '@/lib/constants'
 import Chk from '@/components/intranet/ui/Chk'
 import ProgressBar from '@/components/intranet/ui/ProgressBar'
 import AgentChip from '@/components/intranet/ui/AgentChip'
 import Badge from '@/components/intranet/ui/Badge'
 import type { Operation, ChkValue } from '@/lib/types'
 
-const INSP_OPTIONS = ['', 'OK', 'Reparaciones en curso', 'Pendiente', 'Reinspección requerida']
-
 const BTN_SECONDARY = 'inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-[6px] text-[13px] font-medium cursor-pointer border transition-all bg-surface text-text-2 border-border hover:bg-bg'
 
 export default function OpDetail({ opId }: { opId: number | null }) {
-  const { operations, agents, cycleChk, updateOperation, goTo, canEdit } = useIntranet()
+  const { operations, agents, cycleChk, updateOperation } = useData()
+  const { canEdit } = useAuth()
+  const router = useRouter()
   const op = operations.find(o => o.id === opId)
 
   if (!op) return (
     <div className="p-10">
-      <button className={BTN_SECONDARY} onClick={() => goTo('operaciones')}>← Volver</button>
+      <button className={BTN_SECONDARY} onClick={() => router.push('/intranet/operaciones')}>← Volver</button>
       <p className="mt-5 text-text-3">Operación no encontrada.</p>
     </div>
   )
@@ -34,7 +37,7 @@ export default function OpDetail({ opId }: { opId: number | null }) {
   return (
     <div>
       <div className="flex items-center gap-4 mb-5">
-        <button className={BTN_SECONDARY} onClick={() => goTo('operaciones')}>← Operaciones</button>
+        <button className={BTN_SECONDARY} onClick={() => router.push('/intranet/operaciones')}>← Operaciones</button>
         <Badge cls={statusBadgeClass(op.status)}>{op.status}</Badge>
       </div>
 
@@ -58,7 +61,7 @@ export default function OpDetail({ opId }: { opId: number | null }) {
               </div>
               <div className={detailRow}>
                 <span className="text-text-2 font-medium">Title Co.</span>
-                <span className="font-medium text-right">{op.titleCo || '—'}</span>
+                <span className="font-medium text-right">{op.titleCompany || '—'}</span>
               </div>
               <div className={detailRow}>
                 <span className="text-text-2 font-medium">Exec. Date</span>
@@ -135,7 +138,7 @@ export default function OpDetail({ opId }: { opId: number | null }) {
               )}
               <div className={detailRow}>
                 <span className="text-text-2 font-medium">Reinspección</span>
-                <span className="font-medium text-right">{chk('reinsp')}</span>
+                <span className="font-medium text-right">{chk('reinspection')}</span>
               </div>
               <div className={detailRow}>
                 <span className="text-text-2 font-medium">Appraisal</span>
@@ -164,7 +167,7 @@ export default function OpDetail({ opId }: { opId: number | null }) {
                 ['condoDocs', 'Condo Docs'],
                 ['condoRider', 'Condo Rider'],
                 ['inspDone', 'Inspección'],
-                ['reinsp', 'Reinspección'],
+                ['reinspection', 'Reinspección'],
               ] as [keyof Operation, string][]).map(([key, label]) => (
                 <div className={detailRow} key={key}>
                   <span className="text-text-2 font-medium">{label}</span>

@@ -1,11 +1,11 @@
 'use client'
-import { useIntranet } from '@/context/IntranetContext'
+import { useData } from '@/context/DataContext'
 import { fmtPrice } from '@/lib/helpers'
 import AgentChip from '@/components/intranet/ui/AgentChip'
 import Badge from '@/components/intranet/ui/Badge'
 
 export default function ZonaProp() {
-  const { mlsProperties, agents } = useIntranet()
+  const { mlsProperties, agents } = useData()
   const arProps = mlsProperties.filter(p => p.country === 'AR')
 
   return (

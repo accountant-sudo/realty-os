@@ -1,0 +1,166 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  username  String    @unique
+  password  String
+  role      String
+  name      String
+  initials  String
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("users")
+}
+
+model RolePermission {
+  id           Int      @id @default(autoincrement())
+  role         String   @unique
+  allowedViews String[] @map("allowed_views")
+  canEdit      Boolean  @default(false) @map("can_edit")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+  updatedById  Int?     @map("updated_by_id")
+
+  @@map("role_permissions")
+}
+
+model ActivityLog {
+  id         Int      @id @default(autoincrement())
+  userId     Int      @map("user_id")
+  username   String
+  action     String
+  resource   String
+  resourceId String?  @map("resource_id")
+  metadata   Json?
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@map("activity_logs")
+}
+
+model Agent {
+  id     String @id
+  name   String
+  active Int    @default(0)
+  closed Int    @default(0)
+
+  @@map("agents")
+}
+
+model Realtor {
+  id   String @id
+  name String
+
+  @@map("realtors")
+}
+
+model MlsProperty {
+  id           Int    @id @default(autoincrement())
+  address      String
+  type         String @default("SF")
+  listPrice    Float  @map("list_price")
+  agent        String
+  agentRaw     String @default("") @map("agent_raw")
+  admin        String @default("")
+  listingExp   String @default("") @map("listing_exp")
+  listingStart String @default("") @map("listing_start")
+  showingInst  String @default("") @map("showing_inst")
+  mlsStatus    String @default("published") @map("mls_status")
+  mlsNum       String @default("") @map("mls_num")
+  zillow       String @default("")
+  notes        String @default("")
+  country      String @default("US")
+  usState      String @default("Florida") @map("us_state")
+  city         String @default("Jacksonville")
+  daysListed   Int    @default(0) @map("days_listed")
+  zillowViews  Int    @default(0) @map("zillow_views")
+
+  // US-specific
+  typology          String @default("")
+  rentalStatus      String @default("") @map("rental_status")
+  rentalEstimate    String @default("") @map("rental_estimate")
+  rentalContractEnd String @default("") @map("rental_contract_end")
+  annualTax         String @default("") @map("annual_tax")
+  lockbox           String @default("")
+  tour360           String @default("") @map("tour_360")
+  tourLink          String @default("") @map("tour_link")
+  sellerName        String @default("") @map("seller_name")
+  sellerPhone       String @default("") @map("seller_phone")
+  sellerEmail       String @default("") @map("seller_email")
+
+  // AR-specific
+  ownerName       String @default("") @map("owner_name")
+  neighborhood    String @default("")
+  rooms           Int    @default(0)
+  bedrooms        Int    @default(0)
+  bathrooms       Int    @default(0)
+  toilets         Int    @default(0)
+  parkingSpots    Int    @default(0) @map("parking_spots")
+  condition       String @default("")
+  floors          Int    @default(0)
+  buildingAge     String @default("") @map("building_age")
+  occupancyStatus String @default("") @map("occupancy_status")
+  hoaFees         Float  @default(0) @map("hoa_fees")
+  orientation     String @default("")
+  layout          String @default("")
+  coveredArea     Float  @default(0) @map("covered_area")
+  semiCoveredArea Float  @default(0) @map("semi_covered_area")
+  totalArea       Float  @default(0) @map("total_area")
+  openArea        Float  @default(0) @map("open_area")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("mls_properties")
+}
+
+model Operation {
+  id                 Int     @id @default(autoincrement())
+  address            String
+  type               String  @default("")
+  price              Float   @default(0)
+  financing          String  @default("")
+  agent              String  @default("")
+  realtor            String  @default("")
+  titleCompany       String  @default("") @map("title_company")
+  clientId           Int     @default(0) @map("client_id")
+  buyerName          String  @default("") @map("buyer_name")
+  execDate           String  @default("") @map("exec_date")
+  closingDate        String  @default("") @map("closing_date")
+  closingDateISO     String  @default("") @map("closing_date_iso")
+  status             String  @default("ACTIVA")
+  commissionPaid     Boolean @default(false) @map("commission_paid")
+  compSigned         String  @default("false") @map("comp_signed")
+  compPct            Float   @default(0) @map("comp_pct")
+  compFixed          Float   @default(0) @map("comp_fixed")
+  escrow             String  @default("false")
+  lbp                String  @default("false")
+  sd                 String  @default("false")
+  flood              String  @default("false")
+  condoDocs          String  @default("false") @map("condo_docs")
+  condoRider         String  @default("false") @map("condo_rider")
+  inspDone           String  @default("false") @map("insp_done")
+  inspStatus         String  @default("") @map("insp_status")
+  inspNotes          String  @default("") @map("insp_notes")
+  appraisal          String  @default("")
+  reinspection       String  @default("false")
+  pending            String  @default("")
+  closingNear        Boolean @default(false) @map("closing_near")
+  isRented           Boolean @default(false) @map("is_rented")
+  leaseAgreementSent Boolean @default(false) @map("lease_agreement_sent")
+  estoppelSent       Boolean @default(false) @map("estoppel_sent")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("operations")
+}
