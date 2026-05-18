@@ -130,9 +130,10 @@ export default function OpDetail({ opId }: { opId: number | null }) {
   }
 
   async function handleSave() {
+    const opId = op!.id
     setSaving(true)
     try {
-      await updateOperation(op.id, draft)
+      await updateOperation(opId, draft!)
       toast.success('Changes saved')
     } catch {
       toast.error('Failed to save changes')
