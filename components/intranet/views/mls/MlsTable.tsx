@@ -34,7 +34,7 @@ export default function MlsTable({ properties, agents, canEdit, onEdit, onDelete
 
   const columns = useMemo(() => [
     col.accessor('address', {
-      header: 'Propiedad',
+      header: 'Property',
       cell: ({ row }) => (
         <div>
           <div className="font-semibold text-[13px]">{row.original.address}</div>
@@ -47,7 +47,7 @@ export default function MlsTable({ properties, agents, canEdit, onEdit, onDelete
       ),
     }),
     col.accessor('city', {
-      header: 'Ciudad',
+      header: 'City',
       cell: ({ row }) => (
         <span>
           <span className="text-[16px] leading-none">{countryFlag(row.original.country)}</span>{' '}
@@ -56,12 +56,12 @@ export default function MlsTable({ properties, agents, canEdit, onEdit, onDelete
       ),
     }),
     col.accessor('agent', {
-      header: 'Agente',
+      header: 'Agent',
       cell: ({ row }) => <AgentChip agentId={row.original.agent} agents={agents} />,
       enableSorting: false,
     }),
     col.accessor('listPrice', {
-      header: 'Precio',
+      header: 'Price',
       cell: ({ getValue }) => <span className="font-semibold">{fmtPrice(getValue())}</span>,
     }),
     col.accessor('mlsNum', {
@@ -78,7 +78,7 @@ export default function MlsTable({ properties, agents, canEdit, onEdit, onDelete
       enableSorting: false,
     }),
     col.accessor('mlsStatus', {
-      header: 'Estado',
+      header: 'Status',
       cell: ({ row }) => (
         <Badge cls={mlsStatusClass(row.original.mlsStatus)}>
           {mlsStatusLabel(row.original.mlsStatus, row.original.country)}
@@ -86,22 +86,22 @@ export default function MlsTable({ properties, agents, canEdit, onEdit, onDelete
       ),
     }),
     col.accessor('listingStart', {
-      header: 'Inicio',
+      header: 'Start',
       cell: ({ getValue }) => <span className="text-[12px] text-text-3">{getValue() || '—'}</span>,
       enableSorting: false,
     }),
     col.accessor('listingExp', {
-      header: 'Exp. Listado',
+      header: 'Listing Exp.',
       cell: ({ getValue }) => <span className="text-[12px] text-text-3">{getValue() || '—'}</span>,
       enableSorting: false,
     }),
     col.accessor('createdAt', {
-      header: 'Creado',
+      header: 'Created',
       cell: ({ getValue }) => {
         const v = getValue()
         return (
           <span className="text-[12px] text-text-3">
-            {v ? new Date(v).toLocaleDateString('es-AR', { day: '2-digit', month: 'short', year: '2-digit' }) : '—'}
+            {v ? new Date(v).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: '2-digit' }) : '—'}
           </span>
         )
       },
@@ -113,8 +113,8 @@ export default function MlsTable({ properties, agents, canEdit, onEdit, onDelete
         header: '',
         cell: ({ row }) => (
           <div className="flex items-center gap-1">
-            <button className={BTN_GHOST} onClick={() => onEdit(row.original)}>Editar</button>
-            <button className={BTN_DANGER} onClick={() => onDelete(row.original)}>Eliminar</button>
+            <button className={BTN_GHOST} onClick={() => onEdit(row.original)}>Edit</button>
+            <button className={BTN_DANGER} onClick={() => onDelete(row.original)}>Delete</button>
           </div>
         ),
       }),
@@ -180,7 +180,7 @@ export default function MlsTable({ properties, agents, canEdit, onEdit, onDelete
             {table.getRowModel().rows.length === 0 && (
               <tr>
                 <td colSpan={99} className="text-center text-text-3 py-8 text-[13px]">
-                  Sin propiedades
+                  No properties
                 </td>
               </tr>
             )}
@@ -191,7 +191,7 @@ export default function MlsTable({ properties, agents, canEdit, onEdit, onDelete
       {pageCount > 1 && (
         <div className="flex items-center justify-between px-4 py-3 border-t border-border">
           <div className="flex items-center gap-2">
-            <span className="text-[12px] text-text-3">Filas por página:</span>
+            <span className="text-[12px] text-text-3">Rows per page:</span>
             <select
               className="text-[12px] border border-border rounded-[5px] px-2 py-1 bg-bg text-text-primary focus:outline-none focus:border-gold"
               value={pageSize}

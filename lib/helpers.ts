@@ -2,7 +2,8 @@ import type { Agent, Realtor, Operation, Alert, ChkValue } from './types'
 
 export function agentName(id: string, agents: Agent[]): string {
   const a = agents.find(x => x.id === id)
-  return a ? a.name : id || '—'
+  if (!a) return id || '—'
+  return a.lastName ? `${a.name} ${a.lastName}` : a.name
 }
 
 export function realtorName(id: string, realtors: Realtor[]): string {
@@ -39,13 +40,13 @@ export function getNotifications(operations: Operation[]): Alert[] {
       if (days !== null && days <= 2) {
         const type = days < 0 ? 'danger' : 'warning'
         const msg = days < 0
-          ? `Closing vencido hace ${Math.abs(days)} día${Math.abs(days) === 1 ? '' : 's'}`
-          : days === 0 ? 'Closing es HOY'
-          : `Closing en ${days} día${days === 1 ? '' : 's'}`
+          ? `Closing overdue by ${Math.abs(days)} day${Math.abs(days) === 1 ? '' : 's'}`
+          : days === 0 ? 'Closing is TODAY'
+          : `Closing in ${days} day${days === 1 ? '' : 's'}`
         notifications.push({ type, opId: o.id, address: o.address, msg, icon: '🔔', kind: 'closing' })
       }
     } else {
-      notifications.push({ type: 'info', opId: o.id, address: o.address, msg: 'Sin fecha de closing asignada', icon: '📋', kind: 'missing' })
+      notifications.push({ type: 'info', opId: o.id, address: o.address, msg: 'No closing date assigned', icon: '📋', kind: 'missing' })
     }
   })
   return notifications
@@ -71,9 +72,9 @@ export function mlsStatusClass(s: string): string {
 
 export function mlsStatusLabel(s: string, country: string): string {
   const label: Record<string, string> = {
-    published: country === 'AR' ? 'En ZonaProp' : 'En MLS',
-    under_contract: 'Bajo contrato',
-    withdrawn: 'Retirada',
+    published: country === 'AR' ? 'On ZonaProp' : 'On MLS',
+    under_contract: 'Under contract',
+    withdrawn: 'Withdrawn',
   }
   return label[s] || s
 }

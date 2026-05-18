@@ -46,7 +46,7 @@ export default function MLS() {
       <div className="flex justify-between items-center mb-4">
         <div className="text-[13px] text-text-3">{filtered.length} propiedades</div>
         {canEdit() && (
-          <button className={BTN_PRIMARY} onClick={() => router.push('/intranet/mls/nueva')}>
+          <button className={BTN_PRIMARY} onClick={() => router.push('/intranet/mls/new')}>
             + Nueva propiedad
           </button>
         )}
@@ -70,7 +70,7 @@ export default function MLS() {
           properties={filtered}
           agents={agents}
           canEdit={canEdit()}
-          onEdit={p => router.push(`/intranet/mls/${p.id}/editar`)}
+          onEdit={p => router.push(`/intranet/mls/${p.id}/edit`)}
           onDelete={setDeleteTarget}
         />
       </div>

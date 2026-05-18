@@ -4643,6 +4643,7 @@ export namespace Prisma {
   export type AgentMinAggregateOutputType = {
     id: string | null
     name: string | null
+    lastName: string | null
     active: number | null
     closed: number | null
   }
@@ -4650,6 +4651,7 @@ export namespace Prisma {
   export type AgentMaxAggregateOutputType = {
     id: string | null
     name: string | null
+    lastName: string | null
     active: number | null
     closed: number | null
   }
@@ -4657,6 +4659,7 @@ export namespace Prisma {
   export type AgentCountAggregateOutputType = {
     id: number
     name: number
+    lastName: number
     active: number
     closed: number
     _all: number
@@ -4676,6 +4679,7 @@ export namespace Prisma {
   export type AgentMinAggregateInputType = {
     id?: true
     name?: true
+    lastName?: true
     active?: true
     closed?: true
   }
@@ -4683,6 +4687,7 @@ export namespace Prisma {
   export type AgentMaxAggregateInputType = {
     id?: true
     name?: true
+    lastName?: true
     active?: true
     closed?: true
   }
@@ -4690,6 +4695,7 @@ export namespace Prisma {
   export type AgentCountAggregateInputType = {
     id?: true
     name?: true
+    lastName?: true
     active?: true
     closed?: true
     _all?: true
@@ -4784,6 +4790,7 @@ export namespace Prisma {
   export type AgentGroupByOutputType = {
     id: string
     name: string
+    lastName: string
     active: number
     closed: number
     _count: AgentCountAggregateOutputType | null
@@ -4810,6 +4817,7 @@ export namespace Prisma {
   export type AgentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    lastName?: boolean
     active?: boolean
     closed?: boolean
   }, ExtArgs["result"]["agent"]>
@@ -4817,6 +4825,7 @@ export namespace Prisma {
   export type AgentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    lastName?: boolean
     active?: boolean
     closed?: boolean
   }, ExtArgs["result"]["agent"]>
@@ -4824,6 +4833,7 @@ export namespace Prisma {
   export type AgentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    lastName?: boolean
     active?: boolean
     closed?: boolean
   }, ExtArgs["result"]["agent"]>
@@ -4831,11 +4841,12 @@ export namespace Prisma {
   export type AgentSelectScalar = {
     id?: boolean
     name?: boolean
+    lastName?: boolean
     active?: boolean
     closed?: boolean
   }
 
-  export type AgentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "active" | "closed", ExtArgs["result"]["agent"]>
+  export type AgentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "lastName" | "active" | "closed", ExtArgs["result"]["agent"]>
 
   export type $AgentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Agent"
@@ -4843,6 +4854,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
+      lastName: string
       active: number
       closed: number
     }, ExtArgs["result"]["agent"]>
@@ -5270,6 +5282,7 @@ export namespace Prisma {
   interface AgentFieldRefs {
     readonly id: FieldRef<"Agent", 'String'>
     readonly name: FieldRef<"Agent", 'String'>
+    readonly lastName: FieldRef<"Agent", 'String'>
     readonly active: FieldRef<"Agent", 'Int'>
     readonly closed: FieldRef<"Agent", 'Int'>
   }
@@ -8310,6 +8323,9 @@ export namespace Prisma {
     clientId: number | null
     compPct: number | null
     compFixed: number | null
+    agentSplitPct: number | null
+    realtorSplitPct: number | null
+    brokerSplitPct: number | null
   }
 
   export type OperationSumAggregateOutputType = {
@@ -8318,6 +8334,9 @@ export namespace Prisma {
     clientId: number | null
     compPct: number | null
     compFixed: number | null
+    agentSplitPct: number | null
+    realtorSplitPct: number | null
+    brokerSplitPct: number | null
   }
 
   export type OperationMinAggregateOutputType = {
@@ -8347,10 +8366,14 @@ export namespace Prisma {
     condoRider: string | null
     inspDone: string | null
     inspStatus: string | null
+    inspEstimatedDate: string | null
     inspNotes: string | null
     appraisal: string | null
     reinspection: string | null
     pending: string | null
+    agentSplitPct: number | null
+    realtorSplitPct: number | null
+    brokerSplitPct: number | null
     closingNear: boolean | null
     isRented: boolean | null
     leaseAgreementSent: boolean | null
@@ -8387,10 +8410,14 @@ export namespace Prisma {
     condoRider: string | null
     inspDone: string | null
     inspStatus: string | null
+    inspEstimatedDate: string | null
     inspNotes: string | null
     appraisal: string | null
     reinspection: string | null
     pending: string | null
+    agentSplitPct: number | null
+    realtorSplitPct: number | null
+    brokerSplitPct: number | null
     closingNear: boolean | null
     isRented: boolean | null
     leaseAgreementSent: boolean | null
@@ -8427,10 +8454,14 @@ export namespace Prisma {
     condoRider: number
     inspDone: number
     inspStatus: number
+    inspEstimatedDate: number
     inspNotes: number
     appraisal: number
     reinspection: number
     pending: number
+    agentSplitPct: number
+    realtorSplitPct: number
+    brokerSplitPct: number
     closingNear: number
     isRented: number
     leaseAgreementSent: number
@@ -8448,6 +8479,9 @@ export namespace Prisma {
     clientId?: true
     compPct?: true
     compFixed?: true
+    agentSplitPct?: true
+    realtorSplitPct?: true
+    brokerSplitPct?: true
   }
 
   export type OperationSumAggregateInputType = {
@@ -8456,6 +8490,9 @@ export namespace Prisma {
     clientId?: true
     compPct?: true
     compFixed?: true
+    agentSplitPct?: true
+    realtorSplitPct?: true
+    brokerSplitPct?: true
   }
 
   export type OperationMinAggregateInputType = {
@@ -8485,10 +8522,14 @@ export namespace Prisma {
     condoRider?: true
     inspDone?: true
     inspStatus?: true
+    inspEstimatedDate?: true
     inspNotes?: true
     appraisal?: true
     reinspection?: true
     pending?: true
+    agentSplitPct?: true
+    realtorSplitPct?: true
+    brokerSplitPct?: true
     closingNear?: true
     isRented?: true
     leaseAgreementSent?: true
@@ -8525,10 +8566,14 @@ export namespace Prisma {
     condoRider?: true
     inspDone?: true
     inspStatus?: true
+    inspEstimatedDate?: true
     inspNotes?: true
     appraisal?: true
     reinspection?: true
     pending?: true
+    agentSplitPct?: true
+    realtorSplitPct?: true
+    brokerSplitPct?: true
     closingNear?: true
     isRented?: true
     leaseAgreementSent?: true
@@ -8565,10 +8610,14 @@ export namespace Prisma {
     condoRider?: true
     inspDone?: true
     inspStatus?: true
+    inspEstimatedDate?: true
     inspNotes?: true
     appraisal?: true
     reinspection?: true
     pending?: true
+    agentSplitPct?: true
+    realtorSplitPct?: true
+    brokerSplitPct?: true
     closingNear?: true
     isRented?: true
     leaseAgreementSent?: true
@@ -8692,10 +8741,14 @@ export namespace Prisma {
     condoRider: string
     inspDone: string
     inspStatus: string
+    inspEstimatedDate: string
     inspNotes: string
     appraisal: string
     reinspection: string
     pending: string
+    agentSplitPct: number
+    realtorSplitPct: number
+    brokerSplitPct: number
     closingNear: boolean
     isRented: boolean
     leaseAgreementSent: boolean
@@ -8751,10 +8804,14 @@ export namespace Prisma {
     condoRider?: boolean
     inspDone?: boolean
     inspStatus?: boolean
+    inspEstimatedDate?: boolean
     inspNotes?: boolean
     appraisal?: boolean
     reinspection?: boolean
     pending?: boolean
+    agentSplitPct?: boolean
+    realtorSplitPct?: boolean
+    brokerSplitPct?: boolean
     closingNear?: boolean
     isRented?: boolean
     leaseAgreementSent?: boolean
@@ -8791,10 +8848,14 @@ export namespace Prisma {
     condoRider?: boolean
     inspDone?: boolean
     inspStatus?: boolean
+    inspEstimatedDate?: boolean
     inspNotes?: boolean
     appraisal?: boolean
     reinspection?: boolean
     pending?: boolean
+    agentSplitPct?: boolean
+    realtorSplitPct?: boolean
+    brokerSplitPct?: boolean
     closingNear?: boolean
     isRented?: boolean
     leaseAgreementSent?: boolean
@@ -8831,10 +8892,14 @@ export namespace Prisma {
     condoRider?: boolean
     inspDone?: boolean
     inspStatus?: boolean
+    inspEstimatedDate?: boolean
     inspNotes?: boolean
     appraisal?: boolean
     reinspection?: boolean
     pending?: boolean
+    agentSplitPct?: boolean
+    realtorSplitPct?: boolean
+    brokerSplitPct?: boolean
     closingNear?: boolean
     isRented?: boolean
     leaseAgreementSent?: boolean
@@ -8871,10 +8936,14 @@ export namespace Prisma {
     condoRider?: boolean
     inspDone?: boolean
     inspStatus?: boolean
+    inspEstimatedDate?: boolean
     inspNotes?: boolean
     appraisal?: boolean
     reinspection?: boolean
     pending?: boolean
+    agentSplitPct?: boolean
+    realtorSplitPct?: boolean
+    brokerSplitPct?: boolean
     closingNear?: boolean
     isRented?: boolean
     leaseAgreementSent?: boolean
@@ -8884,7 +8953,7 @@ export namespace Prisma {
     deletedAt?: boolean
   }
 
-  export type OperationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "address" | "type" | "price" | "financing" | "agent" | "realtor" | "titleCompany" | "clientId" | "buyerName" | "execDate" | "closingDate" | "closingDateISO" | "status" | "commissionPaid" | "compSigned" | "compPct" | "compFixed" | "escrow" | "lbp" | "sd" | "flood" | "condoDocs" | "condoRider" | "inspDone" | "inspStatus" | "inspNotes" | "appraisal" | "reinspection" | "pending" | "closingNear" | "isRented" | "leaseAgreementSent" | "estoppelSent" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["operation"]>
+  export type OperationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "address" | "type" | "price" | "financing" | "agent" | "realtor" | "titleCompany" | "clientId" | "buyerName" | "execDate" | "closingDate" | "closingDateISO" | "status" | "commissionPaid" | "compSigned" | "compPct" | "compFixed" | "escrow" | "lbp" | "sd" | "flood" | "condoDocs" | "condoRider" | "inspDone" | "inspStatus" | "inspEstimatedDate" | "inspNotes" | "appraisal" | "reinspection" | "pending" | "agentSplitPct" | "realtorSplitPct" | "brokerSplitPct" | "closingNear" | "isRented" | "leaseAgreementSent" | "estoppelSent" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["operation"]>
 
   export type $OperationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Operation"
@@ -8916,10 +8985,14 @@ export namespace Prisma {
       condoRider: string
       inspDone: string
       inspStatus: string
+      inspEstimatedDate: string
       inspNotes: string
       appraisal: string
       reinspection: string
       pending: string
+      agentSplitPct: number
+      realtorSplitPct: number
+      brokerSplitPct: number
       closingNear: boolean
       isRented: boolean
       leaseAgreementSent: boolean
@@ -9376,10 +9449,14 @@ export namespace Prisma {
     readonly condoRider: FieldRef<"Operation", 'String'>
     readonly inspDone: FieldRef<"Operation", 'String'>
     readonly inspStatus: FieldRef<"Operation", 'String'>
+    readonly inspEstimatedDate: FieldRef<"Operation", 'String'>
     readonly inspNotes: FieldRef<"Operation", 'String'>
     readonly appraisal: FieldRef<"Operation", 'String'>
     readonly reinspection: FieldRef<"Operation", 'String'>
     readonly pending: FieldRef<"Operation", 'String'>
+    readonly agentSplitPct: FieldRef<"Operation", 'Float'>
+    readonly realtorSplitPct: FieldRef<"Operation", 'Float'>
+    readonly brokerSplitPct: FieldRef<"Operation", 'Float'>
     readonly closingNear: FieldRef<"Operation", 'Boolean'>
     readonly isRented: FieldRef<"Operation", 'Boolean'>
     readonly leaseAgreementSent: FieldRef<"Operation", 'Boolean'>
@@ -9816,6 +9893,7 @@ export namespace Prisma {
   export const AgentScalarFieldEnum: {
     id: 'id',
     name: 'name',
+    lastName: 'lastName',
     active: 'active',
     closed: 'closed'
   };
@@ -9915,10 +9993,14 @@ export namespace Prisma {
     condoRider: 'condoRider',
     inspDone: 'inspDone',
     inspStatus: 'inspStatus',
+    inspEstimatedDate: 'inspEstimatedDate',
     inspNotes: 'inspNotes',
     appraisal: 'appraisal',
     reinspection: 'reinspection',
     pending: 'pending',
+    agentSplitPct: 'agentSplitPct',
+    realtorSplitPct: 'realtorSplitPct',
+    brokerSplitPct: 'brokerSplitPct',
     closingNear: 'closingNear',
     isRented: 'isRented',
     leaseAgreementSent: 'leaseAgreementSent',
@@ -10265,6 +10347,7 @@ export namespace Prisma {
     NOT?: AgentWhereInput | AgentWhereInput[]
     id?: StringFilter<"Agent"> | string
     name?: StringFilter<"Agent"> | string
+    lastName?: StringFilter<"Agent"> | string
     active?: IntFilter<"Agent"> | number
     closed?: IntFilter<"Agent"> | number
   }
@@ -10272,6 +10355,7 @@ export namespace Prisma {
   export type AgentOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
+    lastName?: SortOrder
     active?: SortOrder
     closed?: SortOrder
   }
@@ -10282,6 +10366,7 @@ export namespace Prisma {
     OR?: AgentWhereInput[]
     NOT?: AgentWhereInput | AgentWhereInput[]
     name?: StringFilter<"Agent"> | string
+    lastName?: StringFilter<"Agent"> | string
     active?: IntFilter<"Agent"> | number
     closed?: IntFilter<"Agent"> | number
   }, "id">
@@ -10289,6 +10374,7 @@ export namespace Prisma {
   export type AgentOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
+    lastName?: SortOrder
     active?: SortOrder
     closed?: SortOrder
     _count?: AgentCountOrderByAggregateInput
@@ -10304,6 +10390,7 @@ export namespace Prisma {
     NOT?: AgentScalarWhereWithAggregatesInput | AgentScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Agent"> | string
     name?: StringWithAggregatesFilter<"Agent"> | string
+    lastName?: StringWithAggregatesFilter<"Agent"> | string
     active?: IntWithAggregatesFilter<"Agent"> | number
     closed?: IntWithAggregatesFilter<"Agent"> | number
   }
@@ -10659,10 +10746,14 @@ export namespace Prisma {
     condoRider?: StringFilter<"Operation"> | string
     inspDone?: StringFilter<"Operation"> | string
     inspStatus?: StringFilter<"Operation"> | string
+    inspEstimatedDate?: StringFilter<"Operation"> | string
     inspNotes?: StringFilter<"Operation"> | string
     appraisal?: StringFilter<"Operation"> | string
     reinspection?: StringFilter<"Operation"> | string
     pending?: StringFilter<"Operation"> | string
+    agentSplitPct?: FloatFilter<"Operation"> | number
+    realtorSplitPct?: FloatFilter<"Operation"> | number
+    brokerSplitPct?: FloatFilter<"Operation"> | number
     closingNear?: BoolFilter<"Operation"> | boolean
     isRented?: BoolFilter<"Operation"> | boolean
     leaseAgreementSent?: BoolFilter<"Operation"> | boolean
@@ -10699,10 +10790,14 @@ export namespace Prisma {
     condoRider?: SortOrder
     inspDone?: SortOrder
     inspStatus?: SortOrder
+    inspEstimatedDate?: SortOrder
     inspNotes?: SortOrder
     appraisal?: SortOrder
     reinspection?: SortOrder
     pending?: SortOrder
+    agentSplitPct?: SortOrder
+    realtorSplitPct?: SortOrder
+    brokerSplitPct?: SortOrder
     closingNear?: SortOrder
     isRented?: SortOrder
     leaseAgreementSent?: SortOrder
@@ -10742,10 +10837,14 @@ export namespace Prisma {
     condoRider?: StringFilter<"Operation"> | string
     inspDone?: StringFilter<"Operation"> | string
     inspStatus?: StringFilter<"Operation"> | string
+    inspEstimatedDate?: StringFilter<"Operation"> | string
     inspNotes?: StringFilter<"Operation"> | string
     appraisal?: StringFilter<"Operation"> | string
     reinspection?: StringFilter<"Operation"> | string
     pending?: StringFilter<"Operation"> | string
+    agentSplitPct?: FloatFilter<"Operation"> | number
+    realtorSplitPct?: FloatFilter<"Operation"> | number
+    brokerSplitPct?: FloatFilter<"Operation"> | number
     closingNear?: BoolFilter<"Operation"> | boolean
     isRented?: BoolFilter<"Operation"> | boolean
     leaseAgreementSent?: BoolFilter<"Operation"> | boolean
@@ -10782,10 +10881,14 @@ export namespace Prisma {
     condoRider?: SortOrder
     inspDone?: SortOrder
     inspStatus?: SortOrder
+    inspEstimatedDate?: SortOrder
     inspNotes?: SortOrder
     appraisal?: SortOrder
     reinspection?: SortOrder
     pending?: SortOrder
+    agentSplitPct?: SortOrder
+    realtorSplitPct?: SortOrder
+    brokerSplitPct?: SortOrder
     closingNear?: SortOrder
     isRented?: SortOrder
     leaseAgreementSent?: SortOrder
@@ -10830,10 +10933,14 @@ export namespace Prisma {
     condoRider?: StringWithAggregatesFilter<"Operation"> | string
     inspDone?: StringWithAggregatesFilter<"Operation"> | string
     inspStatus?: StringWithAggregatesFilter<"Operation"> | string
+    inspEstimatedDate?: StringWithAggregatesFilter<"Operation"> | string
     inspNotes?: StringWithAggregatesFilter<"Operation"> | string
     appraisal?: StringWithAggregatesFilter<"Operation"> | string
     reinspection?: StringWithAggregatesFilter<"Operation"> | string
     pending?: StringWithAggregatesFilter<"Operation"> | string
+    agentSplitPct?: FloatWithAggregatesFilter<"Operation"> | number
+    realtorSplitPct?: FloatWithAggregatesFilter<"Operation"> | number
+    brokerSplitPct?: FloatWithAggregatesFilter<"Operation"> | number
     closingNear?: BoolWithAggregatesFilter<"Operation"> | boolean
     isRented?: BoolWithAggregatesFilter<"Operation"> | boolean
     leaseAgreementSent?: BoolWithAggregatesFilter<"Operation"> | boolean
@@ -11061,6 +11168,7 @@ export namespace Prisma {
   export type AgentCreateInput = {
     id: string
     name: string
+    lastName?: string
     active?: number
     closed?: number
   }
@@ -11068,6 +11176,7 @@ export namespace Prisma {
   export type AgentUncheckedCreateInput = {
     id: string
     name: string
+    lastName?: string
     active?: number
     closed?: number
   }
@@ -11075,6 +11184,7 @@ export namespace Prisma {
   export type AgentUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
     active?: IntFieldUpdateOperationsInput | number
     closed?: IntFieldUpdateOperationsInput | number
   }
@@ -11082,6 +11192,7 @@ export namespace Prisma {
   export type AgentUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
     active?: IntFieldUpdateOperationsInput | number
     closed?: IntFieldUpdateOperationsInput | number
   }
@@ -11089,6 +11200,7 @@ export namespace Prisma {
   export type AgentCreateManyInput = {
     id: string
     name: string
+    lastName?: string
     active?: number
     closed?: number
   }
@@ -11096,6 +11208,7 @@ export namespace Prisma {
   export type AgentUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
     active?: IntFieldUpdateOperationsInput | number
     closed?: IntFieldUpdateOperationsInput | number
   }
@@ -11103,6 +11216,7 @@ export namespace Prisma {
   export type AgentUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
     active?: IntFieldUpdateOperationsInput | number
     closed?: IntFieldUpdateOperationsInput | number
   }
@@ -11543,10 +11657,14 @@ export namespace Prisma {
     condoRider?: string
     inspDone?: string
     inspStatus?: string
+    inspEstimatedDate?: string
     inspNotes?: string
     appraisal?: string
     reinspection?: string
     pending?: string
+    agentSplitPct?: number
+    realtorSplitPct?: number
+    brokerSplitPct?: number
     closingNear?: boolean
     isRented?: boolean
     leaseAgreementSent?: boolean
@@ -11583,10 +11701,14 @@ export namespace Prisma {
     condoRider?: string
     inspDone?: string
     inspStatus?: string
+    inspEstimatedDate?: string
     inspNotes?: string
     appraisal?: string
     reinspection?: string
     pending?: string
+    agentSplitPct?: number
+    realtorSplitPct?: number
+    brokerSplitPct?: number
     closingNear?: boolean
     isRented?: boolean
     leaseAgreementSent?: boolean
@@ -11622,10 +11744,14 @@ export namespace Prisma {
     condoRider?: StringFieldUpdateOperationsInput | string
     inspDone?: StringFieldUpdateOperationsInput | string
     inspStatus?: StringFieldUpdateOperationsInput | string
+    inspEstimatedDate?: StringFieldUpdateOperationsInput | string
     inspNotes?: StringFieldUpdateOperationsInput | string
     appraisal?: StringFieldUpdateOperationsInput | string
     reinspection?: StringFieldUpdateOperationsInput | string
     pending?: StringFieldUpdateOperationsInput | string
+    agentSplitPct?: FloatFieldUpdateOperationsInput | number
+    realtorSplitPct?: FloatFieldUpdateOperationsInput | number
+    brokerSplitPct?: FloatFieldUpdateOperationsInput | number
     closingNear?: BoolFieldUpdateOperationsInput | boolean
     isRented?: BoolFieldUpdateOperationsInput | boolean
     leaseAgreementSent?: BoolFieldUpdateOperationsInput | boolean
@@ -11662,10 +11788,14 @@ export namespace Prisma {
     condoRider?: StringFieldUpdateOperationsInput | string
     inspDone?: StringFieldUpdateOperationsInput | string
     inspStatus?: StringFieldUpdateOperationsInput | string
+    inspEstimatedDate?: StringFieldUpdateOperationsInput | string
     inspNotes?: StringFieldUpdateOperationsInput | string
     appraisal?: StringFieldUpdateOperationsInput | string
     reinspection?: StringFieldUpdateOperationsInput | string
     pending?: StringFieldUpdateOperationsInput | string
+    agentSplitPct?: FloatFieldUpdateOperationsInput | number
+    realtorSplitPct?: FloatFieldUpdateOperationsInput | number
+    brokerSplitPct?: FloatFieldUpdateOperationsInput | number
     closingNear?: BoolFieldUpdateOperationsInput | boolean
     isRented?: BoolFieldUpdateOperationsInput | boolean
     leaseAgreementSent?: BoolFieldUpdateOperationsInput | boolean
@@ -11702,10 +11832,14 @@ export namespace Prisma {
     condoRider?: string
     inspDone?: string
     inspStatus?: string
+    inspEstimatedDate?: string
     inspNotes?: string
     appraisal?: string
     reinspection?: string
     pending?: string
+    agentSplitPct?: number
+    realtorSplitPct?: number
+    brokerSplitPct?: number
     closingNear?: boolean
     isRented?: boolean
     leaseAgreementSent?: boolean
@@ -11741,10 +11875,14 @@ export namespace Prisma {
     condoRider?: StringFieldUpdateOperationsInput | string
     inspDone?: StringFieldUpdateOperationsInput | string
     inspStatus?: StringFieldUpdateOperationsInput | string
+    inspEstimatedDate?: StringFieldUpdateOperationsInput | string
     inspNotes?: StringFieldUpdateOperationsInput | string
     appraisal?: StringFieldUpdateOperationsInput | string
     reinspection?: StringFieldUpdateOperationsInput | string
     pending?: StringFieldUpdateOperationsInput | string
+    agentSplitPct?: FloatFieldUpdateOperationsInput | number
+    realtorSplitPct?: FloatFieldUpdateOperationsInput | number
+    brokerSplitPct?: FloatFieldUpdateOperationsInput | number
     closingNear?: BoolFieldUpdateOperationsInput | boolean
     isRented?: BoolFieldUpdateOperationsInput | boolean
     leaseAgreementSent?: BoolFieldUpdateOperationsInput | boolean
@@ -11781,10 +11919,14 @@ export namespace Prisma {
     condoRider?: StringFieldUpdateOperationsInput | string
     inspDone?: StringFieldUpdateOperationsInput | string
     inspStatus?: StringFieldUpdateOperationsInput | string
+    inspEstimatedDate?: StringFieldUpdateOperationsInput | string
     inspNotes?: StringFieldUpdateOperationsInput | string
     appraisal?: StringFieldUpdateOperationsInput | string
     reinspection?: StringFieldUpdateOperationsInput | string
     pending?: StringFieldUpdateOperationsInput | string
+    agentSplitPct?: FloatFieldUpdateOperationsInput | number
+    realtorSplitPct?: FloatFieldUpdateOperationsInput | number
+    brokerSplitPct?: FloatFieldUpdateOperationsInput | number
     closingNear?: BoolFieldUpdateOperationsInput | boolean
     isRented?: BoolFieldUpdateOperationsInput | boolean
     leaseAgreementSent?: BoolFieldUpdateOperationsInput | boolean
@@ -12162,6 +12304,7 @@ export namespace Prisma {
   export type AgentCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    lastName?: SortOrder
     active?: SortOrder
     closed?: SortOrder
   }
@@ -12174,6 +12317,7 @@ export namespace Prisma {
   export type AgentMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    lastName?: SortOrder
     active?: SortOrder
     closed?: SortOrder
   }
@@ -12181,6 +12325,7 @@ export namespace Prisma {
   export type AgentMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    lastName?: SortOrder
     active?: SortOrder
     closed?: SortOrder
   }
@@ -12457,10 +12602,14 @@ export namespace Prisma {
     condoRider?: SortOrder
     inspDone?: SortOrder
     inspStatus?: SortOrder
+    inspEstimatedDate?: SortOrder
     inspNotes?: SortOrder
     appraisal?: SortOrder
     reinspection?: SortOrder
     pending?: SortOrder
+    agentSplitPct?: SortOrder
+    realtorSplitPct?: SortOrder
+    brokerSplitPct?: SortOrder
     closingNear?: SortOrder
     isRented?: SortOrder
     leaseAgreementSent?: SortOrder
@@ -12476,6 +12625,9 @@ export namespace Prisma {
     clientId?: SortOrder
     compPct?: SortOrder
     compFixed?: SortOrder
+    agentSplitPct?: SortOrder
+    realtorSplitPct?: SortOrder
+    brokerSplitPct?: SortOrder
   }
 
   export type OperationMaxOrderByAggregateInput = {
@@ -12505,10 +12657,14 @@ export namespace Prisma {
     condoRider?: SortOrder
     inspDone?: SortOrder
     inspStatus?: SortOrder
+    inspEstimatedDate?: SortOrder
     inspNotes?: SortOrder
     appraisal?: SortOrder
     reinspection?: SortOrder
     pending?: SortOrder
+    agentSplitPct?: SortOrder
+    realtorSplitPct?: SortOrder
+    brokerSplitPct?: SortOrder
     closingNear?: SortOrder
     isRented?: SortOrder
     leaseAgreementSent?: SortOrder
@@ -12545,10 +12701,14 @@ export namespace Prisma {
     condoRider?: SortOrder
     inspDone?: SortOrder
     inspStatus?: SortOrder
+    inspEstimatedDate?: SortOrder
     inspNotes?: SortOrder
     appraisal?: SortOrder
     reinspection?: SortOrder
     pending?: SortOrder
+    agentSplitPct?: SortOrder
+    realtorSplitPct?: SortOrder
+    brokerSplitPct?: SortOrder
     closingNear?: SortOrder
     isRented?: SortOrder
     leaseAgreementSent?: SortOrder
@@ -12564,6 +12724,9 @@ export namespace Prisma {
     clientId?: SortOrder
     compPct?: SortOrder
     compFixed?: SortOrder
+    agentSplitPct?: SortOrder
+    realtorSplitPct?: SortOrder
+    brokerSplitPct?: SortOrder
   }
 
   export type StringFieldUpdateOperationsInput = {

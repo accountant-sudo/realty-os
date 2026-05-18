@@ -9,25 +9,25 @@ import type { NavView } from '@/lib/types'
 const VIEW_PATH: Record<NavView, string> = {
   dashboard:   '/intranet/dashboard',
   mls:         '/intranet/mls',
-  operaciones: '/intranet/operaciones',
-  documentos:  '/intranet/documentos',
+  operations:  '/intranet/operations',
+  documents:   '/intranet/documents',
   zillow:      '/intranet/zillow',
   zonaprop:    '/intranet/zonaprop',
-  comisiones:  '/intranet/comisiones',
-  usuarios:    '/intranet/usuarios',
-  permisos:    '/intranet/permisos',
-  actividad:   '/intranet/actividad',
-  'op-detail': '/intranet/operaciones',
+  commissions: '/intranet/commissions',
+  users:       '/intranet/users',
+  permissions: '/intranet/permissions',
+  activity:    '/intranet/activity',
+  'op-detail': '/intranet/operations',
 }
 
-const ROLE_LABEL: Record<string, string> = { super_admin: 'Super Admin', admin: 'Admin', manager: 'Manager', agente: 'Agente' }
+const ROLE_LABEL: Record<string, string> = { super_admin: 'Super Admin', admin: 'Admin', manager: 'Manager', agente: 'Agent' }
 
 export default function Sidebar() {
   const { currentUser, logout, getAllowedViews } = useAuth()
   const pathname = usePathname()
   const allowed = getAllowedViews()
 
-  const sections = ['Principal', 'Gestión', 'Análisis', 'Admin']
+  const sections = ['Main', 'Management', 'Analysis', 'Admin']
   const groupedItems = sections.map(section => ({
     section,
     items: NAV_ITEMS.filter(i => i.section === section && allowed.includes(i.view)),
@@ -53,7 +53,7 @@ export default function Sidebar() {
             </div>
             {items.map(({ view, icon: Icon, label }) => {
               const href = VIEW_PATH[view]
-              const isActive = pathname.startsWith(href) && href !== '/intranet/operaciones'
+              const isActive = pathname.startsWith(href) && href !== '/intranet/operations'
                 ? true
                 : pathname === href || pathname.startsWith(href + '/')
               return (
@@ -88,7 +88,7 @@ export default function Sidebar() {
           </div>
           <button
             onClick={logout}
-            title="Cerrar sesión"
+            title="Log out"
             className="bg-transparent border-none text-[#666] cursor-pointer p-1 hover:text-[#aaa] transition-colors"
           >
             <LogOut className="w-4 h-4" />

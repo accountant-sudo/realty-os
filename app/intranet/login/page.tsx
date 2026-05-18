@@ -61,18 +61,18 @@ export default function LoginPage() {
             Miami Tango
           </div>
           <div className="text-[12px] uppercase tracking-[0.04em]" style={{ color: 'rgba(240,230,200,0.45)' }}>
-            Investments — Acceso interno
+            Investments — Internal access
           </div>
         </div>
 
         <div className="flex flex-col gap-1.5 mb-3.5">
           <label className="text-[11px] font-semibold uppercase tracking-[0.06em]" style={{ color: 'rgba(240,230,200,0.5)' }}>
-            Usuario
+            Username
           </label>
           <input
             id="login-user"
             type="text"
-            placeholder="tu usuario"
+            placeholder="your username"
             autoComplete="username"
             value={user}
             onChange={e => setUser(e.target.value)}
@@ -91,7 +91,7 @@ export default function LoginPage() {
 
         <div className="flex flex-col gap-1.5 mb-3.5">
           <label className="text-[11px] font-semibold uppercase tracking-[0.06em]" style={{ color: 'rgba(240,230,200,0.5)' }}>
-            Contraseña
+            Password
           </label>
           <input
             id="login-pass"
@@ -119,7 +119,7 @@ export default function LoginPage() {
           disabled={loading}
           onClick={handleLogin}
         >
-          {loading ? 'Ingresando...' : 'Ingresar'}
+          {loading ? 'Logging in...' : 'Log in'}
         </button>
 
         <div className="mt-2.5 text-[12px] text-[#e07070] text-center min-h-[18px]">{error}</div>

@@ -20,13 +20,13 @@ export default function Documentos() {
   return (
     <div className="bg-surface border border-border rounded-[10px] overflow-hidden mb-5">
       <div className="px-[18px] py-3.5 border-b border-border flex items-center justify-between">
-        <span className="text-[13px] font-semibold text-text-primary">Documentos por operación activa</span>
+        <span className="text-[13px] font-semibold text-text-primary">Documents by active operation</span>
       </div>
       <div className="overflow-x-auto">
         <table>
           <thead>
             <tr>
-              <th>Propiedad</th>
+              <th>Property</th>
               {DOC_TYPES.map(d => <th key={d.key}>{d.label}</th>)}
             </tr>
           </thead>

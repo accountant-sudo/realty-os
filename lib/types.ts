@@ -1,9 +1,9 @@
 
 export type Role = 'super_admin' | 'admin' | 'manager' | 'agente'
 export type NavView =
-  | 'dashboard' | 'mls' | 'operaciones' | 'documentos'
-  | 'zillow' | 'zonaprop' | 'comisiones' | 'usuarios'
-  | 'permisos' | 'actividad' | 'op-detail'
+  | 'dashboard' | 'mls' | 'operations' | 'documents'
+  | 'zillow' | 'zonaprop' | 'commissions' | 'users'
+  | 'permissions' | 'activity' | 'op-detail'
 
 export interface User {
   pass: string
@@ -34,6 +34,7 @@ export interface UserRecord {
 export interface Agent {
   id: string
   name: string
+  lastName: string
   active: number
   closed: number
 }
@@ -126,9 +127,13 @@ export interface Operation {
   condoRider: ChkValue
   inspDone: ChkValue
   inspStatus: string
+  inspEstimatedDate: string
   inspNotes: string
   appraisal: string
   reinspection: ChkValue
+  agentSplitPct: number
+  realtorSplitPct: number
+  brokerSplitPct: number
   pending: string
   closingNear: boolean
   isRented: boolean

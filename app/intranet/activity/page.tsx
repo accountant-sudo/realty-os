@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
 
 export default function ActividadPage() {
-  redirect('/intranet/usuarios?tab=actividad')
+  redirect('/intranet/users?tab=activity')
 }

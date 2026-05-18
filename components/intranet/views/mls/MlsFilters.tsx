@@ -1,7 +1,7 @@
 import { Search } from 'lucide-react'
 import type { Agent } from '@/lib/types'
 
-const CITIES = ['Todas', 'Jacksonville', 'South Florida', 'Orlando']
+const CITIES = ['All', 'Jacksonville', 'South Florida', 'Orlando']
 const INPUT = 'px-3 py-2 border border-border rounded-[6px] text-[13px] bg-bg focus:outline-none focus:border-gold focus:ring-[3px] focus:ring-gold-light transition-colors font-[inherit]'
 
 interface Props {
@@ -25,13 +25,13 @@ export default function MlsFilters({ search, cityFilter, agentFilter, statusFilt
         <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 text-text-3 w-3.5 h-3.5" />
         <input
           className="w-full pl-8 pr-3 py-2 border border-border rounded-[6px] text-[13px] bg-bg focus:outline-none focus:border-gold focus:bg-surface transition-colors"
-          placeholder="Buscar por dirección, MLS#…"
+          placeholder="Search by address, MLS#…"
           value={search}
           onChange={e => onSearch(e.target.value)}
         />
       </div>
       <select className={`${INPUT} w-[110px]`} value={countryFilter} onChange={e => onCountry(e.target.value)}>
-        <option value="Todos">🌐 Todos</option>
+        <option value="Todos">🌐 All</option>
         <option value="US">🇺🇸 US</option>
         <option value="AR">🇦🇷 AR</option>
       </select>
@@ -39,14 +39,14 @@ export default function MlsFilters({ search, cityFilter, agentFilter, statusFilt
         {CITIES.map(c => <option key={c}>{c}</option>)}
       </select>
       <select className={`${INPUT} w-[140px]`} value={agentFilter} onChange={e => onAgent(e.target.value)}>
-        <option>Todos</option>
+        <option>All</option>
         {agents.map(a => <option key={a.id} value={a.id}>{a.name}</option>)}
       </select>
       <select className={`${INPUT} w-[150px]`} value={statusFilter} onChange={e => onStatus(e.target.value)}>
-        <option>Todos</option>
-        <option value="published">En MLS</option>
-        <option value="under_contract">Bajo contrato</option>
-        <option value="withdrawn">Retirada</option>
+        <option>All</option>
+        <option value="published">On MLS</option>
+        <option value="under_contract">Under contract</option>
+        <option value="withdrawn">Withdrawn</option>
       </select>
     </div>
   )

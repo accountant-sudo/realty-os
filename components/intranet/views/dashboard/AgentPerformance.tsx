@@ -6,12 +6,12 @@ export default function AgentPerformance({ agents }: { agents: Agent[] }) {
   return (
     <div className="bg-surface border border-border rounded-[10px] overflow-hidden mb-5">
       <div className="px-[18px] py-3.5 border-b border-border flex items-center justify-between">
-        <span className="text-[13px] font-semibold text-text-primary">Agentes — performance</span>
+        <span className="text-[13px] font-semibold text-text-primary">Agents — performance</span>
       </div>
       <div className="overflow-x-auto">
         <table>
           <thead>
-            <tr><th>Agente</th><th>Activas</th><th>Cerradas</th><th>Progreso</th></tr>
+            <tr><th>Agent</th><th>Active</th><th>Closed</th><th>Progress</th></tr>
           </thead>
           <tbody>
             {agents.map(a => (

@@ -15,7 +15,8 @@ const EMPTY: NewOp = {
   compSigned: false, compPct: 0, compFixed: 0,
   escrow: false, lbp: false, sd: false, flood: false,
   condoDocs: false, condoRider: false, inspDone: false,
-  inspStatus: '', inspNotes: '', appraisal: '', reinspection: false,
+  inspStatus: '', inspEstimatedDate: '', inspNotes: '', appraisal: '', reinspection: false,
+  agentSplitPct: -1, realtorSplitPct: -1, brokerSplitPct: -1,
   pending: '', closingNear: false, isRented: false,
   leaseAgreementSent: false, estoppelSent: false,
 }
@@ -42,14 +43,14 @@ export default function NewOperationForm({ agents, realtors, onSave, onCancel }:
     <>
       <div className="grid grid-cols-2 gap-4 py-2 max-h-[60vh] overflow-y-auto pr-1">
         <div className="col-span-2 flex flex-col gap-1">
-          <label className={LABEL_CLS}>Dirección *</label>
+          <label className={LABEL_CLS}>Address *</label>
           <input className={INPUT_CLS} value={form.address} onChange={e => set('address', e.target.value)} placeholder="1234 Main St, Jacksonville FL" />
         </div>
 
         <div className="flex flex-col gap-1">
-          <label className={LABEL_CLS}>Agente</label>
+          <label className={LABEL_CLS}>Agent</label>
           <select className={INPUT_CLS} value={form.agent} onChange={e => set('agent', e.target.value)}>
-            <option value="">Sin asignar</option>
+            <option value="">Unassigned</option>
             {agents.map(a => <option key={a.id} value={a.id}>{a.name}</option>)}
           </select>
         </div>
@@ -62,12 +63,12 @@ export default function NewOperationForm({ agents, realtors, onSave, onCancel }:
         </div>
 
         <div className="flex flex-col gap-1">
-          <label className={LABEL_CLS}>Precio</label>
+          <label className={LABEL_CLS}>Price</label>
           <input className={INPUT_CLS} type="number" value={form.price || ''} onChange={e => set('price', Number(e.target.value))} />
         </div>
 
         <div className="flex flex-col gap-1">
-          <label className={LABEL_CLS}>Financiamiento</label>
+          <label className={LABEL_CLS}>Financing</label>
           <select className={INPUT_CLS} value={form.financing} onChange={e => set('financing', e.target.value)}>
             <option value="">—</option>
             <option>CASH</option>
@@ -78,17 +79,17 @@ export default function NewOperationForm({ agents, realtors, onSave, onCancel }:
         </div>
 
         <div className="flex flex-col gap-1">
-          <label className={LABEL_CLS}>Fecha firma</label>
+          <label className={LABEL_CLS}>Exec. date</label>
           <input className={INPUT_CLS} type="date" value={form.execDate} onChange={e => set('execDate', e.target.value)} />
         </div>
 
         <div className="flex flex-col gap-1">
-          <label className={LABEL_CLS}>Fecha cierre</label>
+          <label className={LABEL_CLS}>Closing date</label>
           <input className={INPUT_CLS} type="date" value={form.closingDate} onChange={e => handleClosingDate(e.target.value)} />
         </div>
 
         <div className="flex flex-col gap-1">
-          <label className={LABEL_CLS}>Comprador</label>
+          <label className={LABEL_CLS}>Buyer</label>
           <input className={INPUT_CLS} value={form.buyerName} onChange={e => set('buyerName', e.target.value)} />
         </div>
 
@@ -98,29 +99,29 @@ export default function NewOperationForm({ agents, realtors, onSave, onCancel }:
         </div>
 
         <div className="flex flex-col gap-1">
-          <label className={LABEL_CLS}>Comisión %</label>
+          <label className={LABEL_CLS}>Commission %</label>
           <input className={INPUT_CLS} type="number" step="0.1" value={form.compPct || ''} onChange={e => set('compPct', Number(e.target.value))} />
         </div>
 
         <div className="flex flex-col gap-1">
-          <label className={LABEL_CLS}>Comisión fija $</label>
+          <label className={LABEL_CLS}>Fixed commission $</label>
           <input className={INPUT_CLS} type="number" value={form.compFixed || ''} onChange={e => set('compFixed', Number(e.target.value))} />
         </div>
 
         <div className="col-span-2 flex flex-col gap-1">
-          <label className={LABEL_CLS}>Nota pendiente</label>
-          <input className={INPUT_CLS} value={form.pending} onChange={e => set('pending', e.target.value)} placeholder="Ej: Esperando inspeccion..." />
+          <label className={LABEL_CLS}>Pending note</label>
+          <input className={INPUT_CLS} value={form.pending} onChange={e => set('pending', e.target.value)} placeholder="E.g.: Awaiting inspection..." />
         </div>
       </div>
 
       <div className="flex justify-end gap-2.5 pt-3 border-t border-border">
-        <button className={BTN_S} onClick={onCancel}>Cancelar</button>
+        <button className={BTN_S} onClick={onCancel}>Cancel</button>
         <button
           className={BTN_P}
           onClick={() => onSave(form)}
           disabled={!form.address.trim()}
         >
-          Agregar operación
+          Add operation
         </button>
       </div>
     </>

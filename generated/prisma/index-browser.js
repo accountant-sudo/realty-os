@@ -155,6 +155,7 @@ exports.Prisma.ActivityLogScalarFieldEnum = {
 exports.Prisma.AgentScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  lastName: 'lastName',
   active: 'active',
   closed: 'closed'
 };
@@ -245,10 +246,14 @@ exports.Prisma.OperationScalarFieldEnum = {
   condoRider: 'condoRider',
   inspDone: 'inspDone',
   inspStatus: 'inspStatus',
+  inspEstimatedDate: 'inspEstimatedDate',
   inspNotes: 'inspNotes',
   appraisal: 'appraisal',
   reinspection: 'reinspection',
   pending: 'pending',
+  agentSplitPct: 'agentSplitPct',
+  realtorSplitPct: 'realtorSplitPct',
+  brokerSplitPct: 'brokerSplitPct',
   closingNear: 'closingNear',
   isRented: 'isRented',
   leaseAgreementSent: 'leaseAgreementSent',

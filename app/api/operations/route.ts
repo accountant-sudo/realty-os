@@ -14,7 +14,7 @@ export async function POST(req: Request) {
   const user = await requireAuth(req);
   if (!user)
     return NextResponse.json({ error: "No autorizado" }, { status: 401 });
-  if (user.role === "agente")
+  if (!user.canEdit)
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
   const body = await req.json();

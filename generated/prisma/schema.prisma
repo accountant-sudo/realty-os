@@ -46,10 +46,11 @@ model ActivityLog {
 }
 
 model Agent {
-  id     String @id
-  name   String
-  active Int    @default(0)
-  closed Int    @default(0)
+  id       String @id
+  name     String
+  lastName String @default("") @map("last_name")
+  active   Int    @default(0)
+  closed   Int    @default(0)
 
   @@map("agents")
 }
@@ -149,10 +150,14 @@ model Operation {
   condoRider         String  @default("false") @map("condo_rider")
   inspDone           String  @default("false") @map("insp_done")
   inspStatus         String  @default("") @map("insp_status")
+  inspEstimatedDate  String  @default("") @map("insp_estimated_date")
   inspNotes          String  @default("") @map("insp_notes")
   appraisal          String  @default("")
   reinspection       String  @default("false")
   pending            String  @default("")
+  agentSplitPct      Float   @default(-1) @map("agent_split_pct")
+  realtorSplitPct    Float   @default(-1) @map("realtor_split_pct")
+  brokerSplitPct     Float   @default(-1) @map("broker_split_pct")
   closingNear        Boolean @default(false) @map("closing_near")
   isRented           Boolean @default(false) @map("is_rented")
   leaseAgreementSent Boolean @default(false) @map("lease_agreement_sent")

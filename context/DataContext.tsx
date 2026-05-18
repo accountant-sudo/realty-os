@@ -37,6 +37,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
   const [operations, setOperations] = useState<Operation[]>([])
   const [mlsProperties, setMlsProperties] = useState<MlsProperty[]>([])
   const [agents, setAgents] = useState<Agent[]>([])
+  const [realtors, setRealtors] = useState<Realtor[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -44,10 +45,12 @@ export function DataProvider({ children }: { children: ReactNode }) {
       fetch('/api/operations').then(r => r.json()),
       fetch('/api/mls').then(r => r.json()),
       fetch('/api/agents').then(r => r.json()),
-    ]).then(([ops, mls, ags]) => {
+      fetch('/api/realtors').then(r => r.json()),
+    ]).then(([ops, mls, ags, rltrs]) => {
       setOperations((ops as Record<string, unknown>[]).map(dbToOperation))
       setMlsProperties(mls as MlsProperty[])
       setAgents(ags as Agent[])
+      setRealtors(rltrs as Realtor[])
     }).catch(console.error).finally(() => setLoading(false))
   }, [])
 
@@ -64,10 +67,13 @@ export function DataProvider({ children }: { children: ReactNode }) {
     }))
   }, [])
 
+  // These fields are stored as TEXT in Postgres (ChkValue); all other booleans are real BOOLEAN columns
+  const CHK_KEYS = new Set(['compSigned', 'escrow', 'lbp', 'sd', 'flood', 'condoDocs', 'condoRider', 'inspDone', 'reinspection'])
+
   const updateOperation = useCallback((opId: number, fields: Partial<Operation>) => {
     setOperations(prev => prev.map(op => op.id === opId ? { ...op, ...fields } : op))
     const dbFields = Object.fromEntries(
-      Object.entries(fields).map(([k, v]) => [k, typeof v === 'boolean' ? String(v) : v])
+      Object.entries(fields).map(([k, v]) => [k, CHK_KEYS.has(k) ? String(v) : v])
     )
     fetch(`/api/operations/${opId}`, {
       method: 'PATCH',
@@ -117,12 +123,6 @@ export function DataProvider({ children }: { children: ReactNode }) {
     setOperations(prev => prev.filter(o => o.id !== opId))
     fetch(`/api/operations/${opId}`, { method: 'DELETE' }).catch(console.error)
   }, [])
-
-  const realtors: Realtor[] = [
-    { id: 'carlos', name: 'Carlos' },
-    { id: 'elisabeth', name: 'Elisabeth' },
-    { id: 'none', name: 'Sin realtor' },
-  ]
 
   return (
     <DataContext.Provider value={{

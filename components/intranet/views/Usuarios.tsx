@@ -19,7 +19,7 @@ const ROLE_LABEL: Record<string, string> = {
   super_admin: 'Super Admin',
   admin: 'Admin',
   manager: 'Manager',
-  agente: 'Agente',
+  agente: 'Agent',
 }
 const ROLE_CLS: Record<string, string> = {
   super_admin: 'bg-[#EDE9FE] text-[#5B21B6]',
@@ -30,23 +30,23 @@ const ROLE_CLS: Record<string, string> = {
 const ROLE_ORDER: string[] = ['super_admin', 'admin', 'manager', 'agente']
 
 const ALL_VIEWS: NavView[] = [
-  'dashboard', 'mls', 'operaciones', 'documentos',
-  'zillow', 'zonaprop', 'comisiones', 'usuarios',
+  'dashboard', 'mls', 'operations', 'documents',
+  'zillow', 'zonaprop', 'commissions', 'users',
 ]
 const VIEW_LABELS: Partial<Record<NavView, string>> = {
-  dashboard: 'Dashboard', mls: 'MLS', operaciones: 'Operaciones',
-  documentos: 'Documentos', zillow: 'Zillow', zonaprop: 'ZonaProp',
-  comisiones: 'Comisiones', usuarios: 'Usuarios',
+  dashboard: 'Dashboard', mls: 'MLS', operations: 'Operations',
+  documents: 'Documents', zillow: 'Zillow', zonaprop: 'ZonaProp',
+  commissions: 'Commissions', users: 'Users',
 }
 const ACTION_LABEL: Record<string, string> = {
-  create_user: 'Crear usuario',
-  update_user_role: 'Cambiar rol',
-  delete_user: 'Eliminar usuario',
-  reset_password: 'Reset contraseña',
-  update_permissions: 'Actualizar permisos',
+  create_user: 'Create user',
+  update_user_role: 'Change role',
+  delete_user: 'Delete user',
+  reset_password: 'Reset password',
+  update_permissions: 'Update permissions',
 }
 
-type TabId = 'usuarios' | 'permisos' | 'actividad'
+type TabId = 'users' | 'permissions' | 'activity'
 
 interface RolePerm { id: number; role: string; allowedViews: string[]; canEdit: boolean }
 interface LogEntry {
@@ -59,14 +59,14 @@ interface LogEntry {
 export default function Usuarios() {
   const { isSuperAdmin } = useAuth()
   const searchParams = useSearchParams()
-  const defaultTab = (searchParams.get('tab') as TabId) ?? 'usuarios'
+  const defaultTab = (searchParams.get('tab') as TabId) ?? 'users'
   const [tab, setTab] = useState<TabId>(defaultTab)
 
   return (
     <div>
       {/* Tabs */}
       <div className="flex border-b border-border mb-6">
-        {(['usuarios', ...(isSuperAdmin() ? ['permisos', 'actividad'] : [])] as TabId[]).map(t => (
+        {(['users', ...(isSuperAdmin() ? ['permissions', 'activity'] : [])] as TabId[]).map(t => (
           <button
             key={t}
             onClick={() => setTab(t)}
@@ -79,9 +79,9 @@ export default function Usuarios() {
         ))}
       </div>
 
-      {tab === 'usuarios' && <TabUsuarios isSuperAdmin={isSuperAdmin()} />}
-      {tab === 'permisos' && isSuperAdmin() && <TabPermisos />}
-      {tab === 'actividad' && isSuperAdmin() && <TabActividad />}
+      {tab === 'users' && <TabUsuarios isSuperAdmin={isSuperAdmin()} />}
+      {tab === 'permissions' && isSuperAdmin() && <TabPermisos />}
+      {tab === 'activity' && isSuperAdmin() && <TabActividad />}
     </div>
   )
 }
@@ -152,30 +152,30 @@ function TabUsuarios({ isSuperAdmin }: { isSuperAdmin: boolean }) {
   return (
     <>
       <div className="flex justify-between items-center mb-4">
-        <span className="text-[13px] text-text-3">{users.length} usuarios</span>
+        <span className="text-[13px] text-text-3">{users.length} users</span>
         {isSuperAdmin && (
-          <button className={BTN_P} onClick={() => setCreateOpen(true)}>+ Nuevo usuario</button>
+          <button className={BTN_P} onClick={() => setCreateOpen(true)}>+ New user</button>
         )}
       </div>
 
       {loading ? (
-        <div className="text-[13px] text-text-3 py-8 text-center">Cargando…</div>
+        <div className="text-[13px] text-text-3 py-8 text-center">Loading…</div>
       ) : (
         <div className="space-y-6">
           {grouped.map(({ role, users: roleUsers }) => (
             <div key={role} className="bg-surface border border-border rounded-[10px] overflow-hidden">
               <div className="px-4 py-3 border-b border-border flex items-center gap-2">
                 <Badge cls={ROLE_CLS[role]}>{ROLE_LABEL[role]}</Badge>
-                <span className="text-[12px] text-text-3">{roleUsers.length} usuario{roleUsers.length !== 1 ? 's' : ''}</span>
+                <span className="text-[12px] text-text-3">{roleUsers.length} user{roleUsers.length !== 1 ? 's' : ''}</span>
               </div>
               <div className="overflow-x-auto">
                 <table>
                   <thead>
                     <tr>
-                      <th>Usuario</th>
-                      <th>Nombre</th>
-                      <th>Iniciales</th>
-                      {isSuperAdmin && role !== 'super_admin' && <th>Cambiar rol</th>}
+                      <th>Username</th>
+                      <th>Name</th>
+                      <th>Initials</th>
+                      {isSuperAdmin && role !== 'super_admin' && <th>Change role</th>}
                       {isSuperAdmin && <th></th>}
                     </tr>
                   </thead>
@@ -198,7 +198,7 @@ function TabUsuarios({ isSuperAdmin }: { isSuperAdmin: boolean }) {
                             >
                               <option value="admin">Admin</option>
                               <option value="manager">Manager</option>
-                              <option value="agente">Agente</option>
+                              <option value="agente">Agent</option>
                             </select>
                           </td>
                         )}
@@ -210,7 +210,7 @@ function TabUsuarios({ isSuperAdmin }: { isSuperAdmin: boolean }) {
                               </button>
                               {role !== 'super_admin' && (
                                 <button className={BTN_DANGER} onClick={() => setDeleteTarget(u)}>
-                                  Eliminar
+                                  Delete
                                 </button>
                               )}
                             </div>
@@ -229,9 +229,9 @@ function TabUsuarios({ isSuperAdmin }: { isSuperAdmin: boolean }) {
       {/* Create user modal */}
       <Dialog open={createOpen} onOpenChange={setCreateOpen}>
         <DialogContent className="max-w-[480px]">
-          <DialogHeader><DialogTitle>Nuevo usuario</DialogTitle></DialogHeader>
+          <DialogHeader><DialogTitle>New user</DialogTitle></DialogHeader>
           <CreateUserForm
-            onCreated={u => { setUsers(prev => [...prev, u]); setCreateOpen(false); toast('Usuario creado') }}
+            onCreated={u => { setUsers(prev => [...prev, u]); setCreateOpen(false); toast('User created') }}
             onCancel={() => setCreateOpen(false)}
           />
         </DialogContent>
@@ -240,17 +240,17 @@ function TabUsuarios({ isSuperAdmin }: { isSuperAdmin: boolean }) {
       {/* Delete confirm */}
       <Dialog open={!!deleteTarget} onOpenChange={open => !open && setDeleteTarget(null)}>
         <DialogContent className="max-w-[420px]">
-          <DialogHeader><DialogTitle>Eliminar usuario</DialogTitle></DialogHeader>
+          <DialogHeader><DialogTitle>Delete user</DialogTitle></DialogHeader>
           <p className="text-[13px] text-text-2 py-2">
-            ¿Eliminar a <span className="font-semibold text-text-1">{deleteTarget?.name}</span> ({deleteTarget?.username})?
-            Esta acción no es reversible en la UI.
+            Delete <span className="font-semibold text-text-1">{deleteTarget?.name}</span> ({deleteTarget?.username})?
+            This action is not reversible in the UI.
           </p>
           <div className="flex justify-end gap-2.5 pt-2 border-t border-border">
-            <button className={BTN_S} onClick={() => setDeleteTarget(null)}>Cancelar</button>
+            <button className={BTN_S} onClick={() => setDeleteTarget(null)}>Cancel</button>
             <button
               className="inline-flex items-center px-3.5 py-1.5 rounded-[6px] text-[13px] font-medium cursor-pointer border bg-red-600 text-white border-red-600 hover:bg-red-700"
               onClick={handleDelete}
-            >Eliminar</button>
+            >Delete</button>
           </div>
         </DialogContent>
       </Dialog>
@@ -258,26 +258,26 @@ function TabUsuarios({ isSuperAdmin }: { isSuperAdmin: boolean }) {
       {/* Reset password result */}
       <Dialog open={!!resetTarget} onOpenChange={open => { if (!open) { setResetTarget(null); setTempPassword('') } }}>
         <DialogContent className="max-w-[400px]">
-          <DialogHeader><DialogTitle>Contraseña temporal</DialogTitle></DialogHeader>
+          <DialogHeader><DialogTitle>Temporary password</DialogTitle></DialogHeader>
           {tempPassword ? (
             <>
               <p className="text-[13px] text-text-2 py-2">
-                Nueva contraseña para <span className="font-semibold text-text-1">{resetTarget?.name}</span>:
+                New password for <span className="font-semibold text-text-1">{resetTarget?.name}</span>:
               </p>
               <div className="bg-bg border border-border rounded-[8px] px-4 py-3 font-mono text-[16px] font-semibold text-gold tracking-wider text-center">
                 {tempPassword}
               </div>
               <p className="text-[11px] text-text-3 mt-2 text-center">
-                Cópiala ahora — no se volverá a mostrar
+                Copy now — will not be shown again
               </p>
               <div className="flex justify-end pt-3 border-t border-border">
                 <button className={BTN_P} onClick={() => { setResetTarget(null); setTempPassword('') }}>
-                  Entendido
+                  Got it
                 </button>
               </div>
             </>
           ) : (
-            <div className="py-6 text-center text-[13px] text-text-3">Generando contraseña…</div>
+            <div className="py-6 text-center text-[13px] text-text-3">Generating password…</div>
           )}
         </DialogContent>
       </Dialog>

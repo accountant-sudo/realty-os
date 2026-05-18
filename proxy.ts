@@ -3,10 +3,10 @@ import type { NextRequest } from 'next/server'
 import type { NavView } from '@/lib/types'
 
 const ROLE_VIEWS_FALLBACK: Record<string, NavView[]> = {
-  super_admin: ['dashboard', 'mls', 'operaciones', 'documentos', 'zillow', 'zonaprop', 'comisiones', 'usuarios', 'permisos', 'actividad'],
-  admin:   ['dashboard', 'mls', 'operaciones', 'documentos', 'zillow', 'zonaprop', 'comisiones', 'usuarios'],
-  manager: ['dashboard', 'mls', 'operaciones', 'documentos', 'zillow', 'zonaprop', 'usuarios'],
-  agente:  ['mls', 'operaciones', 'documentos', 'zillow', 'zonaprop'],
+  super_admin: ['dashboard', 'mls', 'operations', 'documents', 'zillow', 'zonaprop', 'commissions', 'users', 'permissions', 'activity'],
+  admin:   ['dashboard', 'mls', 'operations', 'documents', 'zillow', 'zonaprop', 'commissions', 'users'],
+  manager: ['dashboard', 'mls', 'operations', 'documents', 'zillow', 'zonaprop', 'users'],
+  agente:  ['mls', 'operations', 'documents', 'zillow', 'zonaprop'],
 }
 
 function parseJwtPayload(token: string): { role: string; allowedViews?: string[] } | null {

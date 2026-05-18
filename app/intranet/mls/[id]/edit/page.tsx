@@ -26,7 +26,7 @@ export default function EditarPage({ params }: Props) {
   if (!prop) {
     return (
       <div className="flex items-center justify-center min-h-screen text-text-3 text-[13px]">
-        Propiedad no encontrada
+        Property not found
       </div>
     )
   }

@@ -11,31 +11,35 @@ export const AGENT_COLORS: Record<string, string> = {
   leonel: '#BF7A3F', tomas: '#3FBFBF', gustavo: '#6B3FBF',
 }
 
-export const INSP_OPTIONS = ['', 'OK', 'Reparaciones en curso', 'Pendiente', 'Reinspección requerida']
+export const INSP_OPTIONS = ['', 'Pending', 'Done - OK', 'Repairs in progress', 'Done - fixes in progress', 'Reinspection pending', 'Reinspection required', 'N/A']
+
+export const APPRAISAL_OPTIONS = ['', 'Pending', 'OK', 'N/A', 'Awaiting lender OK']
+
+export const FINANCING_OPTIONS = ['', 'Cash', 'Conventional', 'FHA', 'VA Loan', 'Fixed Loan', 'DSCR Loan']
 
 export const VIEW_TITLES: Partial<Record<NavView, string>> = {
   dashboard: 'Dashboard',
-  mls: 'Propiedades / MLS',
-  operaciones: 'Operaciones',
-  documentos: 'Documentos',
-  zillow: 'Análisis de mercado — Zillow 🇺🇸',
-  zonaprop: 'Análisis ZonaProp 🇦🇷',
-  comisiones: 'Comisiones',
-  usuarios: 'Usuarios',
-  permisos: 'Permisos',
-  actividad: 'Actividad',
+  mls: 'Properties / MLS',
+  operations: 'Operations',
+  documents: 'Documents',
+  zillow: 'Market Analysis — Zillow 🇺🇸',
+  zonaprop: 'ZonaProp Analysis 🇦🇷',
+  commissions: 'Commissions',
+  users: 'Users',
+  permissions: 'Permissions',
+  activity: 'Activity',
   'op-detail': '',
 }
 
 export const NAV_ITEMS: { section: string; view: NavView; icon: LucideIcon; label: string }[] = [
-  { section: 'Principal', view: 'dashboard',   icon: LayoutDashboard, label: 'Dashboard' },
-  { section: 'Gestión',   view: 'mls',         icon: Home,            label: 'Propiedades / MLS' },
-  { section: 'Gestión',   view: 'operaciones', icon: ClipboardList,   label: 'Operaciones' },
-  { section: 'Gestión',   view: 'documentos',  icon: FileText,        label: 'Documentos' },
-  { section: 'Análisis',  view: 'zillow',      icon: TrendingUp,      label: 'Mercado / Zillow' },
-  { section: 'Análisis',  view: 'zonaprop',    icon: MapPin,          label: 'ZonaProp 🇦🇷' },
-  { section: 'Análisis',  view: 'comisiones',  icon: DollarSign,      label: 'Comisiones' },
-  { section: 'Admin',     view: 'usuarios',    icon: Users,           label: 'Usuarios' },
-  { section: 'Admin',     view: 'permisos',    icon: Shield,          label: 'Permisos' },
-  { section: 'Admin',     view: 'actividad',   icon: Activity,        label: 'Actividad' },
+  { section: 'Main',       view: 'dashboard',   icon: LayoutDashboard, label: 'Dashboard' },
+  { section: 'Management', view: 'mls',         icon: Home,            label: 'Properties / MLS' },
+  { section: 'Management', view: 'operations',  icon: ClipboardList,   label: 'Operations' },
+  { section: 'Management', view: 'documents',   icon: FileText,        label: 'Documents' },
+  { section: 'Analysis',   view: 'zillow',      icon: TrendingUp,      label: 'Market / Zillow' },
+  { section: 'Analysis',   view: 'zonaprop',    icon: MapPin,          label: 'ZonaProp 🇦🇷' },
+  { section: 'Analysis',   view: 'commissions', icon: DollarSign,      label: 'Commissions' },
+  { section: 'Admin',      view: 'users',       icon: Users,           label: 'Users' },
+  { section: 'Admin',      view: 'permissions', icon: Shield,          label: 'Permissions' },
+  { section: 'Admin',      view: 'activity',    icon: Activity,        label: 'Activity' },
 ]

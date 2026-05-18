@@ -44,7 +44,7 @@ export default function NotificationBell() {
       <button
         onClick={() => setOpen(o => !o)}
         className="relative flex items-center justify-center w-8 h-8 rounded-md hover:bg-[#F5F3EE] transition-colors"
-        aria-label="Notificaciones"
+        aria-label="Notifications"
       >
         {count > 0
           ? <BellRing size={18} className="text-text-2" />
@@ -61,20 +61,20 @@ export default function NotificationBell() {
         <div className="absolute right-0 top-[calc(100%+8px)] w-[320px] bg-surface border border-border rounded-lg shadow-lg z-50 overflow-hidden">
           <div className="px-4 py-3 border-b border-border flex items-center justify-between">
             <span className="text-[13px] font-semibold text-text-primary">
-              Notificaciones {count > 0 && <span className="text-text-3 font-normal">({count})</span>}
+              Notifications {count > 0 && <span className="text-text-3 font-normal">({count})</span>}
             </span>
           </div>
 
           {notifications.length === 0 ? (
             <div className="px-4 py-6 text-center text-[13px] text-text-3">
-              Sin notificaciones activas
+              No active notifications
             </div>
           ) : (
             <ul className="max-h-[360px] overflow-y-auto divide-y divide-border">
               {notifications.map((n, i) => (
                 <li key={i}>
                   <button
-                    onClick={() => { router.push(`/intranet/operaciones/${n.opId}`); setOpen(false) }}
+                    onClick={() => { router.push(`/intranet/operations/${n.opId}`); setOpen(false) }}
                     className={`w-full text-left px-4 py-3 border-l-2 hover:opacity-80 transition-opacity ${itemBg(n.type)}`}
                   >
                     <div className="flex items-start gap-2">
@@ -82,7 +82,7 @@ export default function NotificationBell() {
                       <div className="flex-1 min-w-0">
                         <p className="text-[12px] font-semibold text-text-primary truncate">{n.address}</p>
                         <p className={`text-[12px] mt-0.5 ${itemText(n.type)}`}>{n.msg}</p>
-                        <p className="text-[11px] text-text-3 mt-1">Ver operación →</p>
+                        <p className="text-[11px] text-text-3 mt-1">View operation →</p>
                       </div>
                     </div>
                   </button>

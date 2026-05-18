@@ -6,6 +6,7 @@ export interface JwtPayload {
   role: string
   name: string
   initials: string
+  canEdit: boolean
 }
 
 export async function requireAuth(req: Request): Promise<JwtPayload | null> {
