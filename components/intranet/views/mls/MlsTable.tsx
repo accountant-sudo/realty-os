@@ -13,7 +13,8 @@ import { ChevronUp, ChevronDown, ChevronsUpDown } from 'lucide-react'
 import AgentChip from '@/components/intranet/ui/AgentChip'
 import Badge from '@/components/intranet/ui/Badge'
 import { mlsStatusClass, mlsStatusLabel, countryFlag, fmtPrice } from '@/lib/helpers'
-import type { MlsProperty, Agent } from '@/lib/types'
+import { Link2 } from 'lucide-react'
+import type { MlsProperty, Agent, Operation } from '@/lib/types'
 
 const BTN_GHOST = 'inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-[6px] text-[13px] font-medium cursor-pointer border transition-all bg-transparent text-text-2 border-transparent hover:bg-bg'
 const BTN_DANGER = 'inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-[6px] text-[13px] font-medium cursor-pointer border transition-all bg-transparent text-red-400 border-transparent hover:bg-red-950/30'
@@ -22,6 +23,7 @@ const PAGE_SIZES = [10, 20, 50]
 interface Props {
   properties: MlsProperty[]
   agents: Agent[]
+  operations: Operation[]
   canEdit: boolean
   onEdit: (p: MlsProperty) => void
   onDelete: (p: MlsProperty) => void
@@ -29,22 +31,42 @@ interface Props {
 
 const col = createColumnHelper<MlsProperty>()
 
-export default function MlsTable({ properties, agents, canEdit, onEdit, onDelete }: Props) {
+export default function MlsTable({ properties, agents, operations, canEdit, onEdit, onDelete }: Props) {
   const [sorting, setSorting] = useState<SortingState>([{ id: 'createdAt', desc: true }])
+
+  const activeOpByPropertyId = useMemo(() => {
+    const map = new Map<number, Operation>()
+    for (const op of operations) {
+      if (op.mlsPropertyId && op.status === 'ACTIVA') {
+        map.set(op.mlsPropertyId, op)
+      }
+    }
+    return map
+  }, [operations])
 
   const columns = useMemo(() => [
     col.accessor('address', {
       header: 'Property',
-      cell: ({ row }) => (
-        <div>
-          <div className="font-semibold text-[13px]">{row.original.address}</div>
-          {row.original.notes && (
-            <div className="text-[11px] text-text-3 mt-0.5 max-w-[280px] overflow-hidden text-ellipsis whitespace-nowrap">
-              {row.original.notes}
-            </div>
-          )}
-        </div>
-      ),
+      cell: ({ row }) => {
+        const activeOp = activeOpByPropertyId.get(row.original.id)
+        return (
+          <div>
+            <div className="font-semibold text-[13px]">{row.original.address}</div>
+            {activeOp ? (
+              <div className="flex items-center gap-1 mt-0.5">
+                <Link2 size={10} className="text-amber shrink-0" />
+                <span className="text-[10px] text-amber font-medium truncate max-w-[240px]">
+                  Op #{activeOp.id} · {activeOp.buyerName || 'Active operation'}
+                </span>
+              </div>
+            ) : row.original.notes ? (
+              <div className="text-[11px] text-text-3 mt-0.5 max-w-[280px] overflow-hidden text-ellipsis whitespace-nowrap">
+                {row.original.notes}
+              </div>
+            ) : null}
+          </div>
+        )
+      },
     }),
     col.accessor('city', {
       header: 'City',
@@ -119,7 +141,7 @@ export default function MlsTable({ properties, agents, canEdit, onEdit, onDelete
         ),
       }),
     ] : []),
-  ], [agents, canEdit, onEdit, onDelete])
+  ], [agents, canEdit, onEdit, onDelete, activeOpByPropertyId])
 
   const table = useReactTable({
     data: properties,

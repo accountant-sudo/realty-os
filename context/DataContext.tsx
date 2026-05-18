@@ -10,11 +10,11 @@ interface DataContextValue {
   realtors: Realtor[]
   loading: boolean
   cycleChk: (opId: number, key: keyof Operation) => void
-  updateOperation: (opId: number, fields: Partial<Operation>) => void
+  updateOperation: (opId: number, fields: Partial<Operation>) => Promise<void>
   addOperation: (op: Omit<Operation, 'id'>) => Promise<void>
   deleteOperation: (opId: number) => void
   updateMlsProperty: (propId: number, fields: Partial<MlsProperty>) => void
-  addMlsProperty: (prop: Omit<MlsProperty, 'id'>) => void
+  addMlsProperty: (prop: Omit<MlsProperty, 'id'>) => Promise<MlsProperty>
   deleteMlsProperty: (propId: number) => void
 }
 
@@ -70,16 +70,17 @@ export function DataProvider({ children }: { children: ReactNode }) {
   // These fields are stored as TEXT in Postgres (ChkValue); all other booleans are real BOOLEAN columns
   const CHK_KEYS = new Set(['compSigned', 'escrow', 'lbp', 'sd', 'flood', 'condoDocs', 'condoRider', 'inspDone', 'reinspection'])
 
-  const updateOperation = useCallback((opId: number, fields: Partial<Operation>) => {
+  const updateOperation = useCallback(async (opId: number, fields: Partial<Operation>) => {
     setOperations(prev => prev.map(op => op.id === opId ? { ...op, ...fields } : op))
     const dbFields = Object.fromEntries(
       Object.entries(fields).map(([k, v]) => [k, CHK_KEYS.has(k) ? String(v) : v])
     )
-    fetch(`/api/operations/${opId}`, {
+    const res = await fetch(`/api/operations/${opId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(dbFields),
-    }).catch(console.error)
+    })
+    if (!res.ok) throw new Error('Failed to save')
   }, [])
 
   const updateMlsProperty = useCallback((propId: number, fields: Partial<MlsProperty>) => {
@@ -91,7 +92,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
     }).catch(console.error)
   }, [])
 
-  const addMlsProperty = useCallback(async (prop: Omit<MlsProperty, 'id'>) => {
+  const addMlsProperty = useCallback(async (prop: Omit<MlsProperty, 'id'>): Promise<MlsProperty> => {
     const res = await fetch('/api/mls', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -99,6 +100,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
     })
     const created = await res.json() as MlsProperty
     setMlsProperties(prev => [...prev, created])
+    return created
   }, [])
 
   const deleteMlsProperty = useCallback((propId: number) => {

@@ -41,6 +41,7 @@ export default function EditarPage({ params }: Props) {
       initial={prop}
       agents={agents}
       isNew={false}
+      propId={Number(id)}
       onSave={handleSave}
     />
   )

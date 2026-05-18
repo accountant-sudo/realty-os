@@ -15,7 +15,7 @@ const BTN_SECONDARY = 'inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-[6
 const BTN_PRIMARY = 'inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-[6px] text-[13px] font-medium cursor-pointer border transition-all bg-gold text-text-primary border-gold hover:bg-gold-dark hover:border-gold-dark hover:text-white'
 
 export default function Operaciones() {
-  const { operations, agents, realtors, addOperation, deleteOperation } = useData()
+  const { operations, agents, realtors, mlsProperties, addOperation, deleteOperation } = useData()
   const { canEdit } = useAuth()
   const [tab, setTab] = useState<Tab>('ACTIVA')
   const [showNew, setShowNew] = useState(false)
@@ -70,6 +70,7 @@ export default function Operaciones() {
           <NewOperationForm
             agents={agents}
             realtors={realtors}
+            mlsProperties={mlsProperties}
             onSave={handleAdd}
             onCancel={() => setShowNew(false)}
           />

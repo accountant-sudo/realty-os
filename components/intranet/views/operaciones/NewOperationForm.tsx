@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import type { Agent, Realtor, Operation } from '@/lib/types'
+import { Building2, PenLine } from 'lucide-react'
+import type { Agent, Realtor, MlsProperty, Operation } from '@/lib/types'
 
 const INPUT_CLS = 'w-full px-3 py-2 border border-border rounded-[6px] text-[13px] bg-surface focus:outline-none focus:border-gold focus:ring-[3px] focus:ring-gold-light transition-colors font-[inherit]'
 const LABEL_CLS = 'text-[12px] font-semibold text-text-2'
@@ -9,6 +10,7 @@ const BTN_S = 'inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-[6px] text
 type NewOp = Omit<Operation, 'id'>
 
 const EMPTY: NewOp = {
+  mlsPropertyId: null,
   address: '', type: '', price: 0, financing: '', agent: '', realtor: 'none',
   titleCompany: '', clientId: 0, buyerName: '', execDate: '', closingDate: '',
   closingDateISO: '', status: 'ACTIVA', commissionPaid: false,
@@ -21,15 +23,20 @@ const EMPTY: NewOp = {
   leaseAgreementSent: false, estoppelSent: false,
 }
 
+type Mode = 'mls' | 'external'
+
 interface Props {
   agents: Agent[]
   realtors: Realtor[]
+  mlsProperties: MlsProperty[]
   onSave: (op: NewOp) => void
   onCancel: () => void
 }
 
-export default function NewOperationForm({ agents, realtors, onSave, onCancel }: Props) {
+export default function NewOperationForm({ agents, realtors, mlsProperties, onSave, onCancel }: Props) {
+  const [mode, setMode] = useState<Mode>('mls')
   const [form, setForm] = useState<NewOp>({ ...EMPTY })
+
   function set<K extends keyof NewOp>(key: K, val: NewOp[K]) {
     setForm(f => ({ ...f, [key]: val }))
   }
@@ -39,13 +46,99 @@ export default function NewOperationForm({ agents, realtors, onSave, onCancel }:
     set('closingDateISO', val)
   }
 
+  function handleMlsSelect(propId: string) {
+    if (!propId) {
+      setForm(f => ({ ...f, mlsPropertyId: null, address: '', price: 0, agent: '' }))
+      return
+    }
+    const prop = mlsProperties.find(p => p.id === Number(propId))
+    if (!prop) return
+    setForm(f => ({
+      ...f,
+      mlsPropertyId: prop.id,
+      address: prop.address,
+      price: prop.listPrice,
+      agent: prop.agent,
+    }))
+  }
+
+  function handleModeSwitch(next: Mode) {
+    setMode(next)
+    setForm({ ...EMPTY })
+  }
+
+  const canSubmit = form.address.trim().length > 0
+
   return (
     <>
+      {/* Mode toggle */}
+      <div className="flex gap-2 mb-4">
+        <button
+          type="button"
+          onClick={() => handleModeSwitch('mls')}
+          className={`flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-[8px] border-2 text-[12px] font-medium transition-all ${
+            mode === 'mls'
+              ? 'border-gold bg-gold/5 text-text-primary'
+              : 'border-border bg-bg text-text-2 hover:border-gold/50'
+          }`}
+        >
+          <Building2 size={14} />
+          From MLS listing
+        </button>
+        <button
+          type="button"
+          onClick={() => handleModeSwitch('external')}
+          className={`flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-[8px] border-2 text-[12px] font-medium transition-all ${
+            mode === 'external'
+              ? 'border-gold bg-gold/5 text-text-primary'
+              : 'border-border bg-bg text-text-2 hover:border-gold/50'
+          }`}
+        >
+          <PenLine size={14} />
+          External / off-market
+        </button>
+      </div>
+
       <div className="grid grid-cols-2 gap-4 py-2 max-h-[60vh] overflow-y-auto pr-1">
-        <div className="col-span-2 flex flex-col gap-1">
-          <label className={LABEL_CLS}>Address *</label>
-          <input className={INPUT_CLS} value={form.address} onChange={e => set('address', e.target.value)} placeholder="1234 Main St, Jacksonville FL" />
-        </div>
+
+        {/* Property source */}
+        {mode === 'mls' ? (
+          <div className="col-span-2 flex flex-col gap-1">
+            <label className={LABEL_CLS}>MLS property *</label>
+            <select
+              className={INPUT_CLS}
+              value={form.mlsPropertyId ?? ''}
+              onChange={e => handleMlsSelect(e.target.value)}
+            >
+              <option value="">— Select a property —</option>
+              {mlsProperties.map(p => (
+                <option key={p.id} value={p.id}>
+                  {p.address}{p.mlsNum ? ` · MLS #${p.mlsNum}` : ''}
+                </option>
+              ))}
+            </select>
+            {form.mlsPropertyId && (
+              <div className="flex items-center gap-3 mt-1 px-3 py-2 rounded-[6px] bg-bg border border-border text-[12px] text-text-2">
+                <span className="truncate flex-1">{form.address}</span>
+                {form.price > 0 && (
+                  <span className="font-semibold text-text-primary shrink-0">
+                    ${form.price.toLocaleString()}
+                  </span>
+                )}
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="col-span-2 flex flex-col gap-1">
+            <label className={LABEL_CLS}>Address *</label>
+            <input
+              className={INPUT_CLS}
+              value={form.address}
+              onChange={e => set('address', e.target.value)}
+              placeholder="1234 Main St, Jacksonville FL"
+            />
+          </div>
+        )}
 
         <div className="flex flex-col gap-1">
           <label className={LABEL_CLS}>Agent</label>
@@ -64,7 +157,12 @@ export default function NewOperationForm({ agents, realtors, onSave, onCancel }:
 
         <div className="flex flex-col gap-1">
           <label className={LABEL_CLS}>Price</label>
-          <input className={INPUT_CLS} type="number" value={form.price || ''} onChange={e => set('price', Number(e.target.value))} />
+          <input
+            className={INPUT_CLS}
+            type="number"
+            value={form.price || ''}
+            onChange={e => set('price', Number(e.target.value))}
+          />
         </div>
 
         <div className="flex flex-col gap-1">
@@ -119,7 +217,7 @@ export default function NewOperationForm({ agents, realtors, onSave, onCancel }:
         <button
           className={BTN_P}
           onClick={() => onSave(form)}
-          disabled={!form.address.trim()}
+          disabled={!canSubmit}
         >
           Add operation
         </button>

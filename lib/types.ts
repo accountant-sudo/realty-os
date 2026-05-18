@@ -102,6 +102,7 @@ export type ChkValue = boolean | 'na'
 
 export interface Operation {
   id: number
+  mlsPropertyId?: number | null
   address: string
   type: string
   price: number
@@ -139,6 +140,23 @@ export interface Operation {
   isRented: boolean
   leaseAgreementSent: boolean
   estoppelSent: boolean
+}
+
+export interface FileAttachment {
+  id: number
+  entityType: 'mls_property' | 'operation'
+  entityId: number
+  filename: string
+  storagePath: string
+  mimeType: string
+  sizeBytes: number
+  uploadedById: number
+  uploadedByName: string
+  sortOrder: number
+  visibility: 'public' | 'private'
+  allowedRoles: string[]
+  createdAt: string
+  signedUrl?: string
 }
 
 export interface Alert {

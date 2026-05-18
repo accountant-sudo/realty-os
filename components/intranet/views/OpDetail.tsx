@@ -1,4 +1,5 @@
 'use client'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useData } from '@/context/DataContext'
 import { useAuth } from '@/context/AuthContext'
@@ -7,7 +8,10 @@ import { INSP_OPTIONS, APPRAISAL_OPTIONS, FINANCING_OPTIONS } from '@/lib/consta
 import Chk from '@/components/intranet/ui/Chk'
 import ProgressBar from '@/components/intranet/ui/ProgressBar'
 import AgentChip from '@/components/intranet/ui/AgentChip'
-import type { Operation, ChkValue } from '@/lib/types'
+import DocumentsModal from '@/components/intranet/ui/DocumentsModal'
+import { Link2, ExternalLink, Save, Loader2 } from 'lucide-react'
+import { toast } from 'sonner'
+import type { Operation, ChkValue, MlsProperty } from '@/lib/types'
 
 const INPUT = 'w-full px-2.5 py-1 border border-border rounded-[6px] text-[12px] bg-surface text-text-primary focus:outline-none focus:border-gold font-[inherit]'
 const SELECT = 'px-2.5 py-1 border border-border rounded-[6px] bg-surface text-text-primary cursor-pointer font-[inherit] focus:outline-none focus:border-gold text-[12px]'
@@ -29,33 +33,116 @@ function daysUntil(dateStr: string): number | null {
   return Math.round((d.getTime() - today.getTime()) / 86400000)
 }
 
+function LinkedPropertyCard({
+  value, mlsProperties, canEdit, onChange,
+}: {
+  value: number | null | undefined
+  mlsProperties: MlsProperty[]
+  canEdit: boolean
+  onChange: (id: number | null) => void
+}) {
+  const router = useRouter()
+  const linked = value ? mlsProperties.find(p => p.id === value) : null
+
+  return (
+    <div className="flex items-center gap-2">
+      <select
+        value={value ?? ''}
+        onChange={e => onChange(e.target.value === '' ? null : Number(e.target.value))}
+        disabled={!canEdit}
+        className="flex-1 px-2.5 py-1.5 border border-border rounded-[6px] bg-surface text-text-primary cursor-pointer font-[inherit] focus:outline-none focus:border-gold text-[12px] disabled:cursor-default disabled:opacity-70"
+      >
+        <option value="">— No property linked —</option>
+        {mlsProperties.map(p => (
+          <option key={p.id} value={p.id}>
+            {p.address}{p.mlsNum ? ` · MLS #${p.mlsNum}` : ''}
+          </option>
+        ))}
+      </select>
+      {linked && (
+        <button
+          onClick={() => router.push(`/intranet/mls/${linked.id}/edit`)}
+          title="View listing"
+          className="p-1.5 rounded-[6px] text-text-3 hover:text-gold hover:bg-bg border border-border transition-colors shrink-0"
+        >
+          <ExternalLink size={13} />
+        </button>
+      )}
+    </div>
+  )
+}
+
+type DraftFields = Pick<Operation,
+  'status' | 'buyerName' | 'financing' | 'realtor' |
+  'appraisal' | 'inspStatus' | 'inspEstimatedDate' | 'inspNotes' |
+  'isRented' | 'leaseAgreementSent' | 'estoppelSent' | 'mlsPropertyId'
+>
+
+function pickDraft(op: Operation): DraftFields {
+  return {
+    status:             op.status,
+    buyerName:          op.buyerName,
+    financing:          op.financing,
+    realtor:            op.realtor,
+    appraisal:          op.appraisal,
+    inspStatus:         op.inspStatus,
+    inspEstimatedDate:  op.inspEstimatedDate,
+    inspNotes:          op.inspNotes,
+    isRented:           op.isRented,
+    leaseAgreementSent: op.leaseAgreementSent,
+    estoppelSent:       op.estoppelSent,
+    mlsPropertyId:      op.mlsPropertyId ?? null,
+  }
+}
+
 export default function OpDetail({ opId }: { opId: number | null }) {
-  const { operations, agents, realtors, cycleChk, updateOperation } = useData()
+  const { operations, agents, realtors, mlsProperties, cycleChk, updateOperation } = useData()
   const { canEdit } = useAuth()
   const router = useRouter()
   const op = operations.find(o => o.id === opId)
 
-  if (!op) return (
+  const [draft, setDraft]   = useState<DraftFields | null>(null)
+  const [saving, setSaving] = useState(false)
+
+  useEffect(() => {
+    if (op) setDraft(pickDraft(op))
+  }, [op?.id]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  if (!op || !draft) return (
     <div className="p-10">
       <button className={BTN_SECONDARY} onClick={() => router.push('/intranet/operations')}>← Back</button>
       <p className="mt-5 text-text-3">Operation not found.</p>
     </div>
   )
 
-  const { done, total, pct } = calcProgress(op)
   const edit = canEdit()
-  const statusColor = STATUS_COLOR[op.status]
 
-  const inspDays = daysUntil(op.inspEstimatedDate || '')
+  const isDirty = JSON.stringify(draft) !== JSON.stringify(pickDraft(op))
+
+  const { done, total, pct } = calcProgress(op)
+  const statusColor = STATUS_COLOR[draft.status]
+
+  const inspDays = daysUntil(draft.inspEstimatedDate || '')
   const showInspAlert = inspDays !== null && inspDays <= 2
+
+  function set<K extends keyof DraftFields>(key: K, val: DraftFields[K]) {
+    setDraft(d => d ? { ...d, [key]: val } : d)
+  }
+
+  async function handleSave() {
+    setSaving(true)
+    try {
+      await updateOperation(op.id, draft)
+      toast.success('Changes saved')
+    } catch {
+      toast.error('Failed to save changes')
+    } finally {
+      setSaving(false)
+    }
+  }
 
   function chk(key: keyof Operation) {
     return <Chk val={op![key] as ChkValue} onCycle={() => cycleChk(op!.id, key)} readOnly={!edit} />
-  }
-
-  function boolChk(key: keyof Operation) {
-    const val = op![key] as boolean
-    return <Chk val={val} onCycle={() => updateOperation(op!.id, { [key]: !val } as Partial<Operation>)} readOnly={!edit} />
   }
 
   const detailRow = 'flex justify-between items-center py-[9px] border-b border-border last:border-b-0 text-[13px] gap-4'
@@ -63,8 +150,18 @@ export default function OpDetail({ opId }: { opId: number | null }) {
 
   return (
     <div>
-      <div className="flex items-center gap-3 mb-5">
+      <div className="sticky top-0 z-10 flex items-center justify-between mb-5 py-3 bg-bg border-b border-border -mx-6 px-6">
         <button className={BTN_SECONDARY} onClick={() => router.push('/intranet/operations')}>← Operations</button>
+        {edit && (
+          <button
+            onClick={handleSave}
+            disabled={saving || !isDirty}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-[7px] text-[13px] font-medium bg-gold border border-gold text-white hover:bg-gold-dark disabled:opacity-40 transition-all"
+          >
+            {saving ? <Loader2 size={13} className="animate-spin" /> : <Save size={13} />}
+            {saving ? 'Saving…' : 'Save changes'}
+          </button>
+        )}
       </div>
 
       <h2 className="text-[18px] font-bold mb-6">{op.address}</h2>
@@ -82,8 +179,8 @@ export default function OpDetail({ opId }: { opId: number | null }) {
                   <select
                     className="text-[12px] font-semibold px-[10px] py-[4px] rounded-[20px] bg-surface cursor-pointer focus:outline-none"
                     style={{ border: `1.5px solid ${statusColor}`, color: statusColor }}
-                    value={op.status}
-                    onChange={e => updateOperation(op.id, { status: e.target.value as Operation['status'] })}
+                    value={draft.status}
+                    onChange={e => set('status', e.target.value as Operation['status'])}
                   >
                     <option value="ACTIVA">🟡 Active</option>
                     <option value="CERRADA">🟢 Closed</option>
@@ -94,7 +191,7 @@ export default function OpDetail({ opId }: { opId: number | null }) {
                     className="text-[12px] font-semibold px-[10px] py-[4px] rounded-[20px]"
                     style={{ border: `1.5px solid ${statusColor}`, color: statusColor }}
                   >
-                    {op.status === 'ACTIVA' ? '🟡 Active' : op.status === 'CERRADA' ? '🟢 Closed' : '🔴 Cancelled'}
+                    {draft.status === 'ACTIVA' ? '🟡 Active' : draft.status === 'CERRADA' ? '🟢 Closed' : '🔴 Cancelled'}
                   </span>
                 )}
               </div>
@@ -105,11 +202,11 @@ export default function OpDetail({ opId }: { opId: number | null }) {
                 {edit ? (
                   <input
                     className={`${INPUT} max-w-[200px]`}
-                    defaultValue={op.buyerName}
+                    value={draft.buyerName}
                     placeholder="Buyer name…"
-                    onBlur={e => { if (e.target.value !== op.buyerName) updateOperation(op.id, { buyerName: e.target.value }) }}
+                    onChange={e => set('buyerName', e.target.value)}
                   />
-                ) : <span className="font-medium text-right">{op.buyerName || '—'}</span>}
+                ) : <span className="font-medium text-right">{draft.buyerName || '—'}</span>}
               </div>
 
               <div className={detailRow}>
@@ -127,12 +224,12 @@ export default function OpDetail({ opId }: { opId: number | null }) {
                 {edit ? (
                   <select
                     className={SELECT}
-                    value={op.financing || ''}
-                    onChange={e => updateOperation(op.id, { financing: e.target.value })}
+                    value={draft.financing || ''}
+                    onChange={e => set('financing', e.target.value)}
                   >
                     {FINANCING_OPTIONS.map(f => <option key={f} value={f}>{f || '—'}</option>)}
                   </select>
-                ) : <span className="font-medium text-right">{op.financing || '—'}</span>}
+                ) : <span className="font-medium text-right">{draft.financing || '—'}</span>}
               </div>
 
               <div className={detailRow}>
@@ -147,8 +244,8 @@ export default function OpDetail({ opId }: { opId: number | null }) {
                 {edit ? (
                   <select
                     className={SELECT}
-                    value={op.realtor || 'none'}
-                    onChange={e => updateOperation(op.id, { realtor: e.target.value })}
+                    value={draft.realtor || 'none'}
+                    onChange={e => set('realtor', e.target.value)}
                   >
                     {realtors.map(r => (
                       <option key={r.id} value={r.id}>{r.id === 'none' ? 'No realtor' : r.name}</option>
@@ -156,8 +253,8 @@ export default function OpDetail({ opId }: { opId: number | null }) {
                   </select>
                 ) : (
                   <span className="font-medium text-right">
-                    {op.realtor && op.realtor !== 'none'
-                      ? realtors.find(r => r.id === op.realtor)?.name || op.realtor
+                    {draft.realtor && draft.realtor !== 'none'
+                      ? realtors.find(r => r.id === draft.realtor)?.name || draft.realtor
                       : '—'}
                   </span>
                 )}
@@ -190,6 +287,22 @@ export default function OpDetail({ opId }: { opId: number | null }) {
             </div>
           </div>
 
+          {/* Linked MLS property */}
+          <div className="bg-surface border border-border rounded-[10px] overflow-hidden mb-5">
+            <div className="px-[18px] py-3.5 border-b border-border flex items-center gap-2">
+              <Link2 size={13} className="text-text-3" />
+              <span className="text-[13px] font-semibold text-text-primary">Linked property</span>
+            </div>
+            <div className="px-[18px] py-3">
+              <LinkedPropertyCard
+                value={draft.mlsPropertyId}
+                mlsProperties={mlsProperties}
+                canEdit={edit}
+                onChange={id => set('mlsPropertyId', id)}
+              />
+            </div>
+          </div>
+
           {/* Rented property */}
           <div className="bg-surface border border-border rounded-[10px] overflow-hidden mb-5">
             <div className="px-[18px] py-3.5 border-b border-border">
@@ -200,27 +313,49 @@ export default function OpDetail({ opId }: { opId: number | null }) {
                 <span className={detailLabel}>Is it rented?</span>
                 {edit ? (
                   <button
-                    onClick={() => updateOperation(op.id, { isRented: !op.isRented })}
-                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${op.isRented ? 'bg-green' : 'bg-border'}`}
+                    onClick={() => set('isRented', !draft.isRented)}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${draft.isRented ? 'bg-green' : 'bg-border'}`}
                   >
-                    <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${op.isRented ? 'translate-x-6' : 'translate-x-1'}`} />
+                    <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${draft.isRented ? 'translate-x-6' : 'translate-x-1'}`} />
                   </button>
                 ) : (
-                  <span className={`text-[12px] font-semibold ${op.isRented ? 'text-green' : 'text-text-3'}`}>
-                    {op.isRented ? 'Yes' : 'No'}
+                  <span className={`text-[12px] font-semibold ${draft.isRented ? 'text-green' : 'text-text-3'}`}>
+                    {draft.isRented ? 'Yes' : 'No'}
                   </span>
                 )}
               </div>
 
-              {op.isRented && (
+              {draft.isRented && (
                 <>
                   <div className={detailRow}>
                     <span className={detailLabel}>Lease Agreement sent</span>
-                    <span className="font-medium text-right">{boolChk('leaseAgreementSent')}</span>
+                    {edit ? (
+                      <button
+                        onClick={() => set('leaseAgreementSent', !draft.leaseAgreementSent)}
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${draft.leaseAgreementSent ? 'bg-green' : 'bg-border'}`}
+                      >
+                        <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${draft.leaseAgreementSent ? 'translate-x-6' : 'translate-x-1'}`} />
+                      </button>
+                    ) : (
+                      <span className={`text-[12px] font-semibold ${draft.leaseAgreementSent ? 'text-green' : 'text-text-3'}`}>
+                        {draft.leaseAgreementSent ? 'Yes' : 'No'}
+                      </span>
+                    )}
                   </div>
                   <div className={detailRow}>
                     <span className={detailLabel}>Estoppel Letter sent</span>
-                    <span className="font-medium text-right">{boolChk('estoppelSent')}</span>
+                    {edit ? (
+                      <button
+                        onClick={() => set('estoppelSent', !draft.estoppelSent)}
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${draft.estoppelSent ? 'bg-green' : 'bg-border'}`}
+                      >
+                        <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${draft.estoppelSent ? 'translate-x-6' : 'translate-x-1'}`} />
+                      </button>
+                    ) : (
+                      <span className={`text-[12px] font-semibold ${draft.estoppelSent ? 'text-green' : 'text-text-3'}`}>
+                        {draft.estoppelSent ? 'Yes' : 'No'}
+                      </span>
+                    )}
                   </div>
                 </>
               )}
@@ -229,17 +364,15 @@ export default function OpDetail({ opId }: { opId: number | null }) {
 
           {/* Documents */}
           <div className="bg-surface border border-border rounded-[10px] overflow-hidden">
-            <div className="px-[18px] py-3.5 border-b border-border flex items-center justify-between">
+            <div className="px-[18px] py-3.5 border-b border-border">
               <span className="text-[13px] font-semibold text-text-primary">Documents</span>
-              {edit && (
-                <label className="inline-flex items-center gap-1 px-2.5 py-1 rounded-[6px] text-[11px] font-medium cursor-pointer border transition-all bg-surface text-text-2 border-border hover:bg-bg">
-                  + Upload PDF
-                  <input type="file" accept=".pdf,image/*" multiple className="hidden" />
-                </label>
-              )}
             </div>
             <div className="px-[18px] py-4">
-              <p className="text-[12px] text-text-3">No documents uploaded</p>
+              <DocumentsModal
+                operationId={op.id}
+                operationAddress={op.address}
+                canEdit={edit}
+              />
             </div>
           </div>
         </div>
@@ -281,12 +414,12 @@ export default function OpDetail({ opId }: { opId: number | null }) {
                 {edit ? (
                   <select
                     className={SELECT}
-                    value={op.appraisal || ''}
-                    onChange={e => updateOperation(op.id, { appraisal: e.target.value })}
+                    value={draft.appraisal || ''}
+                    onChange={e => set('appraisal', e.target.value)}
                   >
                     {APPRAISAL_OPTIONS.map(o => <option key={o} value={o}>{o || '—'}</option>)}
                   </select>
-                ) : <span className="font-medium text-right">{op.appraisal || '—'}</span>}
+                ) : <span className="font-medium text-right">{draft.appraisal || '—'}</span>}
               </div>
             </div>
           </div>
@@ -302,12 +435,12 @@ export default function OpDetail({ opId }: { opId: number | null }) {
                 {edit ? (
                   <select
                     className={SELECT}
-                    value={op.inspStatus || ''}
-                    onChange={e => updateOperation(op.id, { inspStatus: e.target.value })}
+                    value={draft.inspStatus || ''}
+                    onChange={e => set('inspStatus', e.target.value)}
                   >
                     {INSP_OPTIONS.map(o => <option key={o} value={o}>{o || '—'}</option>)}
                   </select>
-                ) : <span className="font-medium text-right">{op.inspStatus || '—'}</span>}
+                ) : <span className="font-medium text-right">{draft.inspStatus || '—'}</span>}
               </div>
 
               <div className={`${detailRow} items-start`}>
@@ -321,10 +454,10 @@ export default function OpDetail({ opId }: { opId: number | null }) {
                   <input
                     type="date"
                     className={`${INPUT} w-auto`}
-                    value={op.inspEstimatedDate || ''}
-                    onChange={e => updateOperation(op.id, { inspEstimatedDate: e.target.value })}
+                    value={draft.inspEstimatedDate || ''}
+                    onChange={e => set('inspEstimatedDate', e.target.value)}
                   />
-                ) : <span className="font-medium text-right">{op.inspEstimatedDate || '—'}</span>}
+                ) : <span className="font-medium text-right">{draft.inspEstimatedDate || '—'}</span>}
               </div>
 
               {showInspAlert && (
@@ -343,10 +476,10 @@ export default function OpDetail({ opId }: { opId: number | null }) {
                   <textarea
                     className={`${INPUT} resize-none w-full`}
                     rows={3}
-                    defaultValue={op.inspNotes}
-                    onBlur={e => { if (e.target.value !== op.inspNotes) updateOperation(op.id, { inspNotes: e.target.value }) }}
+                    value={draft.inspNotes}
+                    onChange={e => set('inspNotes', e.target.value)}
                   />
-                ) : <p className="text-[13px]">{op.inspNotes || '—'}</p>}
+                ) : <p className="text-[13px]">{draft.inspNotes || '—'}</p>}
               </div>
             </div>
           </div>

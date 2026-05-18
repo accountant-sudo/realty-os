@@ -1,8 +1,10 @@
 'use client'
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect, useRef } from 'react'
+import { X, Upload } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import AgentChip from '@/components/intranet/ui/AgentChip'
 import Badge from '@/components/intranet/ui/Badge'
+import FileUploader, { type SavedFile } from '@/components/intranet/ui/FileUploader'
 import { mlsStatusClass, mlsStatusLabel, countryFlag, fmtPrice } from '@/lib/helpers'
 import type { MlsProperty, Agent } from '@/lib/types'
 
@@ -30,10 +32,11 @@ interface Props {
   initial: FormState
   agents: Agent[]
   isNew: boolean
-  onSave: (fields: FormState) => Promise<void> | void
+  propId?: number
+  onSave: (fields: FormState) => Promise<{ id: number } | void> | void
 }
 
-export default function PropertyFormPage({ initial, agents, isNew, onSave }: Props) {
+export default function PropertyFormPage({ initial, agents, isNew, propId, onSave }: Props) {
   const router = useRouter()
   const [form, setForm] = useState<FormState>({
     typology: '', rentalStatus: '', rentalEstimate: '', rentalContractEnd: '',
@@ -46,6 +49,17 @@ export default function PropertyFormPage({ initial, agents, isNew, onSave }: Pro
     ...initial,
   })
   const [saving, setSaving] = useState(false)
+  const [savedFiles, setSavedFiles] = useState<SavedFile[]>([])
+  const pendingFilesRef = useRef<File[]>([])
+
+  useEffect(() => {
+    if (!isNew && propId) {
+      fetch(`/api/mls/${propId}/files`)
+        .then(r => r.json())
+        .then((files: SavedFile[]) => setSavedFiles(files))
+        .catch(() => {})
+    }
+  }, [isNew, propId])
 
   function set<K extends keyof FormState>(key: K, val: FormState[K]) {
     setForm(f => ({ ...f, [key]: val }))
@@ -61,9 +75,25 @@ export default function PropertyFormPage({ initial, agents, isNew, onSave }: Pro
     }))
   }
 
+  async function uploadPendingFiles(entityId: number) {
+    for (const file of pendingFilesRef.current) {
+      const fd = new FormData()
+      fd.append('file', file)
+      fd.append('entityType', 'mls_property')
+      fd.append('entityId', String(entityId))
+      await fetch('/api/files', { method: 'POST', body: fd })
+    }
+    pendingFilesRef.current = []
+  }
+
   async function handleSave() {
     setSaving(true)
-    try { await onSave(form) } finally { setSaving(false) }
+    try {
+      const result = await onSave(form)
+      if (isNew && result && 'id' in result) {
+        await uploadPendingFiles(result.id)
+      }
+    } finally { setSaving(false) }
   }
 
   const isUS = form.country === 'US'
@@ -416,6 +446,25 @@ export default function PropertyFormPage({ initial, agents, isNew, onSave }: Pro
               placeholder="Internal notes…"
             />
           </div>
+
+          {/* Images */}
+          <div className="bg-surface border border-border rounded-[10px] p-5 mb-4">
+            <p className={SECTION}>Property images</p>
+            {isNew ? (
+              /* Queue mode: collect files, upload after property is created */
+              <PendingImagePicker onChange={files => { pendingFilesRef.current = files }} />
+            ) : propId ? (
+              <FileUploader
+                entityType="mls_property"
+                entityId={propId}
+                accept="image/*"
+                maxFiles={20}
+                files={savedFiles}
+                onUploaded={f => setSavedFiles(prev => [...prev, f])}
+                onDeleted={id => setSavedFiles(prev => prev.filter(f => f.id !== id))}
+              />
+            ) : null}
+          </div>
         </div>
 
         {/* ── Right: live preview ── */}
@@ -509,6 +558,67 @@ export default function PropertyFormPage({ initial, agents, isNew, onSave }: Pro
           )}
         </div>
       </div>
+    </div>
+  )
+}
+
+function PendingImagePicker({ onChange }: { onChange: (files: File[]) => void }) {
+  const inputRef = useRef<HTMLInputElement>(null)
+  const [selected, setSelected] = useState<File[]>([])
+
+  function handleFiles(list: FileList | null) {
+    if (!list) return
+    const next = [...selected, ...Array.from(list)].slice(0, 20)
+    setSelected(next)
+    onChange(next)
+  }
+
+  function remove(i: number) {
+    const next = selected.filter((_, idx) => idx !== i)
+    setSelected(next)
+    onChange(next)
+  }
+
+  return (
+    <div className="space-y-3">
+      <div
+        className="border-2 border-dashed border-border rounded-[8px] px-4 py-5 text-center cursor-pointer hover:border-gold transition-colors"
+        onClick={() => inputRef.current?.click()}
+        onDragEnter={e => e.preventDefault()}
+        onDragOver={e => e.preventDefault()}
+        onDrop={e => { e.preventDefault(); e.stopPropagation(); handleFiles(e.dataTransfer.files) }}
+      >
+        <Upload className="mx-auto mb-1.5 text-text-3" size={20} />
+        <p className="text-[12px] text-text-3">
+          Drag & drop or <span className="text-gold font-medium">browse</span>
+        </p>
+        <p className="text-[11px] text-text-3 mt-0.5">Images will upload after saving · max 10MB · up to 20</p>
+        <input
+          ref={inputRef}
+          type="file"
+          accept="image/*"
+          multiple
+          className="hidden"
+          onChange={e => handleFiles(e.target.files)}
+        />
+      </div>
+      {selected.length > 0 && (
+        <div className="grid grid-cols-4 gap-2">
+          {selected.map((f, i) => (
+            <div key={i} className="relative group rounded-[6px] overflow-hidden border border-border aspect-square bg-bg">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={URL.createObjectURL(f)} alt={f.name} className="w-full h-full object-cover" />
+              <button
+                type="button"
+                onClick={() => remove(i)}
+                className="absolute top-1 right-1 p-1 rounded-[4px] bg-black/60 text-white opacity-0 group-hover:opacity-100 transition-opacity"
+              >
+                <X size={10} />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

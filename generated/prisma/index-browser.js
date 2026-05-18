@@ -221,6 +221,7 @@ exports.Prisma.MlsPropertyScalarFieldEnum = {
 
 exports.Prisma.OperationScalarFieldEnum = {
   id: 'id',
+  mlsPropertyId: 'mlsPropertyId',
   address: 'address',
   type: 'type',
   price: 'price',
@@ -263,6 +264,22 @@ exports.Prisma.OperationScalarFieldEnum = {
   deletedAt: 'deletedAt'
 };
 
+exports.Prisma.FileAttachmentScalarFieldEnum = {
+  id: 'id',
+  entityType: 'entityType',
+  entityId: 'entityId',
+  filename: 'filename',
+  storagePath: 'storagePath',
+  mimeType: 'mimeType',
+  sizeBytes: 'sizeBytes',
+  uploadedById: 'uploadedById',
+  uploadedByName: 'uploadedByName',
+  sortOrder: 'sortOrder',
+  visibility: 'visibility',
+  allowedRoles: 'allowedRoles',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -297,7 +314,8 @@ exports.Prisma.ModelName = {
   Agent: 'Agent',
   Realtor: 'Realtor',
   MlsProperty: 'MlsProperty',
-  Operation: 'Operation'
+  Operation: 'Operation',
+  FileAttachment: 'FileAttachment'
 };
 
 /**

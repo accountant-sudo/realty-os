@@ -29,9 +29,10 @@ export default function NuevaPage() {
     return null
   }
 
-  async function handleSave(fields: Omit<MlsProperty, 'id'>) {
-    await addMlsProperty(fields)
+  async function handleSave(fields: Omit<MlsProperty, 'id'>): Promise<{ id: number }> {
+    const created = await addMlsProperty(fields)
     router.push('/intranet/mls')
+    return { id: created.id }
   }
 
   return (

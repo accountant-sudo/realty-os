@@ -125,6 +125,7 @@ model MlsProperty {
 
 model Operation {
   id             Int     @id @default(autoincrement())
+  mlsPropertyId  Int?    @map("mls_property_id")
   address        String
   type           String  @default("")
   price          Float   @default(0)
@@ -168,4 +169,23 @@ model Operation {
   deletedAt DateTime?               @map("deleted_at")
 
   @@map("operations")
+}
+
+model FileAttachment {
+  id             Int      @id @default(autoincrement())
+  entityType     String   @map("entity_type")
+  entityId       Int      @map("entity_id")
+  filename       String
+  storagePath    String   @map("storage_path")
+  mimeType       String   @map("mime_type")
+  sizeBytes      Int      @map("size_bytes")
+  uploadedById   Int      @map("uploaded_by_id")
+  uploadedByName String   @map("uploaded_by_name")
+  sortOrder      Int      @default(0) @map("sort_order")
+  visibility     String   @default("public")
+  allowedRoles   String   @default("[]") @map("allowed_roles")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  @@index([entityType, entityId])
+  @@map("file_attachments")
 }

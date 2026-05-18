@@ -13,7 +13,7 @@ const BTN_PRIMARY = 'inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-[6px
 
 export default function MLS() {
   const router = useRouter()
-  const { mlsProperties, agents, deleteMlsProperty } = useData()
+  const { mlsProperties, agents, operations, deleteMlsProperty } = useData()
   const { canEdit } = useAuth()
   const [search, setSearch] = useState('')
   const [cityFilter, setCityFilter] = useState('Todas')
@@ -69,6 +69,7 @@ export default function MLS() {
         <MlsTable
           properties={filtered}
           agents={agents}
+          operations={operations}
           canEdit={canEdit()}
           onEdit={p => router.push(`/intranet/mls/${p.id}/edit`)}
           onDelete={setDeleteTarget}

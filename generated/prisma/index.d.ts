@@ -48,6 +48,11 @@ export type MlsProperty = $Result.DefaultSelection<Prisma.$MlsPropertyPayload>
  * 
  */
 export type Operation = $Result.DefaultSelection<Prisma.$OperationPayload>
+/**
+ * Model FileAttachment
+ * 
+ */
+export type FileAttachment = $Result.DefaultSelection<Prisma.$FileAttachmentPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -239,6 +244,16 @@ export class PrismaClient<
     * ```
     */
   get operation(): Prisma.OperationDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.fileAttachment`: Exposes CRUD operations for the **FileAttachment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FileAttachments
+    * const fileAttachments = await prisma.fileAttachment.findMany()
+    * ```
+    */
+  get fileAttachment(): Prisma.FileAttachmentDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -679,7 +694,8 @@ export namespace Prisma {
     Agent: 'Agent',
     Realtor: 'Realtor',
     MlsProperty: 'MlsProperty',
-    Operation: 'Operation'
+    Operation: 'Operation',
+    FileAttachment: 'FileAttachment'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -695,7 +711,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "rolePermission" | "activityLog" | "agent" | "realtor" | "mlsProperty" | "operation"
+      modelProps: "user" | "rolePermission" | "activityLog" | "agent" | "realtor" | "mlsProperty" | "operation" | "fileAttachment"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1217,6 +1233,80 @@ export namespace Prisma {
           }
         }
       }
+      FileAttachment: {
+        payload: Prisma.$FileAttachmentPayload<ExtArgs>
+        fields: Prisma.FileAttachmentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FileAttachmentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FileAttachmentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FileAttachmentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FileAttachmentPayload>
+          }
+          findFirst: {
+            args: Prisma.FileAttachmentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FileAttachmentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FileAttachmentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FileAttachmentPayload>
+          }
+          findMany: {
+            args: Prisma.FileAttachmentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FileAttachmentPayload>[]
+          }
+          create: {
+            args: Prisma.FileAttachmentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FileAttachmentPayload>
+          }
+          createMany: {
+            args: Prisma.FileAttachmentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.FileAttachmentCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FileAttachmentPayload>[]
+          }
+          delete: {
+            args: Prisma.FileAttachmentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FileAttachmentPayload>
+          }
+          update: {
+            args: Prisma.FileAttachmentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FileAttachmentPayload>
+          }
+          deleteMany: {
+            args: Prisma.FileAttachmentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FileAttachmentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.FileAttachmentUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FileAttachmentPayload>[]
+          }
+          upsert: {
+            args: Prisma.FileAttachmentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FileAttachmentPayload>
+          }
+          aggregate: {
+            args: Prisma.FileAttachmentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFileAttachment>
+          }
+          groupBy: {
+            args: Prisma.FileAttachmentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FileAttachmentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FileAttachmentCountArgs<ExtArgs>
+            result: $Utils.Optional<FileAttachmentCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1332,6 +1422,7 @@ export namespace Prisma {
     realtor?: RealtorOmit
     mlsProperty?: MlsPropertyOmit
     operation?: OperationOmit
+    fileAttachment?: FileAttachmentOmit
   }
 
   /* Types for Logging */
@@ -8319,6 +8410,7 @@ export namespace Prisma {
 
   export type OperationAvgAggregateOutputType = {
     id: number | null
+    mlsPropertyId: number | null
     price: number | null
     clientId: number | null
     compPct: number | null
@@ -8330,6 +8422,7 @@ export namespace Prisma {
 
   export type OperationSumAggregateOutputType = {
     id: number | null
+    mlsPropertyId: number | null
     price: number | null
     clientId: number | null
     compPct: number | null
@@ -8341,6 +8434,7 @@ export namespace Prisma {
 
   export type OperationMinAggregateOutputType = {
     id: number | null
+    mlsPropertyId: number | null
     address: string | null
     type: string | null
     price: number | null
@@ -8385,6 +8479,7 @@ export namespace Prisma {
 
   export type OperationMaxAggregateOutputType = {
     id: number | null
+    mlsPropertyId: number | null
     address: string | null
     type: string | null
     price: number | null
@@ -8429,6 +8524,7 @@ export namespace Prisma {
 
   export type OperationCountAggregateOutputType = {
     id: number
+    mlsPropertyId: number
     address: number
     type: number
     price: number
@@ -8475,6 +8571,7 @@ export namespace Prisma {
 
   export type OperationAvgAggregateInputType = {
     id?: true
+    mlsPropertyId?: true
     price?: true
     clientId?: true
     compPct?: true
@@ -8486,6 +8583,7 @@ export namespace Prisma {
 
   export type OperationSumAggregateInputType = {
     id?: true
+    mlsPropertyId?: true
     price?: true
     clientId?: true
     compPct?: true
@@ -8497,6 +8595,7 @@ export namespace Prisma {
 
   export type OperationMinAggregateInputType = {
     id?: true
+    mlsPropertyId?: true
     address?: true
     type?: true
     price?: true
@@ -8541,6 +8640,7 @@ export namespace Prisma {
 
   export type OperationMaxAggregateInputType = {
     id?: true
+    mlsPropertyId?: true
     address?: true
     type?: true
     price?: true
@@ -8585,6 +8685,7 @@ export namespace Prisma {
 
   export type OperationCountAggregateInputType = {
     id?: true
+    mlsPropertyId?: true
     address?: true
     type?: true
     price?: true
@@ -8716,6 +8817,7 @@ export namespace Prisma {
 
   export type OperationGroupByOutputType = {
     id: number
+    mlsPropertyId: number | null
     address: string
     type: string
     price: number
@@ -8779,6 +8881,7 @@ export namespace Prisma {
 
   export type OperationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    mlsPropertyId?: boolean
     address?: boolean
     type?: boolean
     price?: boolean
@@ -8823,6 +8926,7 @@ export namespace Prisma {
 
   export type OperationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    mlsPropertyId?: boolean
     address?: boolean
     type?: boolean
     price?: boolean
@@ -8867,6 +8971,7 @@ export namespace Prisma {
 
   export type OperationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    mlsPropertyId?: boolean
     address?: boolean
     type?: boolean
     price?: boolean
@@ -8911,6 +9016,7 @@ export namespace Prisma {
 
   export type OperationSelectScalar = {
     id?: boolean
+    mlsPropertyId?: boolean
     address?: boolean
     type?: boolean
     price?: boolean
@@ -8953,13 +9059,14 @@ export namespace Prisma {
     deletedAt?: boolean
   }
 
-  export type OperationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "address" | "type" | "price" | "financing" | "agent" | "realtor" | "titleCompany" | "clientId" | "buyerName" | "execDate" | "closingDate" | "closingDateISO" | "status" | "commissionPaid" | "compSigned" | "compPct" | "compFixed" | "escrow" | "lbp" | "sd" | "flood" | "condoDocs" | "condoRider" | "inspDone" | "inspStatus" | "inspEstimatedDate" | "inspNotes" | "appraisal" | "reinspection" | "pending" | "agentSplitPct" | "realtorSplitPct" | "brokerSplitPct" | "closingNear" | "isRented" | "leaseAgreementSent" | "estoppelSent" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["operation"]>
+  export type OperationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "mlsPropertyId" | "address" | "type" | "price" | "financing" | "agent" | "realtor" | "titleCompany" | "clientId" | "buyerName" | "execDate" | "closingDate" | "closingDateISO" | "status" | "commissionPaid" | "compSigned" | "compPct" | "compFixed" | "escrow" | "lbp" | "sd" | "flood" | "condoDocs" | "condoRider" | "inspDone" | "inspStatus" | "inspEstimatedDate" | "inspNotes" | "appraisal" | "reinspection" | "pending" | "agentSplitPct" | "realtorSplitPct" | "brokerSplitPct" | "closingNear" | "isRented" | "leaseAgreementSent" | "estoppelSent" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["operation"]>
 
   export type $OperationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Operation"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: number
+      mlsPropertyId: number | null
       address: string
       type: string
       price: number
@@ -9424,6 +9531,7 @@ export namespace Prisma {
    */
   interface OperationFieldRefs {
     readonly id: FieldRef<"Operation", 'Int'>
+    readonly mlsPropertyId: FieldRef<"Operation", 'Int'>
     readonly address: FieldRef<"Operation", 'String'>
     readonly type: FieldRef<"Operation", 'String'>
     readonly price: FieldRef<"Operation", 'Float'>
@@ -9836,6 +9944,1160 @@ export namespace Prisma {
 
 
   /**
+   * Model FileAttachment
+   */
+
+  export type AggregateFileAttachment = {
+    _count: FileAttachmentCountAggregateOutputType | null
+    _avg: FileAttachmentAvgAggregateOutputType | null
+    _sum: FileAttachmentSumAggregateOutputType | null
+    _min: FileAttachmentMinAggregateOutputType | null
+    _max: FileAttachmentMaxAggregateOutputType | null
+  }
+
+  export type FileAttachmentAvgAggregateOutputType = {
+    id: number | null
+    entityId: number | null
+    sizeBytes: number | null
+    uploadedById: number | null
+    sortOrder: number | null
+  }
+
+  export type FileAttachmentSumAggregateOutputType = {
+    id: number | null
+    entityId: number | null
+    sizeBytes: number | null
+    uploadedById: number | null
+    sortOrder: number | null
+  }
+
+  export type FileAttachmentMinAggregateOutputType = {
+    id: number | null
+    entityType: string | null
+    entityId: number | null
+    filename: string | null
+    storagePath: string | null
+    mimeType: string | null
+    sizeBytes: number | null
+    uploadedById: number | null
+    uploadedByName: string | null
+    sortOrder: number | null
+    visibility: string | null
+    allowedRoles: string | null
+    createdAt: Date | null
+  }
+
+  export type FileAttachmentMaxAggregateOutputType = {
+    id: number | null
+    entityType: string | null
+    entityId: number | null
+    filename: string | null
+    storagePath: string | null
+    mimeType: string | null
+    sizeBytes: number | null
+    uploadedById: number | null
+    uploadedByName: string | null
+    sortOrder: number | null
+    visibility: string | null
+    allowedRoles: string | null
+    createdAt: Date | null
+  }
+
+  export type FileAttachmentCountAggregateOutputType = {
+    id: number
+    entityType: number
+    entityId: number
+    filename: number
+    storagePath: number
+    mimeType: number
+    sizeBytes: number
+    uploadedById: number
+    uploadedByName: number
+    sortOrder: number
+    visibility: number
+    allowedRoles: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type FileAttachmentAvgAggregateInputType = {
+    id?: true
+    entityId?: true
+    sizeBytes?: true
+    uploadedById?: true
+    sortOrder?: true
+  }
+
+  export type FileAttachmentSumAggregateInputType = {
+    id?: true
+    entityId?: true
+    sizeBytes?: true
+    uploadedById?: true
+    sortOrder?: true
+  }
+
+  export type FileAttachmentMinAggregateInputType = {
+    id?: true
+    entityType?: true
+    entityId?: true
+    filename?: true
+    storagePath?: true
+    mimeType?: true
+    sizeBytes?: true
+    uploadedById?: true
+    uploadedByName?: true
+    sortOrder?: true
+    visibility?: true
+    allowedRoles?: true
+    createdAt?: true
+  }
+
+  export type FileAttachmentMaxAggregateInputType = {
+    id?: true
+    entityType?: true
+    entityId?: true
+    filename?: true
+    storagePath?: true
+    mimeType?: true
+    sizeBytes?: true
+    uploadedById?: true
+    uploadedByName?: true
+    sortOrder?: true
+    visibility?: true
+    allowedRoles?: true
+    createdAt?: true
+  }
+
+  export type FileAttachmentCountAggregateInputType = {
+    id?: true
+    entityType?: true
+    entityId?: true
+    filename?: true
+    storagePath?: true
+    mimeType?: true
+    sizeBytes?: true
+    uploadedById?: true
+    uploadedByName?: true
+    sortOrder?: true
+    visibility?: true
+    allowedRoles?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type FileAttachmentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FileAttachment to aggregate.
+     */
+    where?: FileAttachmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FileAttachments to fetch.
+     */
+    orderBy?: FileAttachmentOrderByWithRelationInput | FileAttachmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FileAttachmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FileAttachments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FileAttachments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FileAttachments
+    **/
+    _count?: true | FileAttachmentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FileAttachmentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FileAttachmentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FileAttachmentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FileAttachmentMaxAggregateInputType
+  }
+
+  export type GetFileAttachmentAggregateType<T extends FileAttachmentAggregateArgs> = {
+        [P in keyof T & keyof AggregateFileAttachment]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFileAttachment[P]>
+      : GetScalarType<T[P], AggregateFileAttachment[P]>
+  }
+
+
+
+
+  export type FileAttachmentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FileAttachmentWhereInput
+    orderBy?: FileAttachmentOrderByWithAggregationInput | FileAttachmentOrderByWithAggregationInput[]
+    by: FileAttachmentScalarFieldEnum[] | FileAttachmentScalarFieldEnum
+    having?: FileAttachmentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FileAttachmentCountAggregateInputType | true
+    _avg?: FileAttachmentAvgAggregateInputType
+    _sum?: FileAttachmentSumAggregateInputType
+    _min?: FileAttachmentMinAggregateInputType
+    _max?: FileAttachmentMaxAggregateInputType
+  }
+
+  export type FileAttachmentGroupByOutputType = {
+    id: number
+    entityType: string
+    entityId: number
+    filename: string
+    storagePath: string
+    mimeType: string
+    sizeBytes: number
+    uploadedById: number
+    uploadedByName: string
+    sortOrder: number
+    visibility: string
+    allowedRoles: string
+    createdAt: Date
+    _count: FileAttachmentCountAggregateOutputType | null
+    _avg: FileAttachmentAvgAggregateOutputType | null
+    _sum: FileAttachmentSumAggregateOutputType | null
+    _min: FileAttachmentMinAggregateOutputType | null
+    _max: FileAttachmentMaxAggregateOutputType | null
+  }
+
+  type GetFileAttachmentGroupByPayload<T extends FileAttachmentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FileAttachmentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FileAttachmentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FileAttachmentGroupByOutputType[P]>
+            : GetScalarType<T[P], FileAttachmentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FileAttachmentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    entityType?: boolean
+    entityId?: boolean
+    filename?: boolean
+    storagePath?: boolean
+    mimeType?: boolean
+    sizeBytes?: boolean
+    uploadedById?: boolean
+    uploadedByName?: boolean
+    sortOrder?: boolean
+    visibility?: boolean
+    allowedRoles?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["fileAttachment"]>
+
+  export type FileAttachmentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    entityType?: boolean
+    entityId?: boolean
+    filename?: boolean
+    storagePath?: boolean
+    mimeType?: boolean
+    sizeBytes?: boolean
+    uploadedById?: boolean
+    uploadedByName?: boolean
+    sortOrder?: boolean
+    visibility?: boolean
+    allowedRoles?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["fileAttachment"]>
+
+  export type FileAttachmentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    entityType?: boolean
+    entityId?: boolean
+    filename?: boolean
+    storagePath?: boolean
+    mimeType?: boolean
+    sizeBytes?: boolean
+    uploadedById?: boolean
+    uploadedByName?: boolean
+    sortOrder?: boolean
+    visibility?: boolean
+    allowedRoles?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["fileAttachment"]>
+
+  export type FileAttachmentSelectScalar = {
+    id?: boolean
+    entityType?: boolean
+    entityId?: boolean
+    filename?: boolean
+    storagePath?: boolean
+    mimeType?: boolean
+    sizeBytes?: boolean
+    uploadedById?: boolean
+    uploadedByName?: boolean
+    sortOrder?: boolean
+    visibility?: boolean
+    allowedRoles?: boolean
+    createdAt?: boolean
+  }
+
+  export type FileAttachmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "entityType" | "entityId" | "filename" | "storagePath" | "mimeType" | "sizeBytes" | "uploadedById" | "uploadedByName" | "sortOrder" | "visibility" | "allowedRoles" | "createdAt", ExtArgs["result"]["fileAttachment"]>
+
+  export type $FileAttachmentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "FileAttachment"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      entityType: string
+      entityId: number
+      filename: string
+      storagePath: string
+      mimeType: string
+      sizeBytes: number
+      uploadedById: number
+      uploadedByName: string
+      sortOrder: number
+      visibility: string
+      allowedRoles: string
+      createdAt: Date
+    }, ExtArgs["result"]["fileAttachment"]>
+    composites: {}
+  }
+
+  type FileAttachmentGetPayload<S extends boolean | null | undefined | FileAttachmentDefaultArgs> = $Result.GetResult<Prisma.$FileAttachmentPayload, S>
+
+  type FileAttachmentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FileAttachmentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: FileAttachmentCountAggregateInputType | true
+    }
+
+  export interface FileAttachmentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['FileAttachment'], meta: { name: 'FileAttachment' } }
+    /**
+     * Find zero or one FileAttachment that matches the filter.
+     * @param {FileAttachmentFindUniqueArgs} args - Arguments to find a FileAttachment
+     * @example
+     * // Get one FileAttachment
+     * const fileAttachment = await prisma.fileAttachment.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FileAttachmentFindUniqueArgs>(args: SelectSubset<T, FileAttachmentFindUniqueArgs<ExtArgs>>): Prisma__FileAttachmentClient<$Result.GetResult<Prisma.$FileAttachmentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one FileAttachment that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {FileAttachmentFindUniqueOrThrowArgs} args - Arguments to find a FileAttachment
+     * @example
+     * // Get one FileAttachment
+     * const fileAttachment = await prisma.fileAttachment.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FileAttachmentFindUniqueOrThrowArgs>(args: SelectSubset<T, FileAttachmentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FileAttachmentClient<$Result.GetResult<Prisma.$FileAttachmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FileAttachment that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileAttachmentFindFirstArgs} args - Arguments to find a FileAttachment
+     * @example
+     * // Get one FileAttachment
+     * const fileAttachment = await prisma.fileAttachment.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FileAttachmentFindFirstArgs>(args?: SelectSubset<T, FileAttachmentFindFirstArgs<ExtArgs>>): Prisma__FileAttachmentClient<$Result.GetResult<Prisma.$FileAttachmentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FileAttachment that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileAttachmentFindFirstOrThrowArgs} args - Arguments to find a FileAttachment
+     * @example
+     * // Get one FileAttachment
+     * const fileAttachment = await prisma.fileAttachment.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FileAttachmentFindFirstOrThrowArgs>(args?: SelectSubset<T, FileAttachmentFindFirstOrThrowArgs<ExtArgs>>): Prisma__FileAttachmentClient<$Result.GetResult<Prisma.$FileAttachmentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more FileAttachments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileAttachmentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FileAttachments
+     * const fileAttachments = await prisma.fileAttachment.findMany()
+     * 
+     * // Get first 10 FileAttachments
+     * const fileAttachments = await prisma.fileAttachment.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const fileAttachmentWithIdOnly = await prisma.fileAttachment.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FileAttachmentFindManyArgs>(args?: SelectSubset<T, FileAttachmentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FileAttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a FileAttachment.
+     * @param {FileAttachmentCreateArgs} args - Arguments to create a FileAttachment.
+     * @example
+     * // Create one FileAttachment
+     * const FileAttachment = await prisma.fileAttachment.create({
+     *   data: {
+     *     // ... data to create a FileAttachment
+     *   }
+     * })
+     * 
+     */
+    create<T extends FileAttachmentCreateArgs>(args: SelectSubset<T, FileAttachmentCreateArgs<ExtArgs>>): Prisma__FileAttachmentClient<$Result.GetResult<Prisma.$FileAttachmentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many FileAttachments.
+     * @param {FileAttachmentCreateManyArgs} args - Arguments to create many FileAttachments.
+     * @example
+     * // Create many FileAttachments
+     * const fileAttachment = await prisma.fileAttachment.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FileAttachmentCreateManyArgs>(args?: SelectSubset<T, FileAttachmentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many FileAttachments and returns the data saved in the database.
+     * @param {FileAttachmentCreateManyAndReturnArgs} args - Arguments to create many FileAttachments.
+     * @example
+     * // Create many FileAttachments
+     * const fileAttachment = await prisma.fileAttachment.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many FileAttachments and only return the `id`
+     * const fileAttachmentWithIdOnly = await prisma.fileAttachment.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends FileAttachmentCreateManyAndReturnArgs>(args?: SelectSubset<T, FileAttachmentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FileAttachmentPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a FileAttachment.
+     * @param {FileAttachmentDeleteArgs} args - Arguments to delete one FileAttachment.
+     * @example
+     * // Delete one FileAttachment
+     * const FileAttachment = await prisma.fileAttachment.delete({
+     *   where: {
+     *     // ... filter to delete one FileAttachment
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FileAttachmentDeleteArgs>(args: SelectSubset<T, FileAttachmentDeleteArgs<ExtArgs>>): Prisma__FileAttachmentClient<$Result.GetResult<Prisma.$FileAttachmentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one FileAttachment.
+     * @param {FileAttachmentUpdateArgs} args - Arguments to update one FileAttachment.
+     * @example
+     * // Update one FileAttachment
+     * const fileAttachment = await prisma.fileAttachment.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FileAttachmentUpdateArgs>(args: SelectSubset<T, FileAttachmentUpdateArgs<ExtArgs>>): Prisma__FileAttachmentClient<$Result.GetResult<Prisma.$FileAttachmentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more FileAttachments.
+     * @param {FileAttachmentDeleteManyArgs} args - Arguments to filter FileAttachments to delete.
+     * @example
+     * // Delete a few FileAttachments
+     * const { count } = await prisma.fileAttachment.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FileAttachmentDeleteManyArgs>(args?: SelectSubset<T, FileAttachmentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FileAttachments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileAttachmentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FileAttachments
+     * const fileAttachment = await prisma.fileAttachment.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FileAttachmentUpdateManyArgs>(args: SelectSubset<T, FileAttachmentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FileAttachments and returns the data updated in the database.
+     * @param {FileAttachmentUpdateManyAndReturnArgs} args - Arguments to update many FileAttachments.
+     * @example
+     * // Update many FileAttachments
+     * const fileAttachment = await prisma.fileAttachment.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more FileAttachments and only return the `id`
+     * const fileAttachmentWithIdOnly = await prisma.fileAttachment.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends FileAttachmentUpdateManyAndReturnArgs>(args: SelectSubset<T, FileAttachmentUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FileAttachmentPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one FileAttachment.
+     * @param {FileAttachmentUpsertArgs} args - Arguments to update or create a FileAttachment.
+     * @example
+     * // Update or create a FileAttachment
+     * const fileAttachment = await prisma.fileAttachment.upsert({
+     *   create: {
+     *     // ... data to create a FileAttachment
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FileAttachment we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FileAttachmentUpsertArgs>(args: SelectSubset<T, FileAttachmentUpsertArgs<ExtArgs>>): Prisma__FileAttachmentClient<$Result.GetResult<Prisma.$FileAttachmentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of FileAttachments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileAttachmentCountArgs} args - Arguments to filter FileAttachments to count.
+     * @example
+     * // Count the number of FileAttachments
+     * const count = await prisma.fileAttachment.count({
+     *   where: {
+     *     // ... the filter for the FileAttachments we want to count
+     *   }
+     * })
+    **/
+    count<T extends FileAttachmentCountArgs>(
+      args?: Subset<T, FileAttachmentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FileAttachmentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FileAttachment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileAttachmentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FileAttachmentAggregateArgs>(args: Subset<T, FileAttachmentAggregateArgs>): Prisma.PrismaPromise<GetFileAttachmentAggregateType<T>>
+
+    /**
+     * Group by FileAttachment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileAttachmentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FileAttachmentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FileAttachmentGroupByArgs['orderBy'] }
+        : { orderBy?: FileAttachmentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FileAttachmentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFileAttachmentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the FileAttachment model
+   */
+  readonly fields: FileAttachmentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FileAttachment.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FileAttachmentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the FileAttachment model
+   */
+  interface FileAttachmentFieldRefs {
+    readonly id: FieldRef<"FileAttachment", 'Int'>
+    readonly entityType: FieldRef<"FileAttachment", 'String'>
+    readonly entityId: FieldRef<"FileAttachment", 'Int'>
+    readonly filename: FieldRef<"FileAttachment", 'String'>
+    readonly storagePath: FieldRef<"FileAttachment", 'String'>
+    readonly mimeType: FieldRef<"FileAttachment", 'String'>
+    readonly sizeBytes: FieldRef<"FileAttachment", 'Int'>
+    readonly uploadedById: FieldRef<"FileAttachment", 'Int'>
+    readonly uploadedByName: FieldRef<"FileAttachment", 'String'>
+    readonly sortOrder: FieldRef<"FileAttachment", 'Int'>
+    readonly visibility: FieldRef<"FileAttachment", 'String'>
+    readonly allowedRoles: FieldRef<"FileAttachment", 'String'>
+    readonly createdAt: FieldRef<"FileAttachment", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * FileAttachment findUnique
+   */
+  export type FileAttachmentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FileAttachment
+     */
+    select?: FileAttachmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FileAttachment
+     */
+    omit?: FileAttachmentOmit<ExtArgs> | null
+    /**
+     * Filter, which FileAttachment to fetch.
+     */
+    where: FileAttachmentWhereUniqueInput
+  }
+
+  /**
+   * FileAttachment findUniqueOrThrow
+   */
+  export type FileAttachmentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FileAttachment
+     */
+    select?: FileAttachmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FileAttachment
+     */
+    omit?: FileAttachmentOmit<ExtArgs> | null
+    /**
+     * Filter, which FileAttachment to fetch.
+     */
+    where: FileAttachmentWhereUniqueInput
+  }
+
+  /**
+   * FileAttachment findFirst
+   */
+  export type FileAttachmentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FileAttachment
+     */
+    select?: FileAttachmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FileAttachment
+     */
+    omit?: FileAttachmentOmit<ExtArgs> | null
+    /**
+     * Filter, which FileAttachment to fetch.
+     */
+    where?: FileAttachmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FileAttachments to fetch.
+     */
+    orderBy?: FileAttachmentOrderByWithRelationInput | FileAttachmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FileAttachments.
+     */
+    cursor?: FileAttachmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FileAttachments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FileAttachments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FileAttachments.
+     */
+    distinct?: FileAttachmentScalarFieldEnum | FileAttachmentScalarFieldEnum[]
+  }
+
+  /**
+   * FileAttachment findFirstOrThrow
+   */
+  export type FileAttachmentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FileAttachment
+     */
+    select?: FileAttachmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FileAttachment
+     */
+    omit?: FileAttachmentOmit<ExtArgs> | null
+    /**
+     * Filter, which FileAttachment to fetch.
+     */
+    where?: FileAttachmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FileAttachments to fetch.
+     */
+    orderBy?: FileAttachmentOrderByWithRelationInput | FileAttachmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FileAttachments.
+     */
+    cursor?: FileAttachmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FileAttachments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FileAttachments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FileAttachments.
+     */
+    distinct?: FileAttachmentScalarFieldEnum | FileAttachmentScalarFieldEnum[]
+  }
+
+  /**
+   * FileAttachment findMany
+   */
+  export type FileAttachmentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FileAttachment
+     */
+    select?: FileAttachmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FileAttachment
+     */
+    omit?: FileAttachmentOmit<ExtArgs> | null
+    /**
+     * Filter, which FileAttachments to fetch.
+     */
+    where?: FileAttachmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FileAttachments to fetch.
+     */
+    orderBy?: FileAttachmentOrderByWithRelationInput | FileAttachmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FileAttachments.
+     */
+    cursor?: FileAttachmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FileAttachments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FileAttachments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FileAttachments.
+     */
+    distinct?: FileAttachmentScalarFieldEnum | FileAttachmentScalarFieldEnum[]
+  }
+
+  /**
+   * FileAttachment create
+   */
+  export type FileAttachmentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FileAttachment
+     */
+    select?: FileAttachmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FileAttachment
+     */
+    omit?: FileAttachmentOmit<ExtArgs> | null
+    /**
+     * The data needed to create a FileAttachment.
+     */
+    data: XOR<FileAttachmentCreateInput, FileAttachmentUncheckedCreateInput>
+  }
+
+  /**
+   * FileAttachment createMany
+   */
+  export type FileAttachmentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many FileAttachments.
+     */
+    data: FileAttachmentCreateManyInput | FileAttachmentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * FileAttachment createManyAndReturn
+   */
+  export type FileAttachmentCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FileAttachment
+     */
+    select?: FileAttachmentSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the FileAttachment
+     */
+    omit?: FileAttachmentOmit<ExtArgs> | null
+    /**
+     * The data used to create many FileAttachments.
+     */
+    data: FileAttachmentCreateManyInput | FileAttachmentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * FileAttachment update
+   */
+  export type FileAttachmentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FileAttachment
+     */
+    select?: FileAttachmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FileAttachment
+     */
+    omit?: FileAttachmentOmit<ExtArgs> | null
+    /**
+     * The data needed to update a FileAttachment.
+     */
+    data: XOR<FileAttachmentUpdateInput, FileAttachmentUncheckedUpdateInput>
+    /**
+     * Choose, which FileAttachment to update.
+     */
+    where: FileAttachmentWhereUniqueInput
+  }
+
+  /**
+   * FileAttachment updateMany
+   */
+  export type FileAttachmentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update FileAttachments.
+     */
+    data: XOR<FileAttachmentUpdateManyMutationInput, FileAttachmentUncheckedUpdateManyInput>
+    /**
+     * Filter which FileAttachments to update
+     */
+    where?: FileAttachmentWhereInput
+    /**
+     * Limit how many FileAttachments to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * FileAttachment updateManyAndReturn
+   */
+  export type FileAttachmentUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FileAttachment
+     */
+    select?: FileAttachmentSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the FileAttachment
+     */
+    omit?: FileAttachmentOmit<ExtArgs> | null
+    /**
+     * The data used to update FileAttachments.
+     */
+    data: XOR<FileAttachmentUpdateManyMutationInput, FileAttachmentUncheckedUpdateManyInput>
+    /**
+     * Filter which FileAttachments to update
+     */
+    where?: FileAttachmentWhereInput
+    /**
+     * Limit how many FileAttachments to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * FileAttachment upsert
+   */
+  export type FileAttachmentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FileAttachment
+     */
+    select?: FileAttachmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FileAttachment
+     */
+    omit?: FileAttachmentOmit<ExtArgs> | null
+    /**
+     * The filter to search for the FileAttachment to update in case it exists.
+     */
+    where: FileAttachmentWhereUniqueInput
+    /**
+     * In case the FileAttachment found by the `where` argument doesn't exist, create a new FileAttachment with this data.
+     */
+    create: XOR<FileAttachmentCreateInput, FileAttachmentUncheckedCreateInput>
+    /**
+     * In case the FileAttachment was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FileAttachmentUpdateInput, FileAttachmentUncheckedUpdateInput>
+  }
+
+  /**
+   * FileAttachment delete
+   */
+  export type FileAttachmentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FileAttachment
+     */
+    select?: FileAttachmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FileAttachment
+     */
+    omit?: FileAttachmentOmit<ExtArgs> | null
+    /**
+     * Filter which FileAttachment to delete.
+     */
+    where: FileAttachmentWhereUniqueInput
+  }
+
+  /**
+   * FileAttachment deleteMany
+   */
+  export type FileAttachmentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FileAttachments to delete
+     */
+    where?: FileAttachmentWhereInput
+    /**
+     * Limit how many FileAttachments to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * FileAttachment without action
+   */
+  export type FileAttachmentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FileAttachment
+     */
+    select?: FileAttachmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FileAttachment
+     */
+    omit?: FileAttachmentOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -9968,6 +11230,7 @@ export namespace Prisma {
 
   export const OperationScalarFieldEnum: {
     id: 'id',
+    mlsPropertyId: 'mlsPropertyId',
     address: 'address',
     type: 'type',
     price: 'price',
@@ -10011,6 +11274,25 @@ export namespace Prisma {
   };
 
   export type OperationScalarFieldEnum = (typeof OperationScalarFieldEnum)[keyof typeof OperationScalarFieldEnum]
+
+
+  export const FileAttachmentScalarFieldEnum: {
+    id: 'id',
+    entityType: 'entityType',
+    entityId: 'entityId',
+    filename: 'filename',
+    storagePath: 'storagePath',
+    mimeType: 'mimeType',
+    sizeBytes: 'sizeBytes',
+    uploadedById: 'uploadedById',
+    uploadedByName: 'uploadedByName',
+    sortOrder: 'sortOrder',
+    visibility: 'visibility',
+    allowedRoles: 'allowedRoles',
+    createdAt: 'createdAt'
+  };
+
+  export type FileAttachmentScalarFieldEnum = (typeof FileAttachmentScalarFieldEnum)[keyof typeof FileAttachmentScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -10721,6 +12003,7 @@ export namespace Prisma {
     OR?: OperationWhereInput[]
     NOT?: OperationWhereInput | OperationWhereInput[]
     id?: IntFilter<"Operation"> | number
+    mlsPropertyId?: IntNullableFilter<"Operation"> | number | null
     address?: StringFilter<"Operation"> | string
     type?: StringFilter<"Operation"> | string
     price?: FloatFilter<"Operation"> | number
@@ -10765,6 +12048,7 @@ export namespace Prisma {
 
   export type OperationOrderByWithRelationInput = {
     id?: SortOrder
+    mlsPropertyId?: SortOrderInput | SortOrder
     address?: SortOrder
     type?: SortOrder
     price?: SortOrder
@@ -10812,6 +12096,7 @@ export namespace Prisma {
     AND?: OperationWhereInput | OperationWhereInput[]
     OR?: OperationWhereInput[]
     NOT?: OperationWhereInput | OperationWhereInput[]
+    mlsPropertyId?: IntNullableFilter<"Operation"> | number | null
     address?: StringFilter<"Operation"> | string
     type?: StringFilter<"Operation"> | string
     price?: FloatFilter<"Operation"> | number
@@ -10856,6 +12141,7 @@ export namespace Prisma {
 
   export type OperationOrderByWithAggregationInput = {
     id?: SortOrder
+    mlsPropertyId?: SortOrderInput | SortOrder
     address?: SortOrder
     type?: SortOrder
     price?: SortOrder
@@ -10908,6 +12194,7 @@ export namespace Prisma {
     OR?: OperationScalarWhereWithAggregatesInput[]
     NOT?: OperationScalarWhereWithAggregatesInput | OperationScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Operation"> | number
+    mlsPropertyId?: IntNullableWithAggregatesFilter<"Operation"> | number | null
     address?: StringWithAggregatesFilter<"Operation"> | string
     type?: StringWithAggregatesFilter<"Operation"> | string
     price?: FloatWithAggregatesFilter<"Operation"> | number
@@ -10948,6 +12235,100 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Operation"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Operation"> | Date | string
     deletedAt?: DateTimeNullableWithAggregatesFilter<"Operation"> | Date | string | null
+  }
+
+  export type FileAttachmentWhereInput = {
+    AND?: FileAttachmentWhereInput | FileAttachmentWhereInput[]
+    OR?: FileAttachmentWhereInput[]
+    NOT?: FileAttachmentWhereInput | FileAttachmentWhereInput[]
+    id?: IntFilter<"FileAttachment"> | number
+    entityType?: StringFilter<"FileAttachment"> | string
+    entityId?: IntFilter<"FileAttachment"> | number
+    filename?: StringFilter<"FileAttachment"> | string
+    storagePath?: StringFilter<"FileAttachment"> | string
+    mimeType?: StringFilter<"FileAttachment"> | string
+    sizeBytes?: IntFilter<"FileAttachment"> | number
+    uploadedById?: IntFilter<"FileAttachment"> | number
+    uploadedByName?: StringFilter<"FileAttachment"> | string
+    sortOrder?: IntFilter<"FileAttachment"> | number
+    visibility?: StringFilter<"FileAttachment"> | string
+    allowedRoles?: StringFilter<"FileAttachment"> | string
+    createdAt?: DateTimeFilter<"FileAttachment"> | Date | string
+  }
+
+  export type FileAttachmentOrderByWithRelationInput = {
+    id?: SortOrder
+    entityType?: SortOrder
+    entityId?: SortOrder
+    filename?: SortOrder
+    storagePath?: SortOrder
+    mimeType?: SortOrder
+    sizeBytes?: SortOrder
+    uploadedById?: SortOrder
+    uploadedByName?: SortOrder
+    sortOrder?: SortOrder
+    visibility?: SortOrder
+    allowedRoles?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type FileAttachmentWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: FileAttachmentWhereInput | FileAttachmentWhereInput[]
+    OR?: FileAttachmentWhereInput[]
+    NOT?: FileAttachmentWhereInput | FileAttachmentWhereInput[]
+    entityType?: StringFilter<"FileAttachment"> | string
+    entityId?: IntFilter<"FileAttachment"> | number
+    filename?: StringFilter<"FileAttachment"> | string
+    storagePath?: StringFilter<"FileAttachment"> | string
+    mimeType?: StringFilter<"FileAttachment"> | string
+    sizeBytes?: IntFilter<"FileAttachment"> | number
+    uploadedById?: IntFilter<"FileAttachment"> | number
+    uploadedByName?: StringFilter<"FileAttachment"> | string
+    sortOrder?: IntFilter<"FileAttachment"> | number
+    visibility?: StringFilter<"FileAttachment"> | string
+    allowedRoles?: StringFilter<"FileAttachment"> | string
+    createdAt?: DateTimeFilter<"FileAttachment"> | Date | string
+  }, "id">
+
+  export type FileAttachmentOrderByWithAggregationInput = {
+    id?: SortOrder
+    entityType?: SortOrder
+    entityId?: SortOrder
+    filename?: SortOrder
+    storagePath?: SortOrder
+    mimeType?: SortOrder
+    sizeBytes?: SortOrder
+    uploadedById?: SortOrder
+    uploadedByName?: SortOrder
+    sortOrder?: SortOrder
+    visibility?: SortOrder
+    allowedRoles?: SortOrder
+    createdAt?: SortOrder
+    _count?: FileAttachmentCountOrderByAggregateInput
+    _avg?: FileAttachmentAvgOrderByAggregateInput
+    _max?: FileAttachmentMaxOrderByAggregateInput
+    _min?: FileAttachmentMinOrderByAggregateInput
+    _sum?: FileAttachmentSumOrderByAggregateInput
+  }
+
+  export type FileAttachmentScalarWhereWithAggregatesInput = {
+    AND?: FileAttachmentScalarWhereWithAggregatesInput | FileAttachmentScalarWhereWithAggregatesInput[]
+    OR?: FileAttachmentScalarWhereWithAggregatesInput[]
+    NOT?: FileAttachmentScalarWhereWithAggregatesInput | FileAttachmentScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"FileAttachment"> | number
+    entityType?: StringWithAggregatesFilter<"FileAttachment"> | string
+    entityId?: IntWithAggregatesFilter<"FileAttachment"> | number
+    filename?: StringWithAggregatesFilter<"FileAttachment"> | string
+    storagePath?: StringWithAggregatesFilter<"FileAttachment"> | string
+    mimeType?: StringWithAggregatesFilter<"FileAttachment"> | string
+    sizeBytes?: IntWithAggregatesFilter<"FileAttachment"> | number
+    uploadedById?: IntWithAggregatesFilter<"FileAttachment"> | number
+    uploadedByName?: StringWithAggregatesFilter<"FileAttachment"> | string
+    sortOrder?: IntWithAggregatesFilter<"FileAttachment"> | number
+    visibility?: StringWithAggregatesFilter<"FileAttachment"> | string
+    allowedRoles?: StringWithAggregatesFilter<"FileAttachment"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"FileAttachment"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -11632,6 +13013,7 @@ export namespace Prisma {
   }
 
   export type OperationCreateInput = {
+    mlsPropertyId?: number | null
     address: string
     type?: string
     price?: number
@@ -11676,6 +13058,7 @@ export namespace Prisma {
 
   export type OperationUncheckedCreateInput = {
     id?: number
+    mlsPropertyId?: number | null
     address: string
     type?: string
     price?: number
@@ -11719,6 +13102,7 @@ export namespace Prisma {
   }
 
   export type OperationUpdateInput = {
+    mlsPropertyId?: NullableIntFieldUpdateOperationsInput | number | null
     address?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
@@ -11763,6 +13147,7 @@ export namespace Prisma {
 
   export type OperationUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    mlsPropertyId?: NullableIntFieldUpdateOperationsInput | number | null
     address?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
@@ -11807,6 +13192,7 @@ export namespace Prisma {
 
   export type OperationCreateManyInput = {
     id?: number
+    mlsPropertyId?: number | null
     address: string
     type?: string
     price?: number
@@ -11850,6 +13236,7 @@ export namespace Prisma {
   }
 
   export type OperationUpdateManyMutationInput = {
+    mlsPropertyId?: NullableIntFieldUpdateOperationsInput | number | null
     address?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
@@ -11894,6 +13281,7 @@ export namespace Prisma {
 
   export type OperationUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    mlsPropertyId?: NullableIntFieldUpdateOperationsInput | number | null
     address?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
@@ -11934,6 +13322,115 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type FileAttachmentCreateInput = {
+    entityType: string
+    entityId: number
+    filename: string
+    storagePath: string
+    mimeType: string
+    sizeBytes: number
+    uploadedById: number
+    uploadedByName: string
+    sortOrder?: number
+    visibility?: string
+    allowedRoles?: string
+    createdAt?: Date | string
+  }
+
+  export type FileAttachmentUncheckedCreateInput = {
+    id?: number
+    entityType: string
+    entityId: number
+    filename: string
+    storagePath: string
+    mimeType: string
+    sizeBytes: number
+    uploadedById: number
+    uploadedByName: string
+    sortOrder?: number
+    visibility?: string
+    allowedRoles?: string
+    createdAt?: Date | string
+  }
+
+  export type FileAttachmentUpdateInput = {
+    entityType?: StringFieldUpdateOperationsInput | string
+    entityId?: IntFieldUpdateOperationsInput | number
+    filename?: StringFieldUpdateOperationsInput | string
+    storagePath?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    uploadedById?: IntFieldUpdateOperationsInput | number
+    uploadedByName?: StringFieldUpdateOperationsInput | string
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    visibility?: StringFieldUpdateOperationsInput | string
+    allowedRoles?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FileAttachmentUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    entityType?: StringFieldUpdateOperationsInput | string
+    entityId?: IntFieldUpdateOperationsInput | number
+    filename?: StringFieldUpdateOperationsInput | string
+    storagePath?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    uploadedById?: IntFieldUpdateOperationsInput | number
+    uploadedByName?: StringFieldUpdateOperationsInput | string
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    visibility?: StringFieldUpdateOperationsInput | string
+    allowedRoles?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FileAttachmentCreateManyInput = {
+    id?: number
+    entityType: string
+    entityId: number
+    filename: string
+    storagePath: string
+    mimeType: string
+    sizeBytes: number
+    uploadedById: number
+    uploadedByName: string
+    sortOrder?: number
+    visibility?: string
+    allowedRoles?: string
+    createdAt?: Date | string
+  }
+
+  export type FileAttachmentUpdateManyMutationInput = {
+    entityType?: StringFieldUpdateOperationsInput | string
+    entityId?: IntFieldUpdateOperationsInput | number
+    filename?: StringFieldUpdateOperationsInput | string
+    storagePath?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    uploadedById?: IntFieldUpdateOperationsInput | number
+    uploadedByName?: StringFieldUpdateOperationsInput | string
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    visibility?: StringFieldUpdateOperationsInput | string
+    allowedRoles?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FileAttachmentUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    entityType?: StringFieldUpdateOperationsInput | string
+    entityId?: IntFieldUpdateOperationsInput | number
+    filename?: StringFieldUpdateOperationsInput | string
+    storagePath?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    uploadedById?: IntFieldUpdateOperationsInput | number
+    uploadedByName?: StringFieldUpdateOperationsInput | string
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    visibility?: StringFieldUpdateOperationsInput | string
+    allowedRoles?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -12577,6 +14074,7 @@ export namespace Prisma {
 
   export type OperationCountOrderByAggregateInput = {
     id?: SortOrder
+    mlsPropertyId?: SortOrder
     address?: SortOrder
     type?: SortOrder
     price?: SortOrder
@@ -12621,6 +14119,7 @@ export namespace Prisma {
 
   export type OperationAvgOrderByAggregateInput = {
     id?: SortOrder
+    mlsPropertyId?: SortOrder
     price?: SortOrder
     clientId?: SortOrder
     compPct?: SortOrder
@@ -12632,6 +14131,7 @@ export namespace Prisma {
 
   export type OperationMaxOrderByAggregateInput = {
     id?: SortOrder
+    mlsPropertyId?: SortOrder
     address?: SortOrder
     type?: SortOrder
     price?: SortOrder
@@ -12676,6 +14176,7 @@ export namespace Prisma {
 
   export type OperationMinOrderByAggregateInput = {
     id?: SortOrder
+    mlsPropertyId?: SortOrder
     address?: SortOrder
     type?: SortOrder
     price?: SortOrder
@@ -12720,6 +14221,7 @@ export namespace Prisma {
 
   export type OperationSumOrderByAggregateInput = {
     id?: SortOrder
+    mlsPropertyId?: SortOrder
     price?: SortOrder
     clientId?: SortOrder
     compPct?: SortOrder
@@ -12727,6 +14229,70 @@ export namespace Prisma {
     agentSplitPct?: SortOrder
     realtorSplitPct?: SortOrder
     brokerSplitPct?: SortOrder
+  }
+
+  export type FileAttachmentCountOrderByAggregateInput = {
+    id?: SortOrder
+    entityType?: SortOrder
+    entityId?: SortOrder
+    filename?: SortOrder
+    storagePath?: SortOrder
+    mimeType?: SortOrder
+    sizeBytes?: SortOrder
+    uploadedById?: SortOrder
+    uploadedByName?: SortOrder
+    sortOrder?: SortOrder
+    visibility?: SortOrder
+    allowedRoles?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type FileAttachmentAvgOrderByAggregateInput = {
+    id?: SortOrder
+    entityId?: SortOrder
+    sizeBytes?: SortOrder
+    uploadedById?: SortOrder
+    sortOrder?: SortOrder
+  }
+
+  export type FileAttachmentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    entityType?: SortOrder
+    entityId?: SortOrder
+    filename?: SortOrder
+    storagePath?: SortOrder
+    mimeType?: SortOrder
+    sizeBytes?: SortOrder
+    uploadedById?: SortOrder
+    uploadedByName?: SortOrder
+    sortOrder?: SortOrder
+    visibility?: SortOrder
+    allowedRoles?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type FileAttachmentMinOrderByAggregateInput = {
+    id?: SortOrder
+    entityType?: SortOrder
+    entityId?: SortOrder
+    filename?: SortOrder
+    storagePath?: SortOrder
+    mimeType?: SortOrder
+    sizeBytes?: SortOrder
+    uploadedById?: SortOrder
+    uploadedByName?: SortOrder
+    sortOrder?: SortOrder
+    visibility?: SortOrder
+    allowedRoles?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type FileAttachmentSumOrderByAggregateInput = {
+    id?: SortOrder
+    entityId?: SortOrder
+    sizeBytes?: SortOrder
+    uploadedById?: SortOrder
+    sortOrder?: SortOrder
   }
 
   export type StringFieldUpdateOperationsInput = {
